@@ -3,9 +3,14 @@ package com.techelevator.service;
 import com.techelevator.dao.ApplicationDao;
 import com.techelevator.dao.PropertyDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.exception.DaoException;
+import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
+import com.techelevator.model.Property;
+import com.techelevator.model.User;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationServiceImpl implements ApplicationService{
@@ -21,34 +26,52 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public List<Application> viewAllApplications(Principal principal) {
-        return null;
+        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
+        List<Application> applications = new ArrayList<>();
+        try{
+            for(Property property : properties){
+                applications.addAll(applicationDao.getApplicationsByPropertyId(property.getPropertyId()));
+            }
+            return applications;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
-    public List<Application> viewApplicationsByStatus(Principal principal) {
-        return null;
+    public List<Application> viewApplicationsByStatus(Principal principal, String status) {
+        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
+        List<Application> applications = new ArrayList<>();
+        try{
+            for(Property property : properties){
+                applications.addAll(applicationDao.getApplicationsByStatus(status));
+            }
+            return applications;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public Application viewApplicationById(Principal principal, int applicationId) {
-        //use principal to get username, check role and make sure its an admin
-        //
-        //
+        Application application =
         return null;
     }
 
     @Override
-    public Application createApplication(Principal principal) {
+    public Application createApplication(Principal principal, Application application) {
+
         return null;
     }
 
     @Override
-    public Application approveApplication(Principal principal, int applicationId) {
+    public Application approveApplication(Principal principal, int applicationId, Application updatedApplication) {
         return null;
     }
 
+
     @Override
-    public Application rejectApplication(Principal principal, int applicationId) {
+    public Application rejectApplication(Principal principal, int applicationId, Application rejectedApplication) {
         return null;
     }
 }
