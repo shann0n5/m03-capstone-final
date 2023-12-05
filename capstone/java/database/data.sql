@@ -10,9 +10,17 @@ INSERT INTO users (username,password_hash,role) VALUES ('ron','$2a$08$UkVvwpULis
 INSERT INTO users (username,password_hash,role) VALUES ('hermione','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'); --userId 1006
 INSERT INTO users (username,password_hash,role) VALUES ('ginny','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER'); --userId 1007
 
-INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('123 Test St, New York, NY 10024', 3, 5000.00, true); --propertyId 2001
-INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('456 Testing Blvd, Long Beach, CA 90210', 2, 3500.00, false); --propertyId 2002
-INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('789 Test Ave, Philadelphia, PA 19093', 1, 1500.00, false); --propertyId 2003
+INSERT INTO properties(number_of_rooms, rent, is_available) VALUES (3, 5000.00, true); --propertyId 2001
+INSERT INTO properties(number_of_rooms, rent, is_available) VALUES (2, 3500.00, false); --propertyId 2002
+INSERT INTO properties(number_of_rooms, rent, is_available) VALUES (1, 1500.00, false); --propertyId 2003
+
+INSERT INTO addresses (address, address2, city, state, zipcode) VALUES ('123 Test St', '', 'New York', 'NY', '10024'); --addressId 1 ?
+INSERT INTO addresses (address, address2, city, state, zipcode) VALUES ('456 Testing Blvd', '', 'Long Beach', 'CA', '90210'); --addressId 2 ?
+INSERT INTO addresses (address, address2, city, state, zipcode) VALUES('789 Test Ave', '', 'Philadelphia', 'PA', '19093'); --addressId 3 ?
+
+INSERT INTO property_addresses (address_id, property_id) VALUES (1,2001);
+INSERT INTO property_addresses (address_id, property_id) VALUES (2,2002);
+INSERT INTO property_addresses (address_id, property_id) VALUES (3,2003);
 
 INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
 INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1004, 'Neville Longbottom', NULL, false); --applicant
