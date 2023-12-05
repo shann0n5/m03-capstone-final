@@ -1,8 +1,9 @@
 BEGIN TRANSACTION;
+-- ROLLBACK;
 
-DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions;
+DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions, addresses, property_addresses;
 
-DROP SEQUENCE IF EXISTS seq_user_id, seq_property_id, seq_application_id, seq_service_request_id, seq_transaction_id;
+DROP SEQUENCE IF EXISTS seq_user_id, seq_property_id, seq_application_id, seq_service_request_id, seq_transaction_id, seq_property_id, seq_address_id;
 
 CREATE SEQUENCE seq_user_id
 	INCREMENT BY 1
@@ -26,13 +27,32 @@ CREATE SEQUENCE seq_property_id
 
 CREATE TABLE properties (
     property_id int NOT NULL DEFAULT nextval('seq_property_id'),
-    address varchar(75) NOT NULL UNIQUE,
 	number_of_rooms int NOT NULL,
 	rent Decimal(10,2) NOT NULL,
 	is_available boolean NOT NULL,
-	is_owner boolean NOT NULL,
-	CONSTRAINT PK_properties PRIMARY KEY (property_id),
-	CONSTRAINT UQ_address UNIQUE (address) 
+	CONSTRAINT PK_properties PRIMARY KEY (property_id)
+);
+
+CREATE SEQUENCE seq_address_id
+	INCREMENT BY 1
+	START WITH 1
+	NO MAXVALUE;
+	
+CREATE TABLE addresses (
+	address_id int NOT NULL DEFAULT nextval('seq_address_id'),
+	address varchar (50) NOT NULL,
+	address2 varchar (50),
+	city varchar (75) NOT NULL,
+	state varchar (50) NOT NULL,
+	zipcode varchar (15) NOT NULL,
+	CONSTRAINT PK_addresses PRIMARY KEY (address_id)
+);
+
+CREATE TABLE property_addresses (
+	address_id int NOT NULL,
+	property_id int NOT NULL,
+	CONSTRAINT FK_property_addresses_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id),
+	CONSTRAINT FK_property_addresses_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
 );
 
 CREATE TABLE user_profiles (
