@@ -13,7 +13,8 @@ public interface PropertyDao {
     List<Property> getPropertiesByUsername(String username);
 
     //TODO get property by zipcode = use Address class
-    //Property getPropertiesByZipcode(int zipcode); where zipcode = address.zipcode
+    List<Property> getPropertiesByZipcode(String zipcode);
+
     Property getPropertyByNumberOfRooms(int numberOfRooms);
 
     List<Property> getPropertiesByAvailability(boolean isAvailable);
