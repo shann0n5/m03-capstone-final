@@ -8,8 +8,10 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import PropertiesView from '../views/PropertiesView.vue';
 import ContactUsView from '../views/ContactUsView.vue';
-import ApplicationsView from '../views/ApplicationsView.vue';
+import QualificationsView from '../views/QualificationsView.vue'
 import AboutUsView from '../views/AboutUsView.vue';
+import Application from '../views/ApplicationView.vue'
+
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -69,12 +71,17 @@ const routes = [
     }
   },
   {
-    path: "/applications",
-    name: "applications",
-    component: ApplicationsView,
+    path: "/qualifications",
+    name: "qualifications",
+    component: QualificationsView,
     meta: {
       requiresAuth: false
     }
+  },
+  {
+    path: "/application",
+    name: "application",
+    component: Application
   },
   {
     path: "/about-us",
@@ -83,7 +90,9 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }
+  },
+ 
+
 ];
 
 // Create the router
