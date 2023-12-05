@@ -1,10 +1,12 @@
 package com.techelevator.service;
 
 import com.techelevator.model.Property;
+import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
 
+@Service
 public class PropertyServiceImpl implements PropertyService{
     @Override
     public List<Property> viewAllProperties(Principal principal) {

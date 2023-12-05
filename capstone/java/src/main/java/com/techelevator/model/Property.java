@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class Property {
 
-    @NotNull( message = "The field 'propertyId' is required.")
+
     private int propertyId;
 
     @NotNull( message = "The field 'address' is required.")

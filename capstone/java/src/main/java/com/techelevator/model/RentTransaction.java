@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class RentTransaction {
-    @NotNull( message = "The field 'transactionId' is required.")
+
     private int transactionId;
     @NotNull( message = "The field 'amount' is required.")
     private BigDecimal amount;

@@ -7,10 +7,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcPropertyDao implements PropertyDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -77,7 +79,7 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public List<Property> getPropertiesByUsername(String username) {
         List<Property> properties = new ArrayList<>();
-        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+        String sql = "SELECT p.property_id, p.address, p.number_of_rooms, p.rent, p.is_available, p.is_owner " +
                 "FROM properties p " +
                 "JOIN user_properties up ON p.property_id = up.property_id " +
                 "JOIN users u ON up.user_id = u.user_id " +

@@ -8,11 +8,14 @@ import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
 import com.techelevator.model.Property;
 import com.techelevator.model.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ApplicationServiceImpl implements ApplicationService{
     private ApplicationDao applicationDao;
     private UserDao userDao;
@@ -54,7 +57,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public Application viewApplicationById(Principal principal, int applicationId) {
-        Application application =
+        Application application = applicationDao.getApplicationById(applicationId);
         return null;
     }
 

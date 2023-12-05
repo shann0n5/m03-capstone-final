@@ -6,10 +6,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcApplicationDao implements ApplicationDao{
     private final JdbcTemplate jdbcTemplate;
 
@@ -42,7 +44,11 @@ public class JdbcApplicationDao implements ApplicationDao{
                 "JOIN properties p ON a.property_id = p.property_id " +
                 "WHERE a.property_id = ?";
         try{
-
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, propertyId);
+            while(results.next()){
+                Application application = mapRowToApplication(results);
+                applications.add(application);
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
