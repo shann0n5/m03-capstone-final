@@ -10,8 +10,11 @@ import PropertiesView from '../views/PropertiesView.vue';
 import ContactUsView from '../views/ContactUsView.vue';
 import QualificationsView from '../views/QualificationsView.vue'
 import AboutUsView from '../views/AboutUsView.vue';
-import Application from '../views/ApplicationView.vue'
-
+import ApplicationView from '../views/ApplicationView.vue';
+import TenantMainPageView from '../views/TenantMainPageView.vue';
+import ServiceRequestView from '../views/ServiceRequestView.vue';
+import RentTransactionView from '../views/RentTransactionsView.vue';
+import AddServiceRequestView from '../views/AddServiceRequestView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -81,7 +84,7 @@ const routes = [
   {
     path: "/application",
     name: "application",
-    component: Application
+    component: ApplicationView
   },
   {
     path: "/about-us",
@@ -91,6 +94,39 @@ const routes = [
       requiresAuth: false
     }
   },
+  {
+    path: "/home/tenant-main-page",
+    name: "tenantMainPageView",
+    component: TenantMainPageView,
+     meta: {
+      requiresAuth: false
+     }
+  },
+  {
+    path: "/service-request-view",
+    name: "serviceRequestView",
+    component: ServiceRequestView,
+    meta:{
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/rent-transaction-view",
+    name: "rentTransactionView",
+    component: RentTransactionView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/service-request/create",
+    name:"addServiceRequest",
+    component: AddServiceRequestView,
+    meta: {
+      requiresAuth: false
+    }
+  }
+
  
 
 ];

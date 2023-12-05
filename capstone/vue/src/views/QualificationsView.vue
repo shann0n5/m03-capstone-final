@@ -5,7 +5,7 @@
       dddddddddddd
      </p>
      <div class="application-link-to-register">
-      <router-link v-bind:to="{name: 'register'}">Register to Apply</router-link>
+      <router-link v-bind:to="{name: 'register'}">Register to Apply</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{name: 'application'}">Rental Application</router-link>
     </div>
 
