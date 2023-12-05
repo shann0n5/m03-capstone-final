@@ -67,7 +67,7 @@ public class Property {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
+    public void setIsAvailable(boolean available) {
         isAvailable = available;
     }
 
@@ -75,7 +75,7 @@ public class Property {
         return isOwner;
     }
 
-    public void setOwner(boolean owner) {
+    public void setIsOwner(boolean owner) {
         isOwner = owner;
     }
 }
