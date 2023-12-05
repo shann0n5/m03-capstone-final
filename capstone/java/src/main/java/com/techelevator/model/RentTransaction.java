@@ -14,6 +14,8 @@ public class RentTransaction {
     @NotNull( message = "The field 'pastDue' is required.")
     private boolean pastDue;
 
+    public RentTransaction() {}
+
     public RentTransaction(int transactionId, BigDecimal amount, Date dueDate, boolean pastDue) {
         this.transactionId = transactionId;
         this.amount = amount;

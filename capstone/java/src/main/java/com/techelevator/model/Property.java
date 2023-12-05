@@ -20,6 +20,8 @@ public class Property {
     @NotNull( message = "The field 'isOwner' is required.")
     private boolean isOwner;
 
+    public Property(int propertyId) {}
+
     public Property(int propertyId, String address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
         this.propertyId = propertyId;
         this.address = address;
