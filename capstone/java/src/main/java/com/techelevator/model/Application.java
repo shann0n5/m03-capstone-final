@@ -18,7 +18,7 @@ public class Application {
     private boolean hasRoomates;
     private String roomateNames;
 
-
+    public Application() {}
 
     public Application(int applicationId, int userId, int propertyId, String status, boolean hasRoomates, String roomateNames) {
         this.applicationId = applicationId;
