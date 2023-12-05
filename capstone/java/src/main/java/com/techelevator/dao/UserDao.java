@@ -14,4 +14,8 @@ public interface UserDao {
     User getUserByUsername(String username);
 
     User createUser(RegisterUserDto user);
+
+    //TODO get users by property id????? check if principal = admin then show users by property id
+
+    // List<User> getUsersByProperty(int propertyId, Principal principal)
 }
