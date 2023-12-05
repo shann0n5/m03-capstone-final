@@ -11,6 +11,10 @@ public class ServiceRequest {
     //Status: Open, In Prog, Complete
     private String status;
 
+    public ServiceRequest(int serviceRequestId) {
+        this.serviceRequestId = serviceRequestId;
+    }
+
     public ServiceRequest(int serviceRequestId, String requestDetails, String status) {
         this.serviceRequestId = serviceRequestId;
         this.requestDetails = requestDetails;
