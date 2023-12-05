@@ -27,6 +27,10 @@ public class RentTransaction {
         return transactionId;
     }
 
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }

@@ -35,6 +35,10 @@ public class Property {
         return propertyId;
     }
 
+    public void setPropertyId(int propertyId) {
+        this.propertyId = propertyId;
+    }
+
     public String getAddress() {
         return address;
     }
