@@ -26,12 +26,24 @@ CREATE SEQUENCE seq_property_id
 
 CREATE TABLE properties (
     property_id int NOT NULL DEFAULT nextval('seq_property_id'),
-    address varchar(75) NOT NULL UNIQUE,
+    address_id int  NOT NULL UNIQUE,
 	number_of_rooms int NOT NULL,
 	rent Decimal(10,2) NOT NULL,
 	is_available boolean NOT NULL,
 	CONSTRAINT PK_properties PRIMARY KEY (property_id),
-	CONSTRAINT UQ_address UNIQUE (address) 
+	CONSTRAINT FK_properties_addresses FOREIGN KEY (address_id) REFERENCES addresses (id)
+);
+
+CREATE TABLE addresses (
+	id int NOT NULL,
+	address varchar (50) NOT NULL,
+	address2 varchar (50),
+	city varchar (75) NOT NULL,
+	state varchar (50) NOT NULL,
+	zipcode varchar (15) NOT NULL,
+	property_id int NOT NULL,
+	CONSTRAINT PK_addresses PRIMARY KEY (id),
+	CONSTRAINT FK_addresses_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
 );
 
 CREATE TABLE user_profiles (
