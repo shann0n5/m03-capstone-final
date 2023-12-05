@@ -30,6 +30,7 @@ CREATE TABLE properties (
 	number_of_rooms int NOT NULL,
 	rent Decimal(10,2) NOT NULL,
 	is_available boolean NOT NULL,
+	is_owner boolean NOT NULL,
 	CONSTRAINT PK_properties PRIMARY KEY (property_id)
 );
 
