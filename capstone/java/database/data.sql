@@ -1,4 +1,5 @@
 BEGIN TRANSACTION;
+--ROLLBACK;
 
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN'); --userId 1001
 INSERT INTO users (username,password_hash,role) VALUES ('admin2','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN'); --userId 1002
@@ -13,27 +14,39 @@ INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('12
 INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('456 Testing Blvd, Long Beach, CA 90210', 2, 3500.00, false); --propertyId 2002
 INSERT INTO properties(address, number_of_rooms, rent, is_available) VALUES ('789 Test Ave, Philadelphia, PA 19093', 1, 1500.00, false); --propertyId 2003
 
-INSERT INTO user_profiles(tenant_id, full_name, property_id, suite_number, has_autopay) VALUES (1003, 'Harry Potter', 2001, '3R', true);
-INSERT INTO user_profiles(tenant_id, full_name, property_id, suite_number, has_autopay) VALUES (1004, 'Neville Longbottom', 2002, NULL, true);
-INSERT INTO user_profiles(tenant_id, full_name, property_id, suite_number, has_autopay) VALUES (1005, 'Ron Weasley', 2001, '3R', false);
-INSERT INTO user_profiles(tenant_id, full_name, property_id, suite_number, has_autopay) VALUES (1006, 'Hermione Granger', 2003, NULL, true);
-INSERT INTO user_profiles(tenant_id, full_name, property_id, suite_number, has_autopay) VALUES (1007, 'Ginny Weasley', 2003, NULL, false);
+INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
+INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1004, 'Neville Longbottom', NULL, false); --applicant
+INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1005, 'Ron Weasley', '3R', false);
+INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1006, 'Hermione Granger', NULL, true); --applicant
+INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1007, 'Ginny Weasley', NULL, false);
 
-INSERT INTO manager_properties(propety_manager_id, property_id) VALUES (1001, 2001);
-INSERT INTO manager_properties(propety_manager_id, property_id) VALUES (1001, 2003);
-INSERT INTO manager_properties(propety_manager_id, property_id) VALUES (1002, 2002);
+INSERT INTO user_properties(user_id, property_id) VALUES (1001, 2001); --owner
+INSERT INTO user_properties(user_id, property_id) VALUES (1001, 2003); --owner
+INSERT INTO user_properties(user_id, property_id) VALUES (1002, 2002); --owner
+INSERT INTO user_properties(user_id, property_id) VALUES (1003, 2001); --tenant
+INSERT INTO user_properties(user_id, property_id) VALUES (1005, 2001); --tenant
+INSERT INTO user_properties(user_id, property_id) VALUES (1007, 2003); --tenant
+INSERT INTO user_properties(user_id, property_id) VALUES (1004, 2002); --applicant
+INSERT INTO user_properties(user_id, property_id) VALUES (1006, 2003); --applicant
 
-INSERT INTO applications(applicant_id, property_id, status, has_roomates, roomate_names) VALUES (1002, 2001, 'STATUS_PENDING'); --applicationId 3001
-INSERT INTO applications(applicant_id, property_id, status, has_roomates, roomate_names) VALUES (1003, 2001, 'STATUS_WITHDRAWN'); --applicationId 3002
-INSERT INTO applications(applicant_id, property_id, status, has_roomates, roomate_names) VALUES (1004, 2001, 'STATUS_REJECTED'); --applicationId 3003
+INSERT INTO applications(user_id, property_id, status, has_roomates, roomate_names) VALUES (1004, 2001, 'STATUS_PENDING', false, NULL); --applicationId 3001
+INSERT INTO applications(user_id, property_id, status, has_roomates, roomate_names) VALUES (1005, 2003, 'STATUS_WITHDRAWN', true, 'Luna Lovegood'); --applicationId 3002
 
-INSERT INTO service_requests (tenant_id, property_id, request_details, status) VALUES (1005, 2002, 'Plumbing needed.', 'STATUS_COMPLETE'); --serviceResquestId 4001
-INSERT INTO service_requests (tenant_id, property_id, request_details, status) VALUES (1006, 2003, 'Exterminator needed.', 'STATUS_IN_PROGRESS'); --serviceResquestId 4002
-INSERT INTO service_requests (tenant_id, property_id, request_details, status) VALUES (1007, 2004, 'Stove burner needs fixing.', 'STATUS_OPEN'); --serviceResquestId 4003
+INSERT INTO service_requests (request_details, status) VALUES ('Plumbing needed.', 'STATUS_COMPLETE'); --serviceResquestId 4001
+INSERT INTO service_requests (request_details, status) VALUES ('Exterminator needed.', 'STATUS_IN_PROGRESS'); --serviceResquestId 4002
+INSERT INTO service_requests (request_details, status) VALUES ('Stove burner needs fixing.', 'STATUS_OPEN'); --serviceResquestId 4003
 
-INSERT INTO bills(tenant_id, property_id, amount, is_paid) VALUES (1005, 2002, 3500.00, true); --billId 5001
-INSERT INTO bills(tenant_id, property_id, amount, is_paid) VALUES (1006, 2003, 1500.00, true); --billId 5002
-INSERT INTO bills(tenant_id, property_id, amount, is_paid) VALUES (1007, 2004, 3950.00, false); --billId 5003
+INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1003, 4001);
+INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1005, 4002);
+INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1007, 4003);
+
+INSERT INTO rent_transactions (amount, due_date, past_due) VALUES (2500.00, '2023-01-01', false); --rentTransactionId 5001
+INSERT INTO rent_transactions (amount, due_date, past_due) VALUES (2500.00, '2023-01-01', false); --rentTransactionId 5002
+INSERT INTO rent_transactions (amount, due_date, past_due) VALUES (1500.00, '2023-12-01', true); --rentTransactionId 5003
+
+INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1003, 5001);
+INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1005, 5002);
+INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1007, 5003);
 
 COMMIT TRANSACTION;
 
