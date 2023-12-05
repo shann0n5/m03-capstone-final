@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class RentTransaction {
-    @NotNull( message = "The field 'transactionId' is required.")
+
     private int transactionId;
     @NotNull( message = "The field 'amount' is required.")
     private BigDecimal amount;
@@ -13,6 +13,8 @@ public class RentTransaction {
     private Date dueDate;
     @NotNull( message = "The field 'pastDue' is required.")
     private boolean pastDue;
+
+    public RentTransaction() {}
 
     public RentTransaction(int transactionId, BigDecimal amount, Date dueDate, boolean pastDue) {
         this.transactionId = transactionId;
@@ -23,6 +25,10 @@ public class RentTransaction {
 
     public int getTransactionId() {
         return transactionId;
+    }
+
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
     }
 
     public BigDecimal getAmount() {

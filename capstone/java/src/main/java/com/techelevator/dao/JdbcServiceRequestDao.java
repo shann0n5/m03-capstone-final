@@ -6,10 +6,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcServiceRequestDao implements ServiceRequestDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -143,11 +145,11 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {
-        ServiceRequest serviceRequest = new ServiceRequest(
-                results.getInt("service_request_id"),
-                results.getNString("request_details"),
-                results.getNString("status")
-        );
+        ServiceRequest serviceRequest = new ServiceRequest();
+                serviceRequest.setServiceRequestId(results.getInt("service_request_id"));
+                serviceRequest.setRequestDetails(results.getNString("request_details"));
+                serviceRequest.setStatus(results.getNString("status"));
+
         return serviceRequest;
     }
 }

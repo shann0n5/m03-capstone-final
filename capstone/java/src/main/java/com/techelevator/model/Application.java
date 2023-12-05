@@ -5,7 +5,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.validation.constraints.NotNull;
 
 public class Application {
-    @NotNull( message = "The field 'applicationId' is required.")
+
     private int applicationId;
     @NotNull( message = "The field 'userId' is required.")
     private int userId;
@@ -18,7 +18,7 @@ public class Application {
     private boolean hasRoomates;
     private String roomateNames;
 
-
+    public Application() {}
 
     public Application(int applicationId, int userId, int propertyId, String status, boolean hasRoomates, String roomateNames) {
         this.applicationId = applicationId;
