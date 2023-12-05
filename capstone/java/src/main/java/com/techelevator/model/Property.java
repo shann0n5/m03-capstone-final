@@ -10,7 +10,7 @@ public class Property {
 
     //TODO is Address to be its own class where you convert the string from the database daos to an Address object or is it okay as a string here?????
     @NotNull( message = "The field 'address' is required.")
-    private String address;
+    private Address address;
     @Min( value = 1, message = "The minimum number of rooms is 1.")
     private int numberOfRooms;
     @NotNull( message = "The field 'rent' is required.")
@@ -22,7 +22,7 @@ public class Property {
 
     public Property() {}
 
-    public Property(int propertyId, String address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
+    public Property(int propertyId, Address address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
         this.propertyId = propertyId;
         this.address = address;
         this.numberOfRooms = numberOfRooms;
@@ -39,11 +39,11 @@ public class Property {
         this.propertyId = propertyId;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

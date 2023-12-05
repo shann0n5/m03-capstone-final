@@ -9,10 +9,11 @@ public interface PropertyDao {
     List<Property> getProperties();
 
     Property getPropertyById(int propertyId);
-    Property getPropertyByUsername(String username);
+
+    List<Property> getPropertiesByUsername(String username);
 
     //TODO get property by zipcode = use Address class
-    //Property getPropertyByZipcode(int zipcode); where zipcode = address.zipcode
+    //Property getPropertiesByZipcode(int zipcode); where zipcode = address.zipcode
     Property getPropertyByNumberOfRooms(int numberOfRooms);
 
     List<Property> getPropertiesByAvailability(boolean isAvailable);

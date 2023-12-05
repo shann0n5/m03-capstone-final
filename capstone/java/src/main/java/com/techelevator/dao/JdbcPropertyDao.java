@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Address;
 import com.techelevator.model.Property;
 import com.techelevator.model.RentTransaction;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -35,8 +36,6 @@ public class JdbcPropertyDao implements PropertyDao {
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
         }
         return properties;
     }
@@ -61,32 +60,6 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property getPropertyByUsername(String username) {
-        Property property = null;
-        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
-                "FROM properties p " +
-                "JOIN user_properties up ON p.property_id = up.property_id " +
-                "JOIN users u ON up.user_id = u.user_id " +
-                "WHERE username = ?;";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
-            if (results.next()) {
-                property = mapRowToProperty(results);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-        return property;
-    }
-
-
-
-    //TODO get property by zipcode = use Address class
-    //Property getPropertyByZipcode(int zipcode); where zipcode = address.zipcode
-
-    @Override
     public Property getPropertyByNumberOfRooms(int numberOfRooms) {
         Property property = null;
         String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
@@ -99,15 +72,52 @@ public class JdbcPropertyDao implements PropertyDao {
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
         }
         return property;
     }
 
     @Override
-    public List<Property> getPropertiesByAvailability(boolean isAvailable) {
+    public List<Property> getPropertiesByUsername(String username) {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+                "FROM properties p " +
+                "JOIN user_properties up ON p.property_id = up.property_id " +
+                "JOIN users u ON up.user_id = u.user_id " +
+                "WHERE username = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                properties.add(mapRowToProperty(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return properties;
+    }
 
+
+    //TODO get property by zipcode = use Address class
+    Property getPropertiesByZipcode(String zipcode) {
+        final String SQL_WHERE_ZIPCODE
+    }
+
+
+    @Override
+    public List<Property> getPropertiesByAvailability(boolean isAvailable) {
+        List<Property> properties = new ArrayList<>();
+
+        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+                "FROM properties " +
+                "WHERE is_available = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                properties.add(mapRowToProperty(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return properties;
     }
 
     @Override
@@ -137,14 +147,14 @@ public class JdbcPropertyDao implements PropertyDao {
             if (numberOfRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
-                updatedProperty = 
+                updatedProperty = getPropertyById(property.getPropertyId());
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return updatedRentTransaction;
+        return updatedProperty;
     }
 
     @Override
@@ -164,13 +174,21 @@ public class JdbcPropertyDao implements PropertyDao {
     private Property mapRowToProperty(SqlRowSet results) {
         Property property = new Property();
         property.setPropertyId(results.getInt("property_id"));
-        property.setAddress(results.getString("address"));
         property.setNumberOfRooms(results.getInt("number_of_rooms"));
         property.setRent(results.getBigDecimal("rent"));
         property.setIsAvailable(results.getBoolean("is_available"));
         property.setIsOwner(results.getBoolean("is_owner"));
+
+        Address address = new Address();
+
+        address.setId(results.getString("address_id"));
+        address.setAddress(results.getString("address"));
+        address.setAddress2(results.getString("address2"));
+        address.setCity(results.getString("city"));
+        address.setState(results.getString("state"));
+        address.setZip(results.getString("zip"));
+
+        property.setAddress(address);
         return property;
     }
-
-
 }
