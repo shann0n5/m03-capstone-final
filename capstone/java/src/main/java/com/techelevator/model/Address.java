@@ -10,19 +10,19 @@ public class Address {
     private String address2;
     private String city;
     private String state;
-    private String zip;
+    private String zipcode;
 
     public Address(){
 
     }
 
-    public Address(String id, String address, String address2, String city, String state, String zip) {
+    public Address(String id, String address, String address2, String city, String state, String zipcode) {
         this.id = id;
         this.address = address;
         this.address2 = address2;
         this.city = city;
         this.state = state;
-        this.zip = zip;
+        this.zipcode = zipcode;
     }
 
 
@@ -66,12 +66,12 @@ public class Address {
         this.state = state;
     }
 
-    public String getZip() {
-        return zip;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 
     @Override
@@ -89,12 +89,12 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address1 = (Address) o;
-        return id.equals(address1.id) && address.equals(address1.address) && address2.equals(address1.address2) && city.equals(address1.city) && state.equals(address1.state) && zip.equals(address1.zip);
+        return id.equals(address1.id) && address.equals(address1.address) && address2.equals(address1.address2) && city.equals(address1.city) && state.equals(address1.state) && zipcode.equals(address1.zipcode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, address2, city, state, zip);
+        return Objects.hash(id, address, address2, city, state, zipcode);
     }
 }
 

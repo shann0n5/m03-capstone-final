@@ -5,16 +5,19 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Property {
+
     @NotNull( message = "The field 'propertyId' is required.")
     private int propertyId;
 
-    //TODO is Address to be its own class where you convert the string from the database daos to an Address object or is it okay as a string here?????
     @NotNull( message = "The field 'address' is required.")
     private Address address;
+
     @Min( value = 1, message = "The minimum number of rooms is 1.")
     private int numberOfRooms;
+
     @NotNull( message = "The field 'rent' is required.")
     private BigDecimal rent;
+
     @NotNull( message = "The field 'isAvailable' is required.")
     private boolean isAvailable;
     @NotNull( message = "The field 'isOwner' is required.")
