@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ApplicationDao {
     List<Application> getApplications();
+    List<Application> getApplicationsByPropertyId(int propertyId);
 
     Application getApplicationById(int applicationId);
 

@@ -35,6 +35,21 @@ public class JdbcApplicationDao implements ApplicationDao{
     }
 
     @Override
+    public List<Application> getApplicationsByPropertyId(int propertyId) {
+        List<Application> applications = new ArrayList<>();
+        String sql = "SELECT a.application_id, a.user_id, a.property_id, a.status, a.has_roomates, " +
+                "a.roomate_names FROM applications a " +
+                "JOIN properties p ON a.property_id = p.property_id " +
+                "WHERE a.property_id = ?";
+        try{
+
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return applications;
+    }
+
+    @Override
     public Application getApplicationById(int applicationId) {
         Application application = null;
         String sql = "SELECT application_id, user_id, property_id, status, has_roomates, " +
@@ -112,7 +127,7 @@ public class JdbcApplicationDao implements ApplicationDao{
         String sql = "DELETE FROM applications WHERE application_id = ?";
         try{
             rowsAffected = jdbcTemplate.update(sql, applicationId);
-        }catch (CannotGetJdbcConnectionException e) {
+        } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
