@@ -54,17 +54,46 @@ public class ApplicationController {
             List<Application> applications = applicationService.viewApplicationsByStatus(principal, status);
             return applications;
         }catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "Server error encountered");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
 
     @GetMapping("applications/{id}")
     public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
         try{
-
-            return null;
+            Application application = applicationService.viewApplicationById(principal, applicationId);
+            if(application == null){
+                throw new ServiceException("No Application found with ID: " + applicationId);
+            }
+            return application;
         }catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT, "Server error encountered");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
+
+    @PutMapping("applications/approve/{id}")
+    public Application approveApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+        try{
+            Application updatedApplication = applicationService.approveApplication(principal, application);
+            if(updatedApplication == null){
+                throw new ServiceException("No Application found with ID: " + applicationId);
+            }
+            return updatedApplication;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
+
+    @PutMapping("applications/reject/{id}")
+    public Application rejectApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+        try{
+            Application updatedApplication = applicationService.rejectApplication(principal, application);
+            if(updatedApplication == null){
+                throw new ServiceException("No Application found with ID: " + applicationId);
+            }
+            return updatedApplication;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
 

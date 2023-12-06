@@ -8,6 +8,7 @@ import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
 import com.techelevator.model.Property;
 import com.techelevator.model.User;
+import org.apache.catalina.core.AprLifecycleListener;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -57,24 +58,61 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public Application viewApplicationById(Principal principal, int applicationId) {
-        Application application = applicationDao.getApplicationById(applicationId);
-        return null;
+        Application application = null;
+        List<Application> applications = viewAllApplications(principal);
+        try {
+            for (Application app : applications) {
+                if (app.getApplicationId() == applicationId) {
+                    application = applicationDao.getApplicationById(app.getApplicationId());
+                }
+            }
+            return application;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public Application createApplication(Principal principal, Application application) {
-
-        return null;
+        try{
+            Application newApplication = applicationDao.createApplication(application);
+            return newApplication;
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
-    public Application approveApplication(Principal principal, int applicationId, Application updatedApplication) {
-        return null;
+    public Application approveApplication(Principal principal, Application updatedApplication) {
+        List<Application> pendingApps = viewApplicationsByStatus(principal,"Pending");
+        Application updatedApp = null;
+        try{
+            for(Application app : pendingApps){
+                if(app.getApplicationId() == updatedApplication.getApplicationId()){
+                    updatedApp = applicationDao.updateApplication(updatedApplication);
+                    updatedApp.setStatus("Approved");
+                }
+            }
+            return updatedApp;
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
 
     @Override
-    public Application rejectApplication(Principal principal, int applicationId, Application rejectedApplication) {
-        return null;
+    public Application rejectApplication(Principal principal, Application rejectedApplication) {
+        List<Application> pendingApps = viewApplicationsByStatus(principal, "Pending");
+        Application rejectedApp = null;
+        try{
+            for (Application app: pendingApps){
+                if(app.getApplicationId() == rejectedApplication.getApplicationId()){
+                    rejectedApp = applicationDao.updateApplication(rejectedApplication);
+                }
+            }
+            return rejectedApp;
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 }
