@@ -20,7 +20,7 @@ public class PropertyServiceImpl implements PropertyService{
 
     private UserDao userDao;
 
-    public PropertyServiceImpl(PropertyDao propertyDao) {
+    public PropertyServiceImpl(PropertyDao propertyDao, UserDao userDao) {
         this.propertyDao = propertyDao;
     }
 
