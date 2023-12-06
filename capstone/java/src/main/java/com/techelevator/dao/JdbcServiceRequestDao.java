@@ -96,8 +96,8 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
                 serviceRequest.setStatus(complete);
             }
 
-            String sql = "INSERT INTO service_requests (service_request_id, request_details, status " +
-                    "VALUES (?, ?, ?) RETURNING service_request_id;";
+            String sql = "INSERT INTO service_requests (request_details, status) " +
+                    "VALUES (?, ?) RETURNING service_request_id;";
 
             status = jdbcTemplate.queryForObject(sql, String.class, serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
 
@@ -113,7 +113,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     public ServiceRequest updateServiceRequest(ServiceRequest serviceRequest) {
         ServiceRequest updatedServiceRequest = null;
         String sql = "UPDATE service_requests " +
-                "SET service_request_id = ?, request_details = ?, status = ? " +
+                "SET request_details = ?, status = ? " +
                 "WHERE service_request_id = ?;";
         try {
             int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
