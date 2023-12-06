@@ -86,8 +86,8 @@ public class JdbcPropertyDao implements PropertyDao {
         Integer newPropertyId;
         Integer addressId;
         try {
-            String sql = "INSERT INTO address (address, address2, city, state, zipcode, property_id) " +
-                    "VALUES (?, ?, ?, ?, ?, ?) RETURNING address_id;";
+            String sql = "INSERT INTO addresses (address, address2, city, state, zipcode) " +
+                    "VALUES (?, ?, ?, ?, ?) RETURNING address_id;";
             addressId = jdbcTemplate.update(sql, property.getAddress().getAddress(), property.getAddress().getAddress2(), property.getAddress().getCity(), property.getAddress().getState(), property.getAddress().getZipcode());
 
             sql = "INSERT INTO properties (address_id, number_of_rooms, rent, is_available, is_owner) " +
