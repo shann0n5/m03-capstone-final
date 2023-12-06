@@ -2,10 +2,13 @@
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
-        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.id" v-on:click="viewServiceRequestDetails(serviceRequest) ">
+        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest) ">
           <div class="header">
-            <h3>Service Request:{{ serviceRequest.id }}</h3>
+            <h3>Service Request:{{ serviceRequest.serviceRequestId }}</h3>
           </div>
+          <div>Details: {{ serviceRequest.requestDetails }}</div>
+          <p></p>
+          <div>{{ serviceRequest.status }}</div>
           <div class="footer">
             <span class="date">{{ new Date(serviceRequest.date).toDateString() }}</span>
           </div>
@@ -17,11 +20,11 @@
 
 <script>
 export default {
-props: ['title','serviceRequest'],
+props: ['title','serviceRequests'],
 
 method: {
     viewServiceRequestDetails(serviceRequest) {
-      this.$router.push({name: 'ServiceRequestView', params:{serviceRequestId: serviceRequest.id}});
+      this.$router.push({name: 'serviceRequest', params:{serviceRequestId: serviceRequest.id}});
     }
 }
 }

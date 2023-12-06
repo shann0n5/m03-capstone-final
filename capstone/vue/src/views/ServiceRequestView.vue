@@ -14,7 +14,7 @@
 </div>
 
   <div class="action-boards">
-    <service-request-section title="Open" v-bind:serviceRequests="open" />
+    <service-request-section title="open" v-bind:serviceRequests="open" />
     <service-request-section title="In Progress" v-bind:serviceRequests="inProgress" />
     <service-request-section title="Closed" v-bind:serviceRequests="closed" />
   </div> 
@@ -37,13 +37,13 @@ data() {
 },
   computed: {
     open() {
-      return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'Open');
+      return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_OPEN');
     },
     inProgress() {
-      return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'In Progress');
+      return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_IN_PROGRESS');
     },
     closed() {
-      return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'Closed');
+      return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_COMPLETE');
     }
   }
 }
