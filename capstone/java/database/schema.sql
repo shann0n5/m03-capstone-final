@@ -87,7 +87,7 @@ CREATE TABLE applications (
 	CONSTRAINT PK_applications PRIMARY KEY (user_id),
 	CONSTRAINT FK_applications_users FOREIGN KEY (user_id) REFERENCES users (user_id),
 	CONSTRAINT FK_applications_properties FOREIGN KEY (property_id) REFERENCES properties (property_id),
-	CONSTRAINT CK_status CHECK (status IN ('STATUS_PENDING', 'STATUS_REJECTED', 'STATUS_WITHDRAWN'))
+	CONSTRAINT CK_status CHECK (status IN ('STATUS_PENDING', 'STATUS_REJECTED', 'STATUS_WITHDRAWN', 'STATUS_APPROVED'))
 );
 
 CREATE SEQUENCE seq_service_request_id

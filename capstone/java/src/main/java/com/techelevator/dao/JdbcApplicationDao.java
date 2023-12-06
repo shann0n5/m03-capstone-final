@@ -108,7 +108,7 @@ public class JdbcApplicationDao implements ApplicationDao{
     @Override
     public Application updateApplication(Application application) {
         Application updatedApplication = null;
-        String sql = "UPDATE application SET user_id = ?, property_id = ?, status = ?, has_roomates = ?, " +
+        String sql = "UPDATE applications SET user_id = ?, property_id = ?, status = ?, has_roomates = ?, " +
                 "roomate_names = ? WHERE application_id = ?";
         try{
             int rowsAffected = jdbcTemplate.update(sql, application.getUserId(), application.getPropertyId(),
