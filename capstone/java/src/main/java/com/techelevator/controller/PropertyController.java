@@ -4,6 +4,7 @@ import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Address;
 import com.techelevator.model.Property;
 import com.techelevator.service.PropertyService;
+import com.techelevator.service.PropertyServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,11 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated")
+@PreAuthorize("isAuthenticated()")
 public class PropertyController {
-    private PropertyService propertyService;
+    private PropertyServiceImpl propertyService;
 
-    public PropertyController(PropertyService propertyService) {
+    public PropertyController(PropertyServiceImpl propertyService) {
         this.propertyService = propertyService;
     }
 
