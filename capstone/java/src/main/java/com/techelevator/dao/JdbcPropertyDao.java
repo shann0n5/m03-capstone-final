@@ -9,8 +9,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Component
 public class JdbcPropertyDao implements PropertyDao {
@@ -60,20 +62,36 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property getPropertyByNumberOfRooms(int numberOfRooms) {
-        Property property = null;
+    public List<Property>  getPropertiesByNumberOfRooms(int numberOfRooms) {
+        List<Property> properties = new ArrayList<>();
         String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
                 "FROM properties " +
                 "WHERE number_of_rooms = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, numberOfRooms);
-            if (results.next()) {
-                property = mapRowToProperty(results);
+            while (results.next()) {
+                properties.add(mapRowToProperty(results));
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-        return property;
+        return properties;
+    }
+    @Override
+    public List<Property> getPropertiesByRent(BigDecimal rent) {
+        List<Property> properties = new ArrayList<>();
+        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+                "FROM properties " +
+                "WHERE rent = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, rent);
+            while (results.next()) {
+                properties.add(mapRowToProperty(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return properties;
     }
 
     @Override
@@ -120,7 +138,8 @@ public class JdbcPropertyDao implements PropertyDao {
         return properties;
     }
 
-    public List<Property> getPropertiesByStateAndCity(String state, String city) {
+    @Override
+    public List<Property> getPropertiesByCityState(String state, String city) {
         final String SQL_WHERE_CITY_STATE = "WHERE a.city = ? AND a.state = ?;";
         final String SQL_WHERE_CITY = "WHERE a.city = ?;";
         final String SQL_WHERE_STATE = "WHERE a.state = ?;";

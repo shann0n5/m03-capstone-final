@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Property;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface PropertyDao {
@@ -12,10 +13,13 @@ public interface PropertyDao {
 
     List<Property> getPropertiesByUsername(String username);
 
-    //TODO get property by zipcode = use Address class
+    List<Property> getPropertiesByCityState(String state, String city);
+
     List<Property> getPropertiesByZipcode(String zipcode);
 
-    Property getPropertyByNumberOfRooms(int numberOfRooms);
+    List<Property>  getPropertiesByNumberOfRooms(int numberOfRooms);
+
+    List<Property> getPropertiesByRent(BigDecimal rent);
 
     List<Property> getPropertiesByAvailability(boolean isAvailable);
 
