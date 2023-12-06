@@ -9,8 +9,18 @@ import java.util.List;
 
 public interface PropertyService {
 
-    List<Property> searchProperties(Address address, int numberOfRooms, BigDecimal rent, boolean isAvailable);
+    List<Property> searchPropertiesByZipcode (String zipcode);
+    List<Property> searchPropertiesByStateAndCity (String state, String city);
+    List<Property> searchPropertiesByNumberOfRooms (int numberOfRooms);
+    List<Property> searchPropertiesByRent (BigDecimal rent);
+    List<Property> searchPropertiesByAvailability (boolean isAvailable);
 
+
+
+
+
+//            (String city, String state, String zipcode, int numberOfRooms, BigDecimal rent, boolean isAvailable);
+//
 //    List<Property> viewAllProperties(Principal principal);
 
     Property viewPropertyById(Principal principal, int propertyId);
