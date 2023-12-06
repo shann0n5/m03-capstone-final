@@ -2,10 +2,14 @@ package com.techelevator.service;
 
 import com.techelevator.dao.ServiceRequestDao;
 import com.techelevator.dao.UserDao;
+import com.techelevator.exception.DaoException;
+import com.techelevator.exception.ServiceException;
 import com.techelevator.model.ServiceRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,11 +24,18 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public List<ServiceRequest> viewAllServiceRequests(Principal principal) {
-        return null;
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
+        try {
+            serviceRequests = serviceRequestDao.getServiceRequests();
+            return serviceRequests;
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public List<ServiceRequest> viewServiceRequestsByStatus(Principal principal, String status) {
+//        List<ServiceRequest>
         return null;
     }
 
@@ -43,8 +54,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
         return null;
     }
 
-    @Override
-    public ServiceRequest rejectServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-        return null;
-    }
+//    @Override
+//    public ServiceRequest deleteServiceRequest(Principal principal, ServiceRequest serviceRequest) {
+//        return null;
+//    }
 }

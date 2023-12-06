@@ -11,6 +11,6 @@ public interface ServiceRequestService {
     public ServiceRequest viewServiceRequestById(Principal principal, int serviceRequestId);
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest);
     public ServiceRequest approveServiceRequest(Principal principal, ServiceRequest serviceRequest);
-    public ServiceRequest rejectServiceRequest(Principal principal, ServiceRequest serviceRequest);
+//    public ServiceRequest rejectServiceRequest(Principal principal, ServiceRequest serviceRequest);
 
 }
