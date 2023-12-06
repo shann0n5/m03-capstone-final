@@ -3,6 +3,10 @@
     <h1>Home</h1>
     <p>Welcome!</p>
   </div>
+<div class="tenant-home-btn"> 
+  <router-link v-bind:to="{name: 'tenantMainPageView'}">Tenant Home</router-link>
+</div>
+ 
 </template>
 
 <script>

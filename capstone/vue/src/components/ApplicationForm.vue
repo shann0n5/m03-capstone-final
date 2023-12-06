@@ -1,14 +1,22 @@
 <template>
   <form v-on:submit.prevent="submitForm">
     <div class="field">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" v-model="editApplication.name">
-        <label for="email">Email</label>
+        <div class="info-field"><label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" v-model="editApplication.firstName">
+        </div>
+        <div class="info-field"><label for="name">Last Name</label>
+        <input type="text" id="lastName" name="lastName" v-model="editApplication.lastName">
+        </div>
+        <div class="info-field"><label for="birthdate">BirthDate</label>
+        <input type="date" id="birthdate" name="birthdate" v-model="editApplication.birthdate">
+        </div>
+        <div class="info-field"><label for="email">Email</label>
         <input type="email" id="email" name="email" v-model="editApplication.email">
-        <label for="birthDate">BirthDate</label>
-        <input type="text" id="birthDate" name="birthdate" v-model="editApplication.birthDate">
-        <label for="address"> Address </label>
+        </div>
+        <div class="info-field"> <label for="address"> Address </label>
         <input type="text" id="address" name="address" v-model="editApplication.address">
+        </div>
+       
         <div class="applicationButton">
             <button class="btn-submit" type="submit">Submit Rental Application</button>
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
@@ -31,10 +39,12 @@ export default {
         return {
             editApplication: {
             id: this.application.id,
-            name: this.application.name,
+            firstName: this.application.firstName,
+            lastName: this.application.lastName,
+            birthdate: this.application.birthdate,
             email: this.application.email,
-            birthDate: this.application.birthDate,
-            address: this.application.address 
+            address: this.application.address,
+            status: this.application.status 
             }
         };
     }
