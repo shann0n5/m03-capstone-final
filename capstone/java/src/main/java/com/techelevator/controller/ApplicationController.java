@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
+import com.techelevator.service.ApplicationService;
 import com.techelevator.service.ApplicationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 @CrossOrigin
 public class ApplicationController {
-    private ApplicationServiceImpl applicationService;
+    private ApplicationService applicationService;
 
-    public ApplicationController(ApplicationServiceImpl applicationService) {
+    public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
 

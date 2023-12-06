@@ -35,27 +35,55 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public List<ServiceRequest> viewServiceRequestsByStatus(Principal principal, String status) {
-//        List<ServiceRequest>
-        return null;
+        try {
+            List<ServiceRequest> serviceRequests = serviceRequestDao.getServiceRequestByStatus(status);
+            return serviceRequests;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public ServiceRequest viewServiceRequestById(Principal principal, int serviceRequestId) {
-        return null;
+        ServiceRequest serviceRequest = null;
+        try{
+            if(serviceRequestId <= 4000){
+                throw new DaoException("Cannot find a service request with id provided.");
+            }
+            else {
+                serviceRequest = serviceRequestDao.getServiceRequestById(serviceRequestId);
+                return serviceRequest;
+            }
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-        return null;
+        try{
+            ServiceRequest newServiceRequest = serviceRequestDao.createServiceRequest(serviceRequest);
+            return newServiceRequest;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
     }
 
     @Override
-    public ServiceRequest approveServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-        return null;
+    public ServiceRequest updateServiceRequest(Principal principal, ServiceRequest serviceRequest) {
+        List<ServiceRequest> openServiceRequests = viewServiceRequestsByStatus(principal, "Open");
+        ServiceRequest updatedServiceRequest = null;
+        try{
+            for (ServiceRequest request : openServiceRequests){
+                if(request.getServiceRequestId() == serviceRequest.getServiceRequestId()){
+                    updatedServiceRequest = serviceRequestDao.updateServiceRequest(serviceRequest);
+                }
+            }
+            return updatedServiceRequest;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+
     }
 
-//    @Override
-//    public ServiceRequest deleteServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-//        return null;
-//    }
 }
