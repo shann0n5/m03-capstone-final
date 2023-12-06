@@ -4,7 +4,7 @@
     <p>Welcome!</p>
   </div>
 <div class="tenant-home-btn"> 
-  <router-link v-bind:to="{name: 'tenantMainPageView'}">Tenant Home</router-link>
+  <router-link v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link>
 </div>
  
 </template>

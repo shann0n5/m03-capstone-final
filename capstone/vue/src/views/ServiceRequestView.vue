@@ -1,20 +1,23 @@
 <template>
-
-  <div class="service-request-actions">
-    <router-link v-bind:to="{name:'tenantMainPageView'}">Back to Tenant Home</router-link>
-
+<div class="back-to-tenant-home">
+    <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
     <service-request-section v-bind:serviceRequest="serviceRequest" />
   </div>
+  <div class="add-new-service-request">
+    <router-link v-bind:to="{name:'addServiceRequest'}">Add New Request</router-link>
+    <service-request-section v-bind:serviceRequest="serviceRequest" />
+  </div>
+  
   <div class="header">
-<h1>Service Request</h1>
- 
+<h1>Service Requests</h1>
+
 </div>
 
-  <!-- <div class="request-boards">
+  <div class="action-boards">
     <service-request-section title="Open" v-bind:serviceRequests="open" />
     <service-request-section title="In Progress" v-bind:serviceRequests="inProgress" />
     <service-request-section title="Closed" v-bind:serviceRequests="closed" />
-  </div> -->
+  </div> 
 </template>
 
 <script>
@@ -28,11 +31,8 @@ ServiceRequestSection
 },
 data() {
     return {
-        serviceBoard:{
-            title: '',
-            serviceRequests: []
-        }
-    }
+        serviceBoard: { title: '', serviceRequests: []}
+    };
     
 },
   computed: {
@@ -40,10 +40,10 @@ data() {
       return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'Open');
     },
     inProgress() {
-      return this.board.cards.filter(card => card.status === 'In Progress');
+      return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'In Progress');
     },
     closed() {
-      return this.board.cards.filter(card => card.status === 'Closed');
+      return this.serviceBoard.serviceRequests.filter(serviceRequest => serviceRequest.status === 'Closed');
     }
   }
 }
@@ -51,7 +51,7 @@ data() {
 
 <style>
 
-.request-boards{
+.action-boards{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -62,5 +62,9 @@ data() {
 }
 .header h1 {
   flex-grow: 1;
+}
+service-request-actions {
+  display: flex;
+  
 }
 </style>

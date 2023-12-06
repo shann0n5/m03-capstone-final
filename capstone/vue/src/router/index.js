@@ -96,7 +96,7 @@ const routes = [
   },
   {
     path: "/home/tenant-main-page",
-    name: "tenantMainPageView",
+    name: "tenantMainPage",
     component: TenantMainPageView,
      meta: {
       requiresAuth: false
@@ -104,7 +104,7 @@ const routes = [
   },
   {
     path: "/service-request-view",
-    name: "serviceRequestView",
+    name: "serviceRequest",
     component: ServiceRequestView,
     meta:{
       requiresAuth: false
@@ -112,7 +112,7 @@ const routes = [
   },
   {
     path: "/rent-transaction-view",
-    name: "rentTransactionView",
+    name: "rentTransaction",
     component: RentTransactionView,
     meta: {
       requiresAuth: false
