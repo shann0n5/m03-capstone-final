@@ -17,9 +17,9 @@ import java.util.List;
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class PropertyController {
-    private PropertyServiceImpl propertyService;
+    private PropertyService propertyService;
 
-    public PropertyController(PropertyServiceImpl propertyService) {
+    public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
 

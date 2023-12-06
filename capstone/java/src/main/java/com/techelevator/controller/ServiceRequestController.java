@@ -17,9 +17,9 @@ import java.util.List;
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class ServiceRequestController {
-    private ServiceRequestServiceImpl serviceRequestService;
+    private ServiceRequestService serviceRequestService;
 
-    public ServiceRequestController(ServiceRequestServiceImpl serviceRequestService) {
+    public ServiceRequestController(ServiceRequestService serviceRequestService) {
         this.serviceRequestService = serviceRequestService;
     }
 
