@@ -28,7 +28,7 @@ export default {
         return {
             editRentTransaction: {
                 id: this.rentTransaction.id,
-                amount: this.rentTransaction.amount,
+                amount: this.rentTransaction.amount
                 
             }
         }

@@ -22,7 +22,7 @@ export default {
           birthdate: '',
           email: '',
           address: '',
-          status: ''
+          status: 'STATUS_PENDING'
         }
       }
     }

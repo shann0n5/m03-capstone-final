@@ -13,9 +13,9 @@ import AboutUsView from '../views/AboutUsView.vue';
 import ApplicationView from '../views/ApplicationView.vue';
 import TenantMainPageView from '../views/TenantMainPageView.vue';
 import ServiceRequestView from '../views/ServiceRequestView.vue';
-import RentTransactionView from '../views/RentTransactionsView.vue';
-import AddServiceRequestView from '../views/AddServiceRequestView.vue'
-
+import ServiceRequestFormView from '../views/ServiceRequestForm.vue'
+import RentTransactionsView from '../views/RentTransactionsView.vue';
+import RentTransactionFormView from '../views/RentTransactionFormView.vue'
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -113,7 +113,7 @@ const routes = [
   {
     path: "/rent-transaction-view",
     name: "rentTransaction",
-    component: RentTransactionView,
+    component: RentTransactionsView,
     meta: {
       requiresAuth: false
     }
@@ -121,7 +121,15 @@ const routes = [
   {
     path: "/service-request/create",
     name:"addServiceRequest",
-    component: AddServiceRequestView,
+    component: ServiceRequestFormView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: "/rent-transaction/create",
+    name: "createRentTransaction",
+    component: RentTransactionFormView,
     meta: {
       requiresAuth: false
     }

@@ -1,10 +1,10 @@
 <template>
   <div class="back-to-tenant-home">
-    <router-link v-bind:to="{name:'tenantMainView'}">Back to Tenant Home</router-link>
-    <rent-transactions-section v-bind:rentTransaction="rentTransaction" />
+    <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
+    <rent-transaction-section v-bind:rentTransaction="rentTransaction" />
   </div>
   <div class="add-new-rent-Transaction">
-    <router-link v-bind:to="{name:'addServiceRequest'}">Add New Request</router-link>
+    <router-link v-bind:to="{name:'createRentTransaction'}">Pay Rent</router-link>
     <rent-transaction-section v-bind:rentTransaction="rentTransaction" />
   </div>
   
@@ -28,15 +28,15 @@ export default {
  },
  data() {
   return {
-    rentTransactionBoard: {title: '', rentTransactions: []}
+    rentTransaction: {title: '', rentTransactions: []}
   }
  },
  computed: {
     upcoming() {
-      return this.rentTransactionBoard.rentTransactions.filter(rentTransaction => rentTransaction.status === 'Upcoming');
+      return this.$store.state.rentTransactions.filter(rentTransaction => rentTransaction.pastDue === false);
     },
     pastDue() {
-      return this.rentTransactionBoard.rentTransactions.filter(rentTransaction => rentTransaction.status === 'Past Due');
+      return this.$store.state.rentTransactions.filter(rentTransaction => rentTransaction.pastDue === true);
     },
   }
 
