@@ -11,7 +11,7 @@ public interface ApplicationService {
     public List<Application> viewApplicationsByStatus(Principal principal, String status);
     public Application viewApplicationById(Principal principal, int applicationId);
     public Application createApplication(Principal principal, Application application);
-    public Application approveApplication(Principal principal, int applicationId, Application updatedApplication);
-    public Application rejectApplication(Principal principal, int applicationId, Application rejectedApplication);
+    public Application approveApplication(Principal principal, Application updatedApplication);
+    public Application rejectApplication(Principal principal, Application rejectedApplication);
 
 }
