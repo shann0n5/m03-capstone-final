@@ -84,7 +84,7 @@ CREATE TABLE applications (
 	status varchar(25) NOT NULL,
 	has_roomates boolean NOT NULL,
 	roomate_names varchar(100),
-	CONSTRAINT PK_applications PRIMARY KEY (user_id),
+	CONSTRAINT PK_applications PRIMARY KEY (application_id),
 	CONSTRAINT FK_applications_users FOREIGN KEY (user_id) REFERENCES users (user_id),
 	CONSTRAINT FK_applications_properties FOREIGN KEY (property_id) REFERENCES properties (property_id),
 	CONSTRAINT CK_status CHECK (status IN ('STATUS_PENDING', 'STATUS_REJECTED', 'STATUS_WITHDRAWN', 'STATUS_APPROVED'))

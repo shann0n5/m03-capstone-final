@@ -79,12 +79,12 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     @Override
     public List<RentTransaction> getRentTransactionsByProperty(int propertyId) {
         List<RentTransaction> rentTransactions = new ArrayList<>();
-        String sql = "SELECT transaction_id, amount, due_date, past_due " +
+        String sql = "SELECT rt.transaction_id, rt.amount, rt.due_date, rt.past_due " +
                 "FROM rent_transactions rt " +
                 "JOIN tenant_rent_transactions trt ON rt.transaction_id = trt.transaction_id " +
-                "JOIN user_properties up ON trt.tenant = up.user_id " +
+                "JOIN user_properties up ON trt.tenant_id = up.user_id " +
                 "JOIN properties p ON up.property_id = p.property_id " +
-                "WHERE property_id = ?;";
+                "WHERE p.property_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, propertyId);
             while (results.next()) {

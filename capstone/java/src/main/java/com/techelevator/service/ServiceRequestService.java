@@ -10,7 +10,6 @@ public interface ServiceRequestService {
     public List<ServiceRequest> viewServiceRequestsByStatus(Principal principal, String status);
     public ServiceRequest viewServiceRequestById(Principal principal, int serviceRequestId);
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest);
-    public ServiceRequest approveServiceRequest(Principal principal, ServiceRequest serviceRequest);
-//    public ServiceRequest rejectServiceRequest(Principal principal, ServiceRequest serviceRequest);
+    public ServiceRequest updateServiceRequest(Principal principal, ServiceRequest serviceRequest);
 
 }
