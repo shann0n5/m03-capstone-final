@@ -20,6 +20,9 @@ public class PropertyServiceImpl implements PropertyService{
 
     private UserDao userDao;
 
+    public PropertyServiceImpl(PropertyDao propertyDao) {
+        this.propertyDao = propertyDao;
+    }
 
     @Override
     public List<Property> viewAllProperties() {
