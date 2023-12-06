@@ -58,7 +58,7 @@ public class PropertyController {
      *
      * @return all properties managed by that user
      */
-    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/properties/managing")
     public List<Property> fetchMyProperties(Principal principal) {
         try {
@@ -69,7 +69,7 @@ public class PropertyController {
     }
     //    As a property owner, I want to be able to see the data for my properties (average rent, vacancy%, etc.)
 
-    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/properties")
     public Property addMyNewProperty(Principal principal, Property newProperty) {
         try {
@@ -79,7 +79,7 @@ public class PropertyController {
         }
     }
 
-    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/properties/{id}")
     public Property updateMyProperty(@PathVariable int id, Principal principal, Property propertyToUpdateTo) {
         try {
@@ -89,7 +89,7 @@ public class PropertyController {
         }
     }
 
-    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/properties/{id}")
     public void deleteMyProperty(@PathVariable int id, Principal principal) {
         try {
