@@ -1,8 +1,8 @@
 BEGIN TRANSACTION;
 -- ROLLBACK;
 
-DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions, addresses, property_addresses;
-
+DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions, addresses;
+--, property_addresses
 DROP SEQUENCE IF EXISTS seq_user_id, seq_property_id, seq_application_id, seq_service_request_id, seq_transaction_id, seq_property_id, seq_address_id;
 
 CREATE SEQUENCE seq_user_id
@@ -20,20 +20,6 @@ CREATE TABLE users (
 	CONSTRAINT CK_role CHECK (role IN ('ROLE_USER','ROLE_ADMIN'))
 );
 
-CREATE SEQUENCE seq_property_id
-	INCREMENT BY 1
-	START WITH 2001
-	NO MAXVALUE;
-
-CREATE TABLE properties (
-    property_id int NOT NULL DEFAULT nextval('seq_property_id'),
-	number_of_rooms int NOT NULL,
-	rent Decimal(10,2) NOT NULL,
-	is_available boolean NOT NULL,
-	is_owner boolean NOT NULL,
-	CONSTRAINT PK_properties PRIMARY KEY (property_id)
-);
-
 CREATE SEQUENCE seq_address_id
 	INCREMENT BY 1
 	START WITH 1
@@ -49,11 +35,20 @@ CREATE TABLE addresses (
 	CONSTRAINT PK_addresses PRIMARY KEY (address_id)
 );
 
-CREATE TABLE property_addresses (
+CREATE SEQUENCE seq_property_id
+	INCREMENT BY 1
+	START WITH 2001
+	NO MAXVALUE;
+
+CREATE TABLE properties (
+    property_id int NOT NULL DEFAULT nextval('seq_property_id'),
 	address_id int NOT NULL,
-	property_id int NOT NULL,
-	CONSTRAINT FK_property_addresses_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id),
-	CONSTRAINT FK_property_addresses_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
+	number_of_rooms int NOT NULL,
+	rent Decimal(10,2) NOT NULL,
+	is_available boolean NOT NULL,
+	is_owner boolean NOT NULL,
+	CONSTRAINT PK_properties PRIMARY KEY (property_id),
+	CONSTRAINT FK_properties_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id)
 );
 
 CREATE TABLE user_profiles (
@@ -129,6 +124,28 @@ CREATE TABLE tenant_rent_transactions(
 	CONSTRAINT FK_tenant_rent_transactions_users FOREIGN KEY (tenant_id) REFERENCES users (user_id),
 	CONSTRAINT FK_tenant_rent_transactions_rent_transactions FOREIGN KEY (transaction_id) REFERENCES rent_transactions (transaction_id)
 );
+
+
+
+------------------------------------ old tables ---------------------------------------------------------
+
+--CREATE TABLE properties (
+--    property_id int NOT NULL DEFAULT nextval('seq_property_id'),
+--	number_of_rooms int NOT NULL,
+--	rent Decimal(10,2) NOT NULL,
+--	is_available boolean NOT NULL,
+--	is_owner boolean NOT NULL,
+--	CONSTRAINT PK_properties PRIMARY KEY (property_id)
+--);
+
+
+--CREATE TABLE property_addresses (
+--	address_id int NOT NULL,
+--	property_id int NOT NULL,
+--	CONSTRAINT FK_property_addresses_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id),
+--	CONSTRAINT FK_property_addresses_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
+--);
+----------------------------------------------------------------------------------------------------------
 
 -- ROLLBACK;
 COMMIT TRANSACTION;
