@@ -70,12 +70,33 @@ public class PropertyController {
 
     @PreAuthorize("hasRole 'ROLE_ADMIN'")
     @PostMapping("/properties")
-    public Property addNewProperty(Principal principal, Property property) {
+    public Property addMyNewProperty(Principal principal, Property newProperty) {
         try {
-            return propertyService.createProperty(principal, property);
+            return propertyService.createProperty(principal, newProperty);
         } catch (ServiceException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }
     }
+
+    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @PutMapping("/properties/{id}")
+    public Property updateMyProperty(@PathVariable int id, Principal principal, Property propertyToUpdateTo) {
+        try {
+            return propertyService.updateProperty(principal, id, propertyToUpdateTo);
+        } catch (ServiceException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+        }
+    }
+
+    @PreAuthorize("hasRole 'ROLE_ADMIN'")
+    @DeleteMapping("/properties/{id}")
+    public void deleteMyProperty(@PathVariable int id, Principal principal) {
+        try {
+            propertyService.deleteProperty(principal, id);
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+        }
+    }
+
 
 }

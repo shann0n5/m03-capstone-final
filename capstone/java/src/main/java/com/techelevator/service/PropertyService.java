@@ -19,6 +19,8 @@ public interface PropertyService {
 
     Property updateProperty(Principal principal, int propertyId, Property updatedProperty);
 
+    int deleteProperty(Principal principal, int propertyId);
+
 
 //    List<Property> viewPropertiesByNumberOfRooms(Principal principal, int numberOfRooms);
 //    List<Property> viewPropertiesByZipcode(Principal principal, String zip);
