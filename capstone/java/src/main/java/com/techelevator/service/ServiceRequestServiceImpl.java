@@ -24,7 +24,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public List<ServiceRequest> viewAllServiceRequests(Principal principal) {
-        List<ServiceRequest> serviceRequests = new ArrayList<>();
+        List<ServiceRequest> serviceRequests;
         try {
             serviceRequests = serviceRequestDao.getServiceRequests();
             return serviceRequests;

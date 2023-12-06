@@ -23,7 +23,7 @@ public class ServiceRequestController {
         this.serviceRequestService = serviceRequestService;
     }
 
-    @GetMapping("service-requests")
+    @GetMapping("/service-requests")
     public List<ServiceRequest> getAllServiceRequests(@Valid Principal principal){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewAllServiceRequests(principal);
@@ -33,7 +33,7 @@ public class ServiceRequestController {
         }
     }
 
-    @PostMapping("service-requests")
+    @PostMapping("/service-requests")
     @ResponseStatus(HttpStatus.CREATED) //Status: Open
     public ResponseEntity<ServiceRequest> addServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest newServiceRequest){
         ServiceRequest createdServiceRequest = null;
@@ -49,7 +49,7 @@ public class ServiceRequestController {
         }
     }
 
-    @GetMapping("service-requests/{status}")
+    @GetMapping("/service-requests/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, String status){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewServiceRequestsByStatus(principal, status);
@@ -59,7 +59,7 @@ public class ServiceRequestController {
         }
     }
 
-    @GetMapping("service-requests/{id}")
+    @GetMapping("/service-requests/{id}")
     public ServiceRequest getServiceRequestById(@Valid Principal principal, @PathVariable("id") int serviceRequestId){
         try{
             ServiceRequest serviceRequest = serviceRequestService.viewServiceRequestById(principal, serviceRequestId);
@@ -72,7 +72,7 @@ public class ServiceRequestController {
         }
     }
 
-    @PutMapping("service-requests/{id}") //Status: In Progress
+    @PutMapping("/service-requests/{id}") //Status: In Progress
     public ServiceRequest approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest,
                                                 @PathVariable("id") int serviceRequestId){
         try{

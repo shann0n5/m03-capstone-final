@@ -91,7 +91,7 @@ public class JdbcApplicationDao implements ApplicationDao{
     @Override
     public Application createApplication(Application application) {
         Application newApplication = null;
-        String sql = "INSERT INTO application (user_id, property_id, status, has_roomates" +
+        String sql = "INSERT INTO application (user_id, property_id, status, has_roomates " +
                 "roomate_names VALUES (?, ?, ?, ?, ?) RETURNING application_id";
         try{
             int newApplicationId = jdbcTemplate.queryForObject(sql, int.class, application.getUserId(), application.getPropertyId(),
