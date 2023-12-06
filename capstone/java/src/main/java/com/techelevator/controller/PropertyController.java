@@ -44,11 +44,12 @@ public class PropertyController {
     @PreAuthorize("permitAll")
     @GetMapping("/properties")
     public List<Property> listProperties (@RequestParam(required = false) Address address, @RequestParam(required = false) int numberOfRooms, @RequestParam(required = false) BigDecimal rent, @RequestParam(required = false) boolean isAvailable) {
-        try {
-            return propertyService.searchProperties(address, numberOfRooms, rent, isAvailable);
-        } catch (ServiceException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
-        }
+//        try {
+//            return propertyService.searchProperties(address, numberOfRooms, rent, isAvailable);
+//        } catch (ServiceException e){
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+//        }
+        return null;
     }
 
     /**
