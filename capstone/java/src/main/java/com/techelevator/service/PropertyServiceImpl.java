@@ -19,74 +19,54 @@ public class PropertyServiceImpl implements PropertyService{
     private PropertyDao propertyDao;
 
     private UserDao userDao;
-    public List<Property> searchPropertiesByZipcode (String zipcode) {
-        try {
-           return propertyDao.getPropertiesByZipcode(zipcode);
-        } catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-    @Override
-    public List<Property> searchPropertiesByStateAndCity (String state, String city) {
-        try {
-            return propertyDao.getPropertiesByCityState(state, city);
-        } catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-    @Override
-    public List<Property> searchPropertiesByNumberOfRooms (int numberOfRooms) {
-        try {
-            return propertyDao.getPropertiesByNumberOfRooms(numberOfRooms);
-        } catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-    @Override
-    public List<Property> searchPropertiesByRent (BigDecimal rent) {
-        try {
-            return propertyDao.getPropertiesByRent(rent);
-        } catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-    @Override
-    public List<Property> searchPropertiesByAvailability (boolean isAvailable) {
-        try {
-            return propertyDao.getPropertiesByAvailability(isAvailable);
-        } catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-
-//    @Override
-//    public List<Property> searchProperties(String city, String state, String zipcode, int numberOfRooms, BigDecimal rent, boolean isAvailable) {
+//    public List<Property> searchPropertiesByZipcode (String zipcode) {
 //        try {
-//            List<Property> propertyList = new ArrayList<>();
-////            if ((state != null && !state.isEmpty()) || (city != null && !city.isEmpty())) {
-////                hotelList = hotelDao.getHotelsByStateAndCity(state, city);
-////            } else {
-////                hotelList = hotelDao.getHotels();
-//////            }
-////            propertyDao.getPropertiesByNumberOfRooms();
-////            propertyDao.getPropertiesByRent();
-////            propertyDao.getPropertiesByZipcode();
-////            propertyDao.getPropertiesByCityState();
-////            propertyDao.getPropertiesByAvailability();
-////
-//            if (address != null ) {
-//
-//                if (city != null && !city.isEmpty() && state != null && !state.isEmpty() && zipcode != null && !zipcode.isEmpty()&& numberOfRooms != 0 && rent != null && isAvailable) {
-//
-//                }
-//            }
-//
-//
-//            return propertyList;
-//        } catch (DaoException e){
+//           return propertyDao.getPropertiesByZipcode(zipcode);
+//        } catch (DaoException e) {
 //            throw new ServiceException("An error has occurred: " + e.getMessage());
 //        }
 //    }
+//    @Override
+//    public List<Property> searchPropertiesByStateAndCity (String state, String city) {
+//        try {
+//            return propertyDao.getPropertiesByCityState(state, city);
+//        } catch (DaoException e) {
+//            throw new ServiceException("An error has occurred: " + e.getMessage());
+//        }
+//    }
+//    @Override
+//    public List<Property> searchPropertiesByNumberOfRooms (int numberOfRooms) {
+//        try {
+//            return propertyDao.getPropertiesByNumberOfRooms(numberOfRooms);
+//        } catch (DaoException e) {
+//            throw new ServiceException("An error has occurred: " + e.getMessage());
+//        }
+//    }
+//    @Override
+//    public List<Property> searchPropertiesByRent (BigDecimal rent) {
+//        try {
+//            return propertyDao.getPropertiesByRent(rent);
+//        } catch (DaoException e) {
+//            throw new ServiceException("An error has occurred: " + e.getMessage());
+//        }
+//    }
+//    @Override
+//    public List<Property> searchPropertiesByAvailability (boolean isAvailable) {
+//        try {
+//            return propertyDao.getPropertiesByAvailability(isAvailable);
+//        } catch (DaoException e) {
+//            throw new ServiceException("An error has occurred: " + e.getMessage());
+//        }
+//    }
+
+    @Override
+    public List<Property> viewAllProperties() {
+        try {
+            return propertyDao.getProperties();
+        } catch (DaoException e){
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+    }
 
     @Override
     public Property viewPropertyById(Principal principal, int propertyId) {
@@ -112,11 +92,11 @@ public class PropertyServiceImpl implements PropertyService{
 //        return null;
 //    }
     @Override
-    public List<Property> viewPropertiesByUsername(Principal principal, String username) {
+    public List<Property> viewPropertiesByUsername(Principal principal) {
         try {
             List<Property> properties = new ArrayList<>();
-            if(principal.getName().equalsIgnoreCase(username)) {
-                properties = propertyDao.getPropertiesByUsername(username);
+            if(principal.getName().equalsIgnoreCase(principal.getName())) {
+                properties = propertyDao.getPropertiesByUsername(principal.getName());
             }
             return properties;
 
