@@ -70,6 +70,7 @@ public class PropertyController {
     //    As a property owner, I want to be able to see the data for my properties (average rent, vacancy%, etc.)
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/properties")
     public Property addMyNewProperty(Principal principal, Property newProperty) {
         try {
@@ -90,6 +91,7 @@ public class PropertyController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/properties/{id}")
     public void deleteMyProperty(@PathVariable int id, Principal principal) {
         try {

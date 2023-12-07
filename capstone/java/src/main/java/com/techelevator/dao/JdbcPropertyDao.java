@@ -29,7 +29,7 @@ public class JdbcPropertyDao implements PropertyDao {
     public List<Property> getProperties() {
         List<Property> properties = new ArrayList<>();
 
-        String sql = "SELECT property_id, address_id, number_of_rooms, rent, is_available, is_owner " +
+        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
                 "FROM properties;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -45,7 +45,7 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public Property getPropertyById(int propertyId) {
         Property property = null;
-        String sql = "SELECT property_id, address_id, number_of_rooms, rent, is_available, is_owner " +
+        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
                 "FROM properties " +
                 "WHERE property_id = ?;";
         try {
@@ -65,7 +65,7 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public List<Property> getPropertiesByUsername(String username) {
         List<Property> properties = new ArrayList<>();
-        String sql = "SELECT p.property_id, p.address_id, p.number_of_rooms, p.rent, p.is_available, p.is_owner " +
+        String sql = "SELECT p.property_id, p.address, p.number_of_rooms, p.rent, p.is_available, p.is_owner " +
                 "FROM properties p " +
                 "JOIN user_properties up ON p.property_id = up.property_id " +
                 "JOIN users u ON up.user_id = u.user_id " +
@@ -84,13 +84,9 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public Property createProperty(Property property) {
         Integer newPropertyId;
-        Integer addressId;
-        try {
-            String sql = "INSERT INTO addresses (address, address2, city, state, zipcode) " +
-                    "VALUES (?, ?, ?, ?, ?) RETURNING address_id;";
-            addressId = jdbcTemplate.update(sql, property.getAddress().getAddress(), property.getAddress().getAddress2(), property.getAddress().getCity(), property.getAddress().getState(), property.getAddress().getZipcode());
 
-            sql = "INSERT INTO properties (address_id, number_of_rooms, rent, is_available, is_owner) " +
+        try {
+            String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
                     "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
 
             newPropertyId = jdbcTemplate.queryForObject(sql, Integer.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
@@ -100,12 +96,17 @@ public class JdbcPropertyDao implements PropertyDao {
             throw new DaoException("Data integrity violation", e);
         }
         return getPropertyById(newPropertyId);
+//        sql = "INSERT INTO addresses (address1, address2, city, state, zipcode) " +
+//                "VALUES (?, ?, ?, ?, ?) RETURNING address_id;";
+//        Integer addressId = jdbcTemplate.update(sql, property.getAddress().getAddress1(), property.getAddress().getAddress2(), property.getAddress().getCity(), property.getAddress().getState(), property.getAddress().getZipcode());
+
+
     }
 
     @Override
     public Property updateProperty(Property property) {
         Property updatedProperty = null;
-        String sql = "UPDATE properties SET address_id = ?, number_of_rooms = ?, rent = ?, is_available = ?, is_owner = ? " +
+        String sql = "UPDATE properties SET address = ?, number_of_rooms = ?, rent = ?, is_available = ?, is_owner = ? " +
                 "WHERE property_id = ?;";
         try {
             int numberOfRows = jdbcTemplate.update(sql, property.getAddress(),
@@ -138,23 +139,19 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     private Property mapRowToProperty(SqlRowSet results) {
-        Property property = new Property();
-        property.setPropertyId(results.getInt("property_id"));
-        property.setNumberOfRooms(results.getInt("number_of_rooms"));
-        property.setRent(results.getBigDecimal("rent"));
-        property.setIsAvailable(results.getBoolean("is_available"));
-        property.setIsOwner(results.getBoolean("is_owner"));
+        Property property = new Property(results.getInt("property_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"), results.getBoolean("is_owner"));
 
-        Address address = new Address();
-
-        address.setId(results.getString("address_id"));
-        address.setAddress(results.getString("address"));
-        address.setAddress2(results.getString("address2"));
-        address.setCity(results.getString("city"));
-        address.setState(results.getString("state"));
-        address.setZipcode(results.getString("zipcode"));
-
-        property.setAddress(address);
+// new Address()
+//        Address address = new Address();
+//
+//        address.setId(results.getString("address_id"));
+//        address.setAddress1(results.getString("address1"));
+//        address.setAddress2(results.getString("address2"));
+//        address.setCity(results.getString("city"));
+//        address.setState(results.getString("state"));
+//        address.setZipcode(results.getString("zipcode"));
+//
+//        property.setAddress(address);
         return property;
     }
 

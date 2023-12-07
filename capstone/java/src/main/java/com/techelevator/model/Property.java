@@ -10,7 +10,7 @@ public class Property {
     private int propertyId;
 
     @NotNull( message = "The field 'address' is required.")
-    private Address address;
+    private String address;
 
     @Min( value = 1, message = "The minimum number of rooms is 1.")
     private int numberOfRooms;
@@ -25,7 +25,7 @@ public class Property {
 
     public Property() {}
 
-    public Property(int propertyId, Address address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
+    public Property(int propertyId, String address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
         this.propertyId = propertyId;
         this.address = address;
         this.numberOfRooms = numberOfRooms;
@@ -42,11 +42,11 @@ public class Property {
         this.propertyId = propertyId;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

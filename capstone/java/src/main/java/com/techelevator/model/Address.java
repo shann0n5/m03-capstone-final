@@ -6,7 +6,7 @@ import java.util.UUID;
 // This was taken from Securing APIs Lecture Final
 public class Address {
     private String id;
-    private String address;
+    private String address1;
     private String address2;
     private String city;
     private String state;
@@ -16,16 +16,25 @@ public class Address {
 
     }
 
-    public Address(String id, String address, String address2, String city, String state, String zipcode) {
+    public Address(String id, String address1, String address2, String city, String state, String zipcode) {
         this.id = id;
-        this.address = address;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+    }
+    public Address(String address1, String address2, String city, String state, String zipcode) {
+        this.address1 = address1;
         this.address2 = address2;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
     }
 
-
+    public String getId() {
+        return id;
+    }
     public void setId(String addressId) {
         this.id = addressId;
     }
@@ -34,12 +43,12 @@ public class Address {
         this.id = UUID.randomUUID().toString();
     }
 
-    public String getAddress() {
-        return address;
+    public String getAddress1() {
+        return address1;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress1(String address1) {
+        this.address1 = address1;
     }
 
     public String getAddress2() {
@@ -78,7 +87,7 @@ public class Address {
     public String toString() {
         return "Address{" +
                 "id=" + id +
-                ", address='" + address + '\'' +
+                ", address='" + address1 + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 '}';
@@ -88,13 +97,13 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Address address1 = (Address) o;
-        return id.equals(address1.id) && address.equals(address1.address) && address2.equals(address1.address2) && city.equals(address1.city) && state.equals(address1.state) && zipcode.equals(address1.zipcode);
+        Address addressOne = (Address) o;
+        return id.equals(addressOne.id) && address1.equals(addressOne.address1) && address2.equals(addressOne.address2) && city.equals(addressOne.city) && state.equals(addressOne.state) && zipcode.equals(addressOne.zipcode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, address2, city, state, zipcode);
+        return Objects.hash(id, address1, address2, city, state, zipcode);
     }
 }
 
