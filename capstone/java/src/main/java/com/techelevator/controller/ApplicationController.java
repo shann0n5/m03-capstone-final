@@ -49,6 +49,7 @@ public class ApplicationController {
         }
     }
 
+    //TODO: endpoint works but giving list of same application
     @GetMapping("/applications/status/{status}")
     public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
         try{

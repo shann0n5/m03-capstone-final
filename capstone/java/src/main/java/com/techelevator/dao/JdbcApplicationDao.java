@@ -74,7 +74,7 @@ public class JdbcApplicationDao implements ApplicationDao{
     @Override
     public List<Application> getApplicationsByStatus(String status) {
         List<Application> applications = new ArrayList<>();
-        String sql = "SELECT SELECT application_id, user_id, property_id, status, has_roomates, " +
+        String sql = "SELECT application_id, user_id, property_id, status, has_roomates, " +
                 "roomate_names FROM applications WHERE status = ?";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, status);
