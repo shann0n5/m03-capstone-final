@@ -25,7 +25,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/applications")
-    public List<Application> getApplications(Principal principal) {
+    public List<Application> getApplications(@Valid Principal principal) {
         try{
             List<Application> applications = applicationService.viewAllApplications(principal);
             return applications;
@@ -49,7 +49,7 @@ public class ApplicationController {
         }
     }
 
-    @GetMapping("applications/{status}")
+    @GetMapping("/applications/status/{status}")
     public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
         try{
             List<Application> applications = applicationService.viewApplicationsByStatus(principal, status);
@@ -59,7 +59,7 @@ public class ApplicationController {
         }
     }
 
-    @GetMapping("applications/{id}")
+    @GetMapping("/applications/{id}")
     public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
         try{
             Application application = applicationService.viewApplicationById(principal, applicationId);
@@ -72,7 +72,7 @@ public class ApplicationController {
         }
     }
 
-    @PutMapping("applications/approve/{id}")
+    @PutMapping("/applications/approve/{id}")
     public Application approveApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
         try{
             Application updatedApplication = applicationService.approveApplication(principal, application);
@@ -85,7 +85,7 @@ public class ApplicationController {
         }
     }
 
-    @PutMapping("applications/reject/{id}")
+    @PutMapping("/applications/reject/{id}")
     public Application rejectApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
         try{
             Application updatedApplication = applicationService.rejectApplication(principal, application);
