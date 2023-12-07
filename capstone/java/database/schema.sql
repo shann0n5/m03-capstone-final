@@ -1,9 +1,9 @@
 BEGIN TRANSACTION;
 -- ROLLBACK;
 
-DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions, addresses;
---, property_addresses
-DROP SEQUENCE IF EXISTS seq_user_id, seq_property_id, seq_application_id, seq_service_request_id, seq_transaction_id, seq_property_id, seq_address_id;
+DROP TABLE IF EXISTS users, user_profiles, user_properties, properties, applications, service_requests, tenant_service_requests, rent_transactions, tenant_rent_transactions;--, addresses;
+--, DROP TABLE IF EXISTS property_addresses
+DROP SEQUENCE IF EXISTS seq_user_id, seq_property_id, seq_application_id, seq_service_request_id, seq_transaction_id, seq_property_id;--, seq_address_id;
 
 CREATE SEQUENCE seq_user_id
 	INCREMENT BY 1
@@ -33,7 +33,6 @@ CREATE TABLE properties (
 	number_of_rooms int NOT NULL,
 	rent Decimal(10,2) NOT NULL,
 	is_available boolean NOT NULL,
-	is_owner boolean NOT NULL,
 	CONSTRAINT PK_properties PRIMARY KEY (property_id)
 );
 

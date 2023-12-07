@@ -33,6 +33,7 @@ public class ServiceRequestController {
         }
     }
 
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/service-requests")
     @ResponseStatus(HttpStatus.CREATED) //Status: Open
     public ResponseEntity<ServiceRequest> addServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest newServiceRequest){
@@ -48,6 +49,7 @@ public class ServiceRequestController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
 
     @GetMapping("/service-requests/status/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, String status){
@@ -72,6 +74,7 @@ public class ServiceRequestController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/service-requests/{id}") //Status: In Progress
     public ServiceRequest approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest,
                                                 @PathVariable("id") int serviceRequestId){

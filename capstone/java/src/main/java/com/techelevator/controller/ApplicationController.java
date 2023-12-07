@@ -24,8 +24,9 @@ public class ApplicationController {
         this.applicationService = applicationService;
     }
 
-    @GetMapping("/applications")
-    public List<Application> getApplications(@Valid Principal principal) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/applications/managing")
+    public List<Application> getAllApplications(@Valid Principal principal) {
         try{
             List<Application> applications = applicationService.viewAllApplications(principal);
             return applications;
@@ -33,6 +34,19 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/applications")
+    public List<Application> getMyApplications(@Valid Principal principal) {
+        try{
+            List<Application> applications = applicationService.viewAllApplications(principal);
+            return applications;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
+
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/applications")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Application> addApplication(@Valid Principal principal, @RequestBody Application newApplication){
@@ -50,6 +64,7 @@ public class ApplicationController {
     }
 
     //TODO: endpoint works but giving list of same application
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/applications/status/{status}")
     public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
         try{
@@ -60,6 +75,7 @@ public class ApplicationController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/applications/{id}")
     public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
         try{
@@ -73,6 +89,7 @@ public class ApplicationController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/applications/approve/{id}")
     public Application approveApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
         try{

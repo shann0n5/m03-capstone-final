@@ -19,13 +19,17 @@ public class JdbcApplicationDao implements ApplicationDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public List<Application> getApplications() {
+    @Override //ADMIN accessing applications to their properties
+    public List<Application> getApplications(String username) {
         List<Application> applications = new ArrayList<>();
-        String sql = "SELECT application_id, user_id, property_id, status, has_roomates, " +
-                "roomate_names FROM applications";
+        String sql = "SELECT a.application_id, a.user_id, a.property_id, a.status, a.has_roomates, " +
+                "a.roomate_names FROM applications a " +
+                "JOIN properties p ON a.property_id = p.property_id " +
+                "user_properties up ON p.property_id = up.property_id " +
+                "users u ON up.user_id = u.user_id" +
+                "WHERE username = ?";
         try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
             while(results.next()){
                 Application application = mapRowToApplication(results);
                 applications.add(application);
