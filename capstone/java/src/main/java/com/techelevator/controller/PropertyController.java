@@ -62,7 +62,7 @@ public class PropertyController {
     @GetMapping("/properties/managing")
     public List<Property> fetchMyProperties(Principal principal) {
         try {
-            return propertyService.viewAllProperties();
+            return propertyService.viewPropertiesByUsername(principal);
         } catch (ServiceException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }

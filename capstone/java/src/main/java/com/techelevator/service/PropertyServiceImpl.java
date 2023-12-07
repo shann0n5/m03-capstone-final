@@ -4,24 +4,24 @@ import com.techelevator.dao.PropertyDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.exception.ServiceException;
-import com.techelevator.model.Address;
+import com.techelevator.model.Authority;
 import com.techelevator.model.Property;
+import com.techelevator.model.User;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PropertyServiceImpl implements PropertyService{
 
-    private PropertyDao propertyDao;
+    private final PropertyDao propertyDao;
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public PropertyServiceImpl(PropertyDao propertyDao, UserDao userDao) {
         this.propertyDao = propertyDao;
+        this.userDao = userDao;
     }
 
     @Override
@@ -42,28 +42,28 @@ public class PropertyServiceImpl implements PropertyService{
         }
     }
 
-//    @Override
-//    public List<Property> viewPropertiesByUsername(Principal principal) {
-//        try {
-//            List<Property> properties = new ArrayList<>();
-//            if(principal.getName().equalsIgnoreCase(principal.getName())) {
-//                properties = propertyDao.getPropertiesByUsername(principal.getName());
-//            }
-//            return properties;
-//
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
-
     @Override
-    public Property createProperty(Principal principal, Property propertyToCreate) {
+    public List<Property> viewPropertiesByUsername(Principal principal) {
         try {
-            return propertyDao.createProperty(propertyToCreate);
+            return propertyDao.getPropertiesByUsername(principal.getName());
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
+    }
 
+    @Override
+    public Property createProperty(Principal principal, Property propertyToCreate) {
+        Property newProperty = null;
+        Authority adminRole = new Authority("ROLE_ADMIN");
+        try {
+            User loggedInUser = userDao.getUserByUsername(principal.getName());
+            if (loggedInUser.getAuthorities().contains(adminRole)){
+                 newProperty = propertyDao.createProperty(propertyToCreate);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+        return newProperty;
     }
 
     @Override
@@ -77,9 +77,10 @@ public class PropertyServiceImpl implements PropertyService{
         }
     }
 
-    public int deleteProperty(Principal principal, int propertyId){
+    @Override
+    public void deleteProperty(Principal principal, int propertyId){
         try {
-            return propertyDao.deleteProperty(propertyId);
+            propertyDao.deleteProperty(propertyId);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

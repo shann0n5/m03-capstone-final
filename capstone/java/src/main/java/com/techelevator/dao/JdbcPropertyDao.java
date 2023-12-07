@@ -17,13 +17,14 @@ import java.util.Properties;
 @Component
 public class JdbcPropertyDao implements PropertyDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    private List<Property> properties = new ArrayList<>();
+    private final List<Property> properties = new ArrayList<>();
 
     public JdbcPropertyDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
     @Override
     public List<Property> getProperties() {
@@ -69,9 +70,9 @@ public class JdbcPropertyDao implements PropertyDao {
                 "FROM properties p " +
                 "JOIN user_properties up ON p.property_id = up.property_id " +
                 "JOIN users u ON up.user_id = u.user_id " +
-                "WHERE username = ?;";
+                "WHERE username = ? AND role = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, "ROLE_ADMIN");
             while (results.next()) {
                 properties.add(mapRowToProperty(results));
             }
