@@ -1,7 +1,6 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Address;
 import com.techelevator.model.Property;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -9,10 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 @Component
 public class JdbcPropertyDao implements PropertyDao {
@@ -70,9 +67,9 @@ public class JdbcPropertyDao implements PropertyDao {
                 "FROM properties p " +
                 "JOIN user_properties up ON p.property_id = up.property_id " +
                 "JOIN users u ON up.user_id = u.user_id " +
-                "WHERE username = ? AND role = ?;";
+                "WHERE username = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username, "ROLE_ADMIN");
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
             while (results.next()) {
                 properties.add(mapRowToProperty(results));
             }
@@ -84,13 +81,16 @@ public class JdbcPropertyDao implements PropertyDao {
 
     @Override
     public Property createProperty(Property property) {
-        Integer newPropertyId;
+        int newPropertyId;
 
         try {
             String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
                     "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
 
-            newPropertyId = jdbcTemplate.queryForObject(sql, Integer.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
+            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
+            sql = "INSERT INTO user_properties (user_id, property_id) " +
+                    "VALUES (?, ?);";
+//            jdbcTemplate.qu
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -142,17 +142,6 @@ public class JdbcPropertyDao implements PropertyDao {
     private Property mapRowToProperty(SqlRowSet results) {
         Property property = new Property(results.getInt("property_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"), results.getBoolean("is_owner"));
 
-// new Address()
-//        Address address = new Address();
-//
-//        address.setId(results.getString("address_id"));
-//        address.setAddress1(results.getString("address1"));
-//        address.setAddress2(results.getString("address2"));
-//        address.setCity(results.getString("city"));
-//        address.setState(results.getString("state"));
-//        address.setZipcode(results.getString("zipcode"));
-//
-//        property.setAddress(address);
         return property;
     }
 

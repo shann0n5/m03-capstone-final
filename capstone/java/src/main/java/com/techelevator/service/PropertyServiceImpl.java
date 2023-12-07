@@ -17,11 +17,8 @@ public class PropertyServiceImpl implements PropertyService{
 
     private final PropertyDao propertyDao;
 
-    private final UserDao userDao;
-
     public PropertyServiceImpl(PropertyDao propertyDao, UserDao userDao) {
         this.propertyDao = propertyDao;
-        this.userDao = userDao;
     }
 
     @Override
@@ -54,12 +51,12 @@ public class PropertyServiceImpl implements PropertyService{
     @Override
     public Property createProperty(Principal principal, Property propertyToCreate) {
         Property newProperty = null;
-        Authority adminRole = new Authority("ROLE_ADMIN");
+//        Authority adminRole = new Authority("ROLE_ADMIN");
         try {
-            User loggedInUser = userDao.getUserByUsername(principal.getName());
-            if (loggedInUser.getAuthorities().contains(adminRole)){
+//           User loggedInUser = userDao.getUserByUsername(principal.getName());
+//            if (loggedInUser.getAuthorities().contains(adminRole)){
                  newProperty = propertyDao.createProperty(propertyToCreate);
-            }
+//            }
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

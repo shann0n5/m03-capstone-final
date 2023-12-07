@@ -1,7 +1,6 @@
 package com.techelevator.controller;
 
 import com.techelevator.exception.ServiceException;
-import com.techelevator.model.Address;
 import com.techelevator.model.Property;
 import com.techelevator.service.PropertyService;
 import com.techelevator.service.PropertyServiceImpl;
@@ -17,7 +16,7 @@ import java.util.List;
 @RestController
 @PreAuthorize("isAuthenticated()")
 public class PropertyController {
-    private PropertyService propertyService;
+    private final PropertyService propertyService;
 
     public PropertyController(PropertyService propertyService) {
         this.propertyService = propertyService;
