@@ -74,10 +74,12 @@ public class PropertyController {
     @PostMapping("/properties")
     public Property addMyNewProperty(Principal principal, Property newProperty) {
         try {
-            return propertyService.createProperty(principal, newProperty);
+            Property createdProperty = propertyService.createProperty(principal, newProperty);
+//            if (createdProperty == null)
         } catch (ServiceException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountereduuuuuuuu.");
         }
+        return null;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

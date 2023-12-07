@@ -93,17 +93,12 @@ public class JdbcPropertyDao implements PropertyDao {
                     "FROM users " +
                     "WHERE username = ?;";
             jdbcTemplate.queryForObject(sql, void.class, newPropertyId, principal.getName());
+            return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return getPropertyById();
-//        sql = "INSERT INTO addresses (address1, address2, city, state, zipcode) " +
-//                "VALUES (?, ?, ?, ?, ?) RETURNING address_id;";
-//        Integer addressId = jdbcTemplate.update(sql, property.getAddress().getAddress1(), property.getAddress().getAddress2(), property.getAddress().getCity(), property.getAddress().getState(), property.getAddress().getZipcode());
-
-
     }
 
     @Override
