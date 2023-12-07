@@ -30,14 +30,14 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public List<Application> viewAllApplications(Principal principal) {
-//        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
-//        List<Application> applications = new ArrayList<>();
-        List<Application> applications;
+        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
+        List<Application> applications = new ArrayList<>();
+//        List<Application> applications;
         try{
-//            for(Property property : properties){
-//                applications.addAll(applicationDao.getApplicationsByPropertyId(property.getPropertyId()));
-//            }
-            applications = applicationDao.getApplications();
+            for(Property property : properties){
+                applications.addAll(applicationDao.getApplicationsByPropertyId(property.getPropertyId()));
+            }
+//            applications = applicationDao.getApplications();
             return applications;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
@@ -68,7 +68,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 //                    application = applicationDao.getApplicationById(app.getApplicationId());
 //                }
             if(applicationId <= 3000){
-                throw new DaoException("Cannot find a service request with id provided.");
+                throw new DaoException("Cannot find an application with id provided.");
             } else{
                 application = applicationDao.getApplicationById(applicationId);
             }
