@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Property;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
 
 public interface PropertyDao {
@@ -23,7 +24,7 @@ public interface PropertyDao {
 //
 //    List<Property> getPropertiesByAvailability(boolean isAvailable);
 
-    Property createProperty(Property property);
+    Property createProperty(Property property, Principal principal);
 
     Property updateProperty(Property property);
 

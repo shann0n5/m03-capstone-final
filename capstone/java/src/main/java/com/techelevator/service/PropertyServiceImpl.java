@@ -55,7 +55,7 @@ public class PropertyServiceImpl implements PropertyService{
         try {
 //           User loggedInUser = userDao.getUserByUsername(principal.getName());
 //            if (loggedInUser.getAuthorities().contains(adminRole)){
-                 newProperty = propertyDao.createProperty(propertyToCreate);
+                 newProperty = propertyDao.createProperty(propertyToCreate, principal);
 //            }
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());

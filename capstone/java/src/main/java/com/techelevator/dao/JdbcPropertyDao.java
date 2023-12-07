@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,23 +81,24 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property createProperty(Property property) {
-        int newPropertyId;
+    public Property createProperty(Property property, Principal principal) {
+       // int newPropertyId;
 
         try {
             String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
                     "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
 
-            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
-            sql = "INSERT INTO user_properties (user_id, property_id) " +
-                    "VALUES (?, ?);";
-//            jdbcTemplate.qu
+            int  newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
+            sql = " INSERT INTO user_properties (user_id, property_id) SELECT user_id, ? " +
+                    "FROM users " +
+                    "WHERE username = ?;";
+            jdbcTemplate.queryForObject(sql, void.class, newPropertyId, principal.getName());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return getPropertyById(newPropertyId);
+        return getPropertyById();
 //        sql = "INSERT INTO addresses (address1, address2, city, state, zipcode) " +
 //                "VALUES (?, ?, ?, ?, ?) RETURNING address_id;";
 //        Integer addressId = jdbcTemplate.update(sql, property.getAddress().getAddress1(), property.getAddress().getAddress2(), property.getAddress().getCity(), property.getAddress().getState(), property.getAddress().getZipcode());
