@@ -49,7 +49,7 @@ public class ServiceRequestController {
         }
     }
 
-    @GetMapping("/service-requests/{status}")
+    @GetMapping("/service-requests/status/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, String status){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewServiceRequestsByStatus(principal, status);

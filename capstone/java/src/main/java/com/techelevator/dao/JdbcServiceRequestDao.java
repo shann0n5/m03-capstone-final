@@ -82,31 +82,32 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     @Override
     //Status: Open, In Prog, Complete
     public ServiceRequest createServiceRequest(ServiceRequest serviceRequest) {
-        String status = "";
-        String open = "Open";
-        String inProg = "In Prog";
-        String complete = "Complete";
-
+//        String status = "";
+//        String open = "Open";
+//        String inProg = "In Prog";
+//        String complete = "Complete";
+        ServiceRequest request = null;
+        String sql = "INSERT INTO service_requests (request_details, status) " +
+                "VALUES (?, ?) RETURNING service_request_id;";
         try {
-            if ((serviceRequest.getStatus().toLowerCase()).contains(open.toLowerCase())) {
-                serviceRequest.setStatus(open);
-            } else if ((serviceRequest.getStatus().toLowerCase()).contains(inProg.toLowerCase())) {
-                serviceRequest.setStatus(inProg);
-            } else if ((serviceRequest.getStatus().toLowerCase()).contains(complete.toLowerCase())) {
-                serviceRequest.setStatus(complete);
-            }
-
-            String sql = "INSERT INTO service_requests (request_details, status) " +
-                    "VALUES (?, ?) RETURNING service_request_id;";
-
-            status = jdbcTemplate.queryForObject(sql, String.class, serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
-
+//            if ((serviceRequest.getStatus().toLowerCase()).contains(open.toLowerCase())) {
+//                serviceRequest.setStatus(open);
+//            } else if ((serviceRequest.getStatus().toLowerCase()).contains(inProg.toLowerCase())) {
+//                serviceRequest.setStatus(inProg);
+//            } else if ((serviceRequest.getStatus().toLowerCase()).contains(complete.toLowerCase())) {
+//                serviceRequest.setStatus(complete);
+//            }
+//            status = jdbcTemplate.queryForObject(sql, String.class, serviceRequest.getServiceRequestId(),
+//                    serviceRequest.getRequestDetails(), serviceRequest.getStatus());
+            int requestId = jdbcTemplate.queryForObject(sql, int.class, serviceRequest.getRequestDetails(),
+                    serviceRequest.getStatus());
+            request = getServiceRequestById(requestId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return serviceRequest;
+        return request;
     }
 
     @Override
@@ -147,8 +148,8 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {
         ServiceRequest serviceRequest = new ServiceRequest();
                 serviceRequest.setServiceRequestId(results.getInt("service_request_id"));
-                serviceRequest.setRequestDetails(results.getNString("request_details"));
-                serviceRequest.setStatus(results.getNString("status"));
+                serviceRequest.setRequestDetails(results.getString("request_details"));
+                serviceRequest.setStatus(results.getString("status"));
 
         return serviceRequest;
     }

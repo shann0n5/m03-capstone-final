@@ -25,7 +25,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/applications")
-    public List<Application> getApplications(Principal principal) {
+    public List<Application> getApplications(@Valid Principal principal) {
         try{
             List<Application> applications = applicationService.viewAllApplications(principal);
             return applications;
@@ -49,7 +49,7 @@ public class ApplicationController {
         }
     }
 
-    @GetMapping("/applications/{status}")
+    @GetMapping("/applications/status/{status}")
     public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
         try{
             List<Application> applications = applicationService.viewApplicationsByStatus(principal, status);
