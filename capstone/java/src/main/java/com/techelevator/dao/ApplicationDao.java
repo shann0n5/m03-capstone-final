@@ -5,13 +5,16 @@ import com.techelevator.model.Application;
 import java.util.List;
 
 public interface ApplicationDao {
-    List<Application> getApplications(String username);
-    List<Application> getApplicationsByPropertyId(int propertyId);
+    List<Application> getApplicationsByManagerUsername(String username);
+    List<Application> getApplicationsByUsername(String username);
+    List<Application> getApplicationsByPropertyId(String username, int propertyId);
 
+    Application getApplicationByIdManager(String username, int applicationId);
+    Application getApplicationByIdUsername(String username, int applicationId);
     Application getApplicationById(int applicationId);
 
     //Status: Pending, Rejected, Withdrawn
-    List<Application> getApplicationsByStatus(String status);
+    List<Application> getApplicationsByStatus(String username,String status);
 
     Application createApplication(Application application);
 

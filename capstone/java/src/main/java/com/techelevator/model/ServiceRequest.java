@@ -1,22 +1,33 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ServiceRequest {
-    @NotNull( message = "The field 'serviceRequestId' is required.")
     private int serviceRequestId;
-    @NotNull( message = "The field 'requestDetails' is required.")
+    @NotEmpty( message = "The field 'tenantId' is required.")
+    private int tenantId;
+    @NotEmpty( message = "The field 'requestDetails' is required.")
     private String requestDetails;
-    @NotNull( message = "The field 'status' is required.")
-    //Status: Open, In Prog, Complete
+    @NotEmpty( message = "The field 'status' is required.")
+    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
     private String status;
 
     public ServiceRequest() {}
 
-    public ServiceRequest(int serviceRequestId, String requestDetails, String status) {
+    public ServiceRequest(int serviceRequestId, int tenantId, String requestDetails, String status) {
         this.serviceRequestId = serviceRequestId;
+        this.tenantId = tenantId;
         this.requestDetails = requestDetails;
         this.status = status;
+    }
+
+    public int getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public int getServiceRequestId() {

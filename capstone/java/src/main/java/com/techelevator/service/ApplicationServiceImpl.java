@@ -6,6 +6,7 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
+import com.techelevator.model.Authority;
 import com.techelevator.model.Property;
 import com.techelevator.model.User;
 import org.apache.catalina.core.AprLifecycleListener;
@@ -30,28 +31,26 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public List<Application> viewAllApplications(Principal principal) {
-        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
-        List<Application> applications = new ArrayList<>();
-//        List<Application> applications;
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority userRole = new Authority("ROLE_USER");
+        List<Application> applications = null;
         try{
-            for(Property property : properties){
-                applications.addAll(applicationDao.getApplicationsByPropertyId(property.getPropertyId()));
+            if(loggedInUser.getAuthorities().contains(managerRole)){
+                applications = applicationDao.getApplicationsByManagerUsername(principal.getName());
+            } else if (loggedInUser.getAuthorities().contains(userRole)) {
+                applications = applicationDao.getApplicationsByUsername(principal.getName());
             }
-//            applications = applicationDao.getApplications();
             return applications;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
-
     @Override
     public List<Application> viewApplicationsByStatus(Principal principal, String status) {
-        List<Property> properties = propertyDao.getPropertiesByUsername(principal.getName());
-        List<Application> applications = new ArrayList<>();
+        List<Application> applications = null;
         try{
-            for(Property property : properties){
-                applications.addAll(applicationDao.getApplicationsByStatus(status));
-            }
+            applications = applicationDao.getApplicationsByStatus(principal.getName(),status);
             return applications;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
@@ -59,18 +58,30 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
+    public List<Application> viewApplicationsByPropertyId(Principal principal, int propertyId) {
+        List<Application> applications = null;
+        try{
+            applications = applicationDao.getApplicationsByPropertyId(principal.getName(),propertyId);
+            return applications;
+        } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+    }
+    @Override
     public Application viewApplicationById(Principal principal, int applicationId) {
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority userRole = new Authority("ROLE_USER");
         Application application = null;
-//        List<Application> applications = viewAllApplications(principal);
         try {
-//            for (Application app : applications) {
-//                if (app.getApplicationId() == applicationId) {
-//                    application = applicationDao.getApplicationById(app.getApplicationId());
-//                }
-            if(applicationId <= 3000){
+            if(applicationId <= 5000){
                 throw new DaoException("Cannot find an application with id provided.");
             } else{
-                application = applicationDao.getApplicationById(applicationId);
+                if(loggedInUser.getAuthorities().contains(managerRole)){
+                    application = applicationDao.getApplicationByIdManager(principal.getName(), applicationId);
+                } else if (loggedInUser.getAuthorities().contains(userRole)) {
+                    application = applicationDao.getApplicationByIdUsername(principal.getName(),applicationId);
+                }
             }
             return application;
         } catch (DaoException e) {
@@ -80,8 +91,14 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public Application createApplication(Principal principal, Application application) {
+        //TODO: add logic to check above 18 , and property status is true(available)
         try{
-            Application newApplication = applicationDao.createApplication(application);
+//            if(!application.isAbove18()){
+//
+//            }
+            Application newApplication = applicationDao.createApplication(application);;
+           // newApplication.setStatus("STATUS_PENDING");
+
             return newApplication;
         }catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());

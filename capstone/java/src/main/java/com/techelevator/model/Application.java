@@ -2,31 +2,65 @@ package com.techelevator.model;
 
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Application {
 
     private int applicationId;
-    @NotNull( message = "The field 'userId' is required.")
+    @NotEmpty( message = "The field 'userId' is required.")
     private int userId;
-    @NotNull( message = "The field 'propertyId' is required.")
+    @NotEmpty( message = "The field 'propertyId' is required.")
     private int propertyId;
-    @NotNull( message = "The field 'status' is required.")
-    //Status: Pending, Rejected, Withdrawn
+    @NotEmpty( message = "The field 'status' is required.")
+    //Status: STATUS_PENDING, STATUS_REJECTED, STATUS_APPROVED
     private String status;
-    @NotNull( message = "The field 'hasRoomates' is required.")
+    @NotEmpty( message = "The field 'fullName' is required.")
+    private String fullName;
+    @NotEmpty( message = "The field 'email' is required.")
+    private String email;
+    @NotEmpty( message = "The field 'isAbove18' is required.")
+    private boolean isAbove18;
+    @NotEmpty( message = "The field 'hasRoomates' is required.")
     private boolean hasRoomates;
     private String roomateNames;
 
     public Application() {}
 
-    public Application(int applicationId, int userId, int propertyId, String status, boolean hasRoomates, String roomateNames) {
+    public Application(int applicationId, int userId, int propertyId, String status, String fullName, String email, boolean isAbove18, boolean hasRoomates, String roomateNames) {
         this.applicationId = applicationId;
         this.userId = userId;
         this.propertyId = propertyId;
         this.status = status;
+        this.fullName = fullName;
+        this.email = email;
+        this.isAbove18 = isAbove18;
         this.hasRoomates = hasRoomates;
         this.roomateNames = roomateNames;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isAbove18() {
+        return isAbove18;
+    }
+
+    public void setAbove18(boolean above18) {
+        isAbove18 = above18;
     }
 
     public int getApplicationId() {
