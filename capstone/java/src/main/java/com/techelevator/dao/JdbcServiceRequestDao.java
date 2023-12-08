@@ -25,10 +25,15 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     @Override //ADMIN accessing service requests to their properties
     public List<ServiceRequest> getServiceRequestsByManagerUsername(String username) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
-                "FROM service_requests;";
+        String sql = "SELECT sr.service_request_id, sr.tenant_id, sr.request_details, sr.status " +
+                "FROM service_requests sr " +
+                "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
+                "JOIN properties p ON tp.property_id = p.property_id " +
+                "JOIN manager_profiles mp ON p.manager_id = mp.manager_id " +
+                "JOIN users u ON mp.user_id = u.user_id "+
+                "WHERE u.username = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
             while (results.next()) {
                 serviceRequests.add(mapRowToServiceRequest(results));
             }
@@ -39,8 +44,6 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return serviceRequests;
     }
-
-
     @Override //TENANT accessing their own service requests
     public List<ServiceRequest> getServiceRequestsByTenantUsername(String username) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();

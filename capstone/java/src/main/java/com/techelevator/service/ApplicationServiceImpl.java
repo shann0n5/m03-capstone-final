@@ -107,13 +107,13 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public Application approveApplication(Principal principal, Application updatedApplication) {
-        List<Application> pendingApps = viewApplicationsByStatus(principal,"Pending");
+        List<Application> pendingApps = viewApplicationsByStatus(principal,"STATUS_PENDING");
         Application updatedApp = null;
         try{
             for(Application app : pendingApps){
                 if(app.getApplicationId() == updatedApplication.getApplicationId()){
                     updatedApp = applicationDao.updateApplication(updatedApplication);
-                    updatedApp.setStatus("Approved");
+                    updatedApp.setStatus("STATUS_APPROVED");
                 }
             }
             return updatedApp;
@@ -121,7 +121,6 @@ public class ApplicationServiceImpl implements ApplicationService{
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
-
 
     @Override
     public Application rejectApplication(Principal principal, Application rejectedApplication) {
@@ -135,6 +134,16 @@ public class ApplicationServiceImpl implements ApplicationService{
             }
             return rejectedApp;
         }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteApplication(Principal principal,int id) {
+        try{
+            int userId = userDao.getUserByUsername(principal.getName()).getId();
+            applicationDao.deleteApplication(userId, id);
+        } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }

@@ -183,14 +183,15 @@ public class JdbcApplicationDao implements ApplicationDao{
         return newApplication;
     }
 
-    @Override
+    @Override //ADMIN would approve or reject
     public Application updateApplication(Application application) {
         Application updatedApplication = null;
-        String sql = "UPDATE applications SET user_id = ?, property_id = ?, status = ?, has_roomates = ?, " +
-                "roomate_names = ? WHERE application_id = ?";
+        String sql = "UPDATE applications SET user_id = ?, property_id = ?, status = ?, full_name = ?, email = ?, " +
+                "has_roomates = ?, is_Above_18 = ?, roomate_names = ? WHERE application_id = ?";
         try{
             int rowsAffected = jdbcTemplate.update(sql, application.getUserId(), application.getPropertyId(),
-                    application.getStatus(), application.isHasRoomates(), application.getRoomateNames(),
+                    application.getStatus(), application.getFullName(), application.getEmail(), application.isAbove18(),
+                    application.isHasRoomates(), application.getRoomateNames(),
                     application.getApplicationId());
             if(rowsAffected == 0){
                 throw new DaoException("Zero rows affected, expected at least one");
@@ -206,11 +207,11 @@ public class JdbcApplicationDao implements ApplicationDao{
     }
 
     @Override
-    public int deleteApplication(int applicationId) {
+    public int deleteApplication(int userId,int applicationId) {
         int rowsAffected;
-        String sql = "DELETE FROM applications WHERE application_id = ?";
+        String sql = "DELETE FROM applications a WHERE a.user_id = ? AND application_id = ?";
         try{
-            rowsAffected = jdbcTemplate.update(sql, applicationId);
+            rowsAffected = jdbcTemplate.update(sql,userId, applicationId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

@@ -82,6 +82,16 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("applications/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteApplication( @Valid Principal principal,@PathVariable("id") int applicationId){
+        try{
+            applicationService.deleteApplication(principal,applicationId);
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/applications/approve/{id}")

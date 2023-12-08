@@ -32,7 +32,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
         List<ServiceRequest> serviceRequests = null;
         try {
             if(loggedInUser.getAuthorities().contains(managerRole)){
-//                serviceRequests = serviceRequestDao.
+                serviceRequests = serviceRequestDao.getServiceRequestsByManagerUsername(principal.getName());
             } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
                 serviceRequests = serviceRequestDao.getServiceRequestsByTenantUsername(principal.getName());
             }

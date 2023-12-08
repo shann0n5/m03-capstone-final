@@ -20,6 +20,6 @@ public interface ApplicationDao {
 
     Application updateApplication(Application application);
 
-    int deleteApplication(int applicationId);
+    int deleteApplication(int userId,int applicationId);
 
 }

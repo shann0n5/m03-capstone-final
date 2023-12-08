@@ -15,5 +15,6 @@ public interface ApplicationService {
     Application createApplication(Principal principal, Application application);
     Application approveApplication(Principal principal, Application updatedApplication);
     Application rejectApplication(Principal principal, Application rejectedApplication);
+    void deleteApplication(Principal principal, int id);
 
 }

@@ -33,7 +33,16 @@ public class ServiceRequestController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("/service-requests")
+    public List<ServiceRequest> getAllMyServiceRequests(@Valid Principal principal){
+        try{
+            List<ServiceRequest> serviceRequests = serviceRequestService.viewAllServiceRequests(principal);
+            return serviceRequests;
+        } catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/service-requests")
     @ResponseStatus(HttpStatus.CREATED) //Status: Open
@@ -50,7 +59,6 @@ public class ServiceRequestController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
 
     @GetMapping("/service-requests/status/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, String status){
