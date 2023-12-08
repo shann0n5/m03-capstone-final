@@ -93,6 +93,7 @@ public class ApplicationServiceImpl implements ApplicationService{
     public Application createApplication(Principal principal, Application application) {
         //TODO: add logic to check above 18 , and property status is true(available)
         try{
+            application.setStatus("STATUS_PENDING");
 //            if(!application.isAbove18()){
 //
 //            }
@@ -106,33 +107,21 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public Application approveApplication(Principal principal, Application updatedApplication) {
+    public Application approveOrRejectApplication(Principal principal, Application updatedApplication) {
         List<Application> pendingApps = viewApplicationsByStatus(principal,"STATUS_PENDING");
         Application updatedApp = null;
         try{
             for(Application app : pendingApps){
                 if(app.getApplicationId() == updatedApplication.getApplicationId()){
-                    updatedApp = applicationDao.updateApplication(updatedApplication);
-                    updatedApp.setStatus("STATUS_APPROVED");
+                    if(updatedApplication.getStatus().toUpperCase().contains("STATUS_APPROVED")){
+                        app.setStatus("STATUS_APPROVED");
+                    } else if (updatedApplication.getStatus().toUpperCase().contains("STATUS_REJECTED")){
+                        app.setStatus("STATUS_REJECTED");
+                    }
+                    updatedApp = applicationDao.updateApplication(app);
                 }
             }
             return updatedApp;
-        }catch (DaoException e) {
-            throw new ServiceException("An error has occurred: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public Application rejectApplication(Principal principal, Application rejectedApplication) {
-        List<Application> pendingApps = viewApplicationsByStatus(principal, "Pending");
-        Application rejectedApp = null;
-        try{
-            for (Application app: pendingApps){
-                if(app.getApplicationId() == rejectedApplication.getApplicationId()){
-                    rejectedApp = applicationDao.updateApplication(rejectedApplication);
-                }
-            }
-            return rejectedApp;
         }catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
