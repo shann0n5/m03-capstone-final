@@ -23,7 +23,8 @@ public class ServiceRequestController {
         this.serviceRequestService = serviceRequestService;
     }
 
-    @GetMapping("/service-requests")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/service-requests/managing")
     public List<ServiceRequest> getAllServiceRequests(@Valid Principal principal){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewAllServiceRequests(principal);
@@ -33,7 +34,7 @@ public class ServiceRequestController {
         }
     }
 
-//    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/service-requests")
     @ResponseStatus(HttpStatus.CREATED) //Status: Open
     public ResponseEntity<ServiceRequest> addServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest newServiceRequest){

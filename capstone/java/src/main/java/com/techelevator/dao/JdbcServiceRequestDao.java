@@ -22,13 +22,35 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
-    public List<ServiceRequest> getServiceRequests() {
+    @Override //ADMIN accessing service requests to their properties
+    public List<ServiceRequest> getServiceRequestsByManagerUsername(String username) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        String sql = "SELECT service_request_id, request_details, status " +
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
                 "FROM service_requests;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                serviceRequests.add(mapRowToServiceRequest(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return serviceRequests;
+    }
+
+
+    @Override //TENANT accessing their own service requests
+    public List<ServiceRequest> getServiceRequestsByTenantUsername(String username) {
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
+        String sql = "SELECT sr.service_request_id, sr.tenant_id, sr.request_details, sr.status " +
+                "FROM service_requests sr " +
+                "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
+                "JOIN users u ON tp.user_id = u.user_id " +
+                "WHERE u.username = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
             while (results.next()) {
                 serviceRequests.add(mapRowToServiceRequest(results));
             }

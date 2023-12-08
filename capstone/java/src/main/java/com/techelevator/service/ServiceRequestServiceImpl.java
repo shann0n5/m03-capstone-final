@@ -4,7 +4,9 @@ import com.techelevator.dao.ServiceRequestDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.exception.ServiceException;
+import com.techelevator.model.Authority;
 import com.techelevator.model.ServiceRequest;
+import com.techelevator.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,16 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public List<ServiceRequest> viewAllServiceRequests(Principal principal) {
-        List<ServiceRequest> serviceRequests;
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority tenantRole = new Authority("ROLE_USER");
+        List<ServiceRequest> serviceRequests = null;
         try {
-            serviceRequests = serviceRequestDao.getServiceRequests();
+            if(loggedInUser.getAuthorities().contains(managerRole)){
+//                serviceRequests = serviceRequestDao.
+            } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
+                serviceRequests = serviceRequestDao.getServiceRequestsByTenantUsername(principal.getName());
+            }
             return serviceRequests;
         }catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
