@@ -13,8 +13,7 @@ public interface ApplicationService {
     List<Application> viewApplicationsByPropertyId(Principal principal, int propertyId);
     Application viewApplicationById(Principal principal, int applicationId);
     Application createApplication(Principal principal, Application application);
-    Application approveApplication(Principal principal, Application updatedApplication);
-    Application rejectApplication(Principal principal, Application rejectedApplication);
+    Application approveOrRejectApplication(Principal principal, Application updatedApplication);
     void deleteApplication(Principal principal, int id);
 
 }
