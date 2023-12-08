@@ -12,7 +12,7 @@ public interface PropertyDao {
 
     Property getPropertyById(int propertyId);
 
-    List<Property> getPropertiesByUsername(String username);
+    //List<Property> getPropertiesByUsername(String username);
     List<Property> getPropertiesByTenantUsername(String username);
     List<Property> getPropertiesByManagerUsername(String username);
     Property createProperty(Property property, int userId);
@@ -29,9 +29,9 @@ public interface PropertyDao {
 
    // Property createProperty(Property property, Principal principal);
 
-    Property updateProperty(Property property);
+    Property updateProperty(Property property, int userId);
 
-    int deleteProperty(int propertyId);
+    int deleteProperty(int propertyId, int userId);
 
 
 }

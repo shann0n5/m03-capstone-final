@@ -9,6 +9,7 @@ import com.techelevator.model.Property;
 import com.techelevator.model.User;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,11 +76,11 @@ public class PropertyServiceImpl implements PropertyService{
     }
 
     @Override
-    public Property updateProperty(Principal principal, int propertyId, Property propertyToUpdateTo) {
+    public Property updateProperty(@Valid Property propertyToUpdateTo, Principal principal, int propertyId) {
         try {
-            // resetting the property id to the one they passed in
-            propertyToUpdateTo.setPropertyId(propertyId);
-            return propertyDao.updateProperty(propertyToUpdateTo);
+            int userId = userDao.getUserByUsername(principal.getName()).getId();
+            Property updatedProperty = propertyDao.updateProperty(propertyToUpdateTo, userId);
+            return updatedProperty;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
@@ -88,61 +89,11 @@ public class PropertyServiceImpl implements PropertyService{
     @Override
     public void deleteProperty(Principal principal, int propertyId){
         try {
-            propertyDao.deleteProperty(propertyId);
+            int userId = userDao.getUserByUsername(principal.getName()).getId();
+            propertyDao.deleteProperty(propertyId, userId);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
-    //    @Override
-//    public List<Property> viewPropertiesByNumberOfRooms(Principal principal, int numberOfRooms) {
-//        return null;
-//    }
-//    @Override
-//    public List<Property> viewPropertiesByZipcode(Principal principal, String zip) {
-//        return null;
-//    }
-//    @Override
-//    public List<Property> viewPropertiesByAvailability(Principal principal, boolean isAvailable) {
-//    return null;
-//    }
 
-    //    public List<Property> searchPropertiesByZipcode (String zipcode) {
-//        try {
-//           return propertyDao.getPropertiesByZipcode(zipcode);
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
-//    @Override
-//    public List<Property> searchPropertiesByStateAndCity (String state, String city) {
-//        try {
-//            return propertyDao.getPropertiesByCityState(state, city);
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
-//    @Override
-//    public List<Property> searchPropertiesByNumberOfRooms (int numberOfRooms) {
-//        try {
-//            return propertyDao.getPropertiesByNumberOfRooms(numberOfRooms);
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
-//    @Override
-//    public List<Property> searchPropertiesByRent (BigDecimal rent) {
-//        try {
-//            return propertyDao.getPropertiesByRent(rent);
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
-//    @Override
-//    public List<Property> searchPropertiesByAvailability (boolean isAvailable) {
-//        try {
-//            return propertyDao.getPropertiesByAvailability(isAvailable);
-//        } catch (DaoException e) {
-//            throw new ServiceException("An error has occurred: " + e.getMessage());
-//        }
-//    }
 }

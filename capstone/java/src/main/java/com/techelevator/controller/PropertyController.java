@@ -5,10 +5,12 @@ import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Property;
 import com.techelevator.service.PropertyService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -70,38 +72,69 @@ public class PropertyController {
     }
     //    As a property owner, I want to be able to see the data for my properties (average rent, vacancy%, etc.)
 
+    /**
+     *
+     * @param newProperty
+     * @param principal
+     * @return the new property created
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/properties")
-    public Property addMyNewProperty(Principal principal, Property newProperty) {
-        try {
-            return propertyService.createProperty(principal, newProperty);
-//            if (createdProperty == null)
-        } catch (ServiceException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountereduuuuuuuu.");
-        }
-    }
+    public ResponseEntity<Property> addMyNewProperty(@Valid @RequestBody Property newProperty, Principal principal) {
+        Property createdProperty = new Property();
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/properties/{id}")
-    public Property updateMyProperty(@PathVariable int id, Principal principal, Property propertyToUpdateTo) {
-        Property updatedProperty = new Property();
         try {
-            return propertyService.updateProperty(principal, id, propertyToUpdateTo);
+           createdProperty = propertyService.createProperty(principal, newProperty);
+            if (createdProperty == null) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+            } else {
+                return ResponseEntity.ok(createdProperty);
+            }
         } catch (ServiceException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }
     }
 
+    /**
+     *
+     * @param propertyToUpdateTo
+     * @param id
+     * @param principal
+     * @return the updated property
+     */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/properties/{id}")
+    public Property updateMyProperty(@Valid @RequestBody Property propertyToUpdateTo, @PathVariable int id, Principal principal) {
+        if (id <=0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client side error - make sure your request is properly defined.");
+        }
+        propertyToUpdateTo.setPropertyId(id);
+        try {
+            Property updatedProperty = propertyService.updateProperty(propertyToUpdateTo, principal, id);
+            if (updatedProperty == null) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredggg.");
+            } else {
+                return updatedProperty;
+            }
+        } catch (ServiceException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredeee.");
+        }
+    }
+
+    /**
+     *
+     * @param id
+     * @param principal
+     */
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/properties/{id}")
     public void deleteMyProperty(@PathVariable int id, Principal principal) {
         try {
             propertyService.deleteProperty(principal, id);
-
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredyyy.");
         }
     }
 
