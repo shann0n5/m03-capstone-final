@@ -85,7 +85,11 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    //Status: Open, In Prog, Complete
+    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
+
+    // users (tenants) will see their requests by status
+    // admin will see all requests related to their properties
+
     public List<ServiceRequest> getServiceRequestByStatus(String status) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
         String sql = "SELECT service_request_id, request_details, status " +
@@ -105,7 +109,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    //Status: Open, In Prog, Complete
+    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
     public ServiceRequest createServiceRequest(ServiceRequest serviceRequest) {
 //        String status = "";
 //        String open = "Open";
