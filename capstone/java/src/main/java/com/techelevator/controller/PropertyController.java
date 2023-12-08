@@ -85,6 +85,7 @@ public class PropertyController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/properties/{id}")
     public Property updateMyProperty(@PathVariable int id, Principal principal, Property propertyToUpdateTo) {
+        Property updatedProperty = new Property();
         try {
             return propertyService.updateProperty(principal, id, propertyToUpdateTo);
         } catch (ServiceException e){

@@ -10,6 +10,7 @@ import com.techelevator.model.User;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +18,11 @@ public class PropertyServiceImpl implements PropertyService{
 
     private final PropertyDao propertyDao;
 
+    private final UserDao userDao;
+
     public PropertyServiceImpl(PropertyDao propertyDao, UserDao userDao) {
         this.propertyDao = propertyDao;
+        this.userDao = userDao;
     }
 
     @Override
@@ -41,8 +45,17 @@ public class PropertyServiceImpl implements PropertyService{
 
     @Override
     public List<Property> viewPropertiesByUsername(Principal principal) {
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority tenantRole = new Authority("ROLE_USER");
+        List<Property> properties = new ArrayList<>();
         try {
-            return propertyDao.getPropertiesByUsername(principal.getName());
+            if (loggedInUser.getAuthorities().contains(managerRole)) {
+                properties = propertyDao.getPropertiesByManagerUsername(principal.getName());
+            } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
+                properties = propertyDao.getPropertiesByTenantUsername(principal.getName());
+            }
+            return properties;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
@@ -51,12 +64,10 @@ public class PropertyServiceImpl implements PropertyService{
     @Override
     public Property createProperty(Principal principal, Property propertyToCreate) {
         Property newProperty = null;
-//        Authority adminRole = new Authority("ROLE_ADMIN");
+         ;
+        int userId = userDao.getUserByUsername(principal.getName()).getId();
         try {
-//           User loggedInUser = userDao.getUserByUsername(principal.getName());
-//            if (loggedInUser.getAuthorities().contains(adminRole)){
-                 newProperty = propertyDao.createProperty(propertyToCreate, principal);
-//            }
+            newProperty = propertyDao.createProperty(propertyToCreate, principal);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

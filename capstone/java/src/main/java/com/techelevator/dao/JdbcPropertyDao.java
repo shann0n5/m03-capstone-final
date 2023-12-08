@@ -60,6 +60,10 @@ public class JdbcPropertyDao implements PropertyDao {
         return property;
     }
 
+    public List<Property> getPropertiesByUsername(String username){
+        return null;
+    }
+
     @Override
     public List<Property> getPropertiesByTenantUsername(String username) {
         List<Property> properties = new ArrayList<>();
@@ -100,23 +104,12 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property createProperty(Property property, Principal principal) {
-        // int newPropertyId;
-
-        // try {
-//            String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
-//                    "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
-//
-//            int  newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
-//            sql = " INSERT INTO user_properties (user_id, property_id) SELECT user_id, ? " +
-//                    "FROM users " +
-//                    "WHERE username = ?;";
-//            jdbcTemplate.queryForObject(sql, void.class, newPropertyId, principal.getName());
-
-        String sql = "INSERT INTO (manager_id, address, number_of_rooms, rent, is_available) " +
+    public Property createProperty(Property property, int userId) {
+        int newPropertyId = 0 ;
+        String sql = "INSERT INTO properties (manager_id, address, number_of_rooms, rent, is_available) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         try {
-            int newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getManagerId(), property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
+           newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getManagerId(), property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
 
             return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -129,7 +122,7 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public Property updateProperty(Property property) {
         Property updatedProperty = null;
-        String sql = "UPDATE properties SET manager _id =?, address = ?, number_of_rooms = ?, rent = ?, is_available = ? " +
+        String sql = "UPDATE properties SET manager_id = ?, address = ?, number_of_rooms = ?, rent = ?, is_available = ? " +
                 "WHERE property_id = ?;";
         try {
             int numberOfRows = jdbcTemplate.update(sql, property.getManagerId(), property.getAddress(),
