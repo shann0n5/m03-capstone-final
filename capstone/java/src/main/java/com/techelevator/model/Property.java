@@ -3,15 +3,16 @@ package com.techelevator.model;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Property {
 
 
     private int propertyId;
-
+    @NotNull ( message = "The field 'managerId' is required.")
+    private int managerId;
     @NotNull( message = "The field 'address' is required.")
     private String address;
-
     @Min( value = 1, message = "The minimum number of rooms is 1.")
     private int numberOfRooms;
 
@@ -20,18 +21,19 @@ public class Property {
 
     @NotNull( message = "The field 'isAvailable' is required.")
     private boolean isAvailable;
-    @NotNull( message = "The field 'isOwner' is required.")
-    private boolean isOwner;
+
+
 
     public Property() {}
 
-    public Property(int propertyId, String address, int numberOfRooms, BigDecimal rent, boolean isAvailable, boolean isOwner) {
+    public Property(int propertyId, int managerId, String address, int numberOfRooms, BigDecimal rent, boolean isAvailable) {
         this.propertyId = propertyId;
+        this.managerId = managerId;
         this.address = address;
         this.numberOfRooms = numberOfRooms;
         this.rent = rent;
         this.isAvailable = isAvailable;
-        this.isOwner = isOwner;
+
     }
 
     public int getPropertyId() {
@@ -40,6 +42,14 @@ public class Property {
 
     public void setPropertyId(int propertyId) {
         this.propertyId = propertyId;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int manager_id) {
+        this.managerId = managerId;
     }
 
     public String getAddress() {
@@ -74,11 +84,26 @@ public class Property {
         isAvailable = available;
     }
 
-    public boolean isOwner() {
-        return isOwner;
+    public String toString() {
+        return "\n--------------------------------------------" +
+                "\n Property Details" +
+                "\n--------------------------------------------" +
+                "\n Property Id: " + propertyId +
+                "\n Manager Id: " + managerId +
+                "\n Address:'" + address + '\'' +
+                "\n Number of rooms: " + numberOfRooms +
+                "\n Rent: " + rent +
+                "\n Available: " + isAvailable;
     }
-
-    public void setIsOwner(boolean owner) {
-        isOwner = owner;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Property property = (Property) o;
+        return propertyId == property.propertyId && managerId == property.managerId && address.equals(property.address) && numberOfRooms == property.numberOfRooms && rent.compareTo(property.rent) == 0 && isAvailable == property.isAvailable;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(propertyId, managerId, address, numberOfRooms, rent, isAvailable);
     }
 }

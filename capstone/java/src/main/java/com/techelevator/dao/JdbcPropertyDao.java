@@ -28,7 +28,7 @@ public class JdbcPropertyDao implements PropertyDao {
     public List<Property> getProperties() {
         List<Property> properties = new ArrayList<>();
 
-        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+        String sql = "SELECT property_id, manager_id, address, number_of_rooms, rent, is_available " +
                 "FROM properties;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -44,7 +44,7 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public Property getPropertyById(int propertyId) {
         Property property = null;
-        String sql = "SELECT property_id, address, number_of_rooms, rent, is_available, is_owner " +
+        String sql = "SELECT property_id, manager_id, address, number_of_rooms, rent, is_available " +
                 "FROM properties " +
                 "WHERE property_id = ?;";
         try {
@@ -60,17 +60,36 @@ public class JdbcPropertyDao implements PropertyDao {
         return property;
     }
 
-
     @Override
-    public List<Property> getPropertiesByUsername(String username) {
+    public List<Property> getPropertiesByTenantUsername(String username) {
         List<Property> properties = new ArrayList<>();
-        String sql = "SELECT p.property_id, p.address, p.number_of_rooms, p.rent, p.is_available, p.is_owner " +
-                "FROM properties p " +
-                "JOIN user_properties up ON p.property_id = up.property_id " +
-                "JOIN users u ON up.user_id = u.user_id " +
-                "WHERE username = ?;";
+        String sql =
+                "SELECT p.property_id, p.manager_id, p.address, p.number_of_rooms, p.rent, p.is_available " +
+                        "FROM properties p " +
+                        "JOIN tenant_profiles tp ON  p.property_id = tp.property_id " +
+                        "JOIN users u ON tp.user_id = u.user_id " +
+                        "WHERE username = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, username);
+            while (results.next()) {
+                properties.add(mapRowToProperty(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return properties;
+    }
+    @Override
+    public List<Property> getPropertiesByManagerUsername(String username) {
+        List<Property> properties = new ArrayList<>();
+        String sql1 =
+                "SELECT p.property_id, p.manager_id, p.address, p.number_of_rooms, p.rent, p.is_available " +
+                        "FROM properties p " +
+                        "JOIN manager_profiles mp ON p.manager_id = mp.manager_id " +
+                        "JOIN users u ON mp.user_id = u.user_id " +
+                        "WHERE username = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql1, username);
             while (results.next()) {
                 properties.add(mapRowToProperty(results));
             }
@@ -82,17 +101,23 @@ public class JdbcPropertyDao implements PropertyDao {
 
     @Override
     public Property createProperty(Property property, Principal principal) {
-       // int newPropertyId;
+        // int newPropertyId;
 
+        // try {
+//            String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
+//                    "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
+//
+//            int  newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
+//            sql = " INSERT INTO user_properties (user_id, property_id) SELECT user_id, ? " +
+//                    "FROM users " +
+//                    "WHERE username = ?;";
+//            jdbcTemplate.queryForObject(sql, void.class, newPropertyId, principal.getName());
+
+        String sql = "INSERT INTO (manager_id, address, number_of_rooms, rent, is_available) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         try {
-            String sql = "INSERT INTO properties (address, number_of_rooms, rent, is_available, is_owner) " +
-                    "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
+            int newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getManagerId(), property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
 
-            int  newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner());
-            sql = " INSERT INTO user_properties (user_id, property_id) SELECT user_id, ? " +
-                    "FROM users " +
-                    "WHERE username = ?;";
-            jdbcTemplate.queryForObject(sql, void.class, newPropertyId, principal.getName());
             return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -104,11 +129,11 @@ public class JdbcPropertyDao implements PropertyDao {
     @Override
     public Property updateProperty(Property property) {
         Property updatedProperty = null;
-        String sql = "UPDATE properties SET address = ?, number_of_rooms = ?, rent = ?, is_available = ?, is_owner = ? " +
+        String sql = "UPDATE properties SET manager _id =?, address = ?, number_of_rooms = ?, rent = ?, is_available = ? " +
                 "WHERE property_id = ?;";
         try {
-            int numberOfRows = jdbcTemplate.update(sql, property.getAddress(),
-                    property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.isOwner(), property.getPropertyId());
+            int numberOfRows = jdbcTemplate.update(sql, property.getManagerId(), property.getAddress(),
+                    property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.getPropertyId());
             if (numberOfRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
@@ -137,9 +162,7 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     private Property mapRowToProperty(SqlRowSet results) {
-        Property property = new Property(results.getInt("property_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"), results.getBoolean("is_owner"));
-
-        return property;
+        return new Property(results.getInt("property_id"), results.getInt("manager_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"));
     }
 
     // THIS SHOULD BE FILTERED IN VUE BY RETURNING ALL PROPERTIES

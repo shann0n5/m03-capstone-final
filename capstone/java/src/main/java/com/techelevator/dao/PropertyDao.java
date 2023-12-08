@@ -12,7 +12,9 @@ public interface PropertyDao {
 
     Property getPropertyById(int propertyId);
 
-    List<Property> getPropertiesByUsername(String username);
+    //List<Property> getPropertiesByUsername(String username);
+    List<Property> getPropertiesByTenantUsername(String username);
+    List<Property> getPropertiesByManagerUsername(String username);
 
 //    List<Property> getPropertiesByCityState(String state, String city);
 //
