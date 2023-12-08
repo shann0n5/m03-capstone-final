@@ -91,15 +91,9 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public Application createApplication(Principal principal, Application application) {
-        //TODO: add logic to check above 18 , and property status is true(available)
+        Application newApplication;
         try{
-            application.setStatus("STATUS_PENDING");
-//            if(!application.isAbove18()){
-//
-//            }
-            Application newApplication = applicationDao.createApplication(application);;
-           // newApplication.setStatus("STATUS_PENDING");
-
+            newApplication = applicationDao.createApplication(application);;
             return newApplication;
         }catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());

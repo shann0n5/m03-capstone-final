@@ -92,12 +92,11 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/applications/approve/{id}")
-    public Application approveApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+    @PutMapping("/applications/update/{id}")
+    public Application updateApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
         try{
-            Application updatedApplication = applicationService.approveApplication(principal, application);
+            Application updatedApplication = applicationService.approveOrRejectApplication(principal, application);
             if(updatedApplication == null){
                 throw new ServiceException("No Application found with ID: " + applicationId);
             }
@@ -107,18 +106,18 @@ public class ApplicationController {
         }
     }
 
-    @PutMapping("/applications/reject/{id}")
-    public Application rejectApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
-        try{
-            Application updatedApplication = applicationService.rejectApplication(principal, application);
-            if(updatedApplication == null){
-                throw new ServiceException("No Application found with ID: " + applicationId);
-            }
-            return updatedApplication;
-        }catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
-        }
-    }
-
+//    @PutMapping("/applications/reject/{id}")
+//    public Application rejectApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+//        try{
+//            Application updatedApplication = applicationService.rejectApplication(principal, application);
+//            if(updatedApplication == null){
+//                throw new ServiceException("No Application found with ID: " + applicationId);
+//            }
+//            return updatedApplication;
+//        }catch (ServiceException e) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+//        }
+//    }
 
 }
+
