@@ -1,26 +1,37 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class RentTransaction {
-
     private int transactionId;
-    @NotNull( message = "The field 'amount' is required.")
+    @NotEmpty( message = "The field 'tenantId' is required.")
+    private int tenantId;
+    @NotEmpty( message = "The field 'amount' is required.")
     private BigDecimal amount;
-    @NotNull( message = "The field 'dueDate' is required.")
+    @NotEmpty( message = "The field 'dueDate' is required.")
     private Date dueDate;
-    @NotNull( message = "The field 'pastDue' is required.")
+    @NotEmpty( message = "The field 'pastDue' is required.")
     private boolean pastDue;
 
     public RentTransaction() {}
 
-    public RentTransaction(int transactionId, BigDecimal amount, Date dueDate, boolean pastDue) {
+    public RentTransaction(int transactionId, int tenantId, BigDecimal amount, Date dueDate, boolean pastDue) {
         this.transactionId = transactionId;
+        this.tenantId = tenantId;
         this.amount = amount;
         this.dueDate = dueDate;
         this.pastDue = pastDue;
+    }
+
+    public int getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(int tenantId) {
+        this.tenantId = tenantId;
     }
 
     public int getTransactionId() {

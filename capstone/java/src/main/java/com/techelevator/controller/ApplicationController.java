@@ -34,7 +34,6 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/applications")
     public List<Application> getMyApplications(@Valid Principal principal) {
@@ -45,7 +44,28 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/applications/status/{status}")
+    public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
+        try{
+            List<Application> applications = applicationService.viewApplicationsByStatus(principal, status);
+            return applications;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
+    @GetMapping("/applications/{id}")
+    public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
+        try{
+            Application application = applicationService.viewApplicationById(principal, applicationId);
+            if(application == null){
+                throw new ServiceException("No Application found with ID: " + applicationId);
+            }
+            return application;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/applications")
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,32 +80,6 @@ public class ApplicationController {
             }
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    //TODO: endpoint works but giving list of same application
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/applications/status/{status}")
-    public List<Application> getApplicationByStatus(@Valid Principal principal, @PathVariable("status") String status){
-        try{
-            List<Application> applications = applicationService.viewApplicationsByStatus(principal, status);
-            return applications;
-        }catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
-        }
-    }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/applications/{id}")
-    public Application getApplicationById(@Valid Principal principal, @PathVariable("id") int applicationId){
-        try{
-            Application application = applicationService.viewApplicationById(principal, applicationId);
-            if(application == null){
-                throw new ServiceException("No Application found with ID: " + applicationId);
-            }
-            return application;
-        }catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
 

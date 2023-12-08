@@ -147,10 +147,10 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
 
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {
         ServiceRequest serviceRequest = new ServiceRequest();
-                serviceRequest.setServiceRequestId(results.getInt("service_request_id"));
-                serviceRequest.setRequestDetails(results.getString("request_details"));
-                serviceRequest.setStatus(results.getString("status"));
-
+        serviceRequest.setServiceRequestId(results.getInt("service_request_id"));
+        serviceRequest.setTenantId(results.getInt("tenant_id"));
+        serviceRequest.setRequestDetails(results.getString("request_details"));
+        serviceRequest.setStatus(results.getString("status"));
         return serviceRequest;
     }
 }
