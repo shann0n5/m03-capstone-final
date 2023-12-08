@@ -1,15 +1,14 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.PropertyDao;
 import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Property;
 import com.techelevator.service.PropertyService;
-import com.techelevator.service.PropertyServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
@@ -18,9 +17,11 @@ import java.util.List;
 @CrossOrigin
 public class PropertyController {
     private final PropertyService propertyService;
+    private final PropertyDao propertyDao;
 
-    public PropertyController(PropertyService propertyService) {
+    public PropertyController(PropertyService propertyService, PropertyDao propertyDao) {
         this.propertyService = propertyService;
+        this.propertyDao = propertyDao;
     }
 
     /**
@@ -74,12 +75,11 @@ public class PropertyController {
     @PostMapping("/properties")
     public Property addMyNewProperty(Principal principal, Property newProperty) {
         try {
-            Property createdProperty = propertyService.createProperty(principal, newProperty);
+            return propertyService.createProperty(principal, newProperty);
 //            if (createdProperty == null)
         } catch (ServiceException e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountereduuuuuuuu.");
         }
-        return null;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -99,6 +99,7 @@ public class PropertyController {
     public void deleteMyProperty(@PathVariable int id, Principal principal) {
         try {
             propertyService.deleteProperty(principal, id);
+
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }

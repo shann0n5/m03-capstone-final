@@ -105,11 +105,18 @@ public class JdbcPropertyDao implements PropertyDao {
 
     @Override
     public Property createProperty(Property property, int userId) {
-        int newPropertyId = 0 ;
-        String sql = "INSERT INTO properties (manager_id, address, number_of_rooms, rent, is_available) " +
+        int newPropertyId;
+        int manager_id;
+
+        String sql = "SELECT manager_id " +
+                "FROM manager_profiles " +
+                "WHERE user_id = ?;";
+
+        String sql2 = "INSERT INTO properties (manager_id, address, number_of_rooms, rent, is_available) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         try {
-           newPropertyId = jdbcTemplate.queryForObject(sql, int.class, property.getManagerId(), property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
+            manager_id = jdbcTemplate.queryForObject(sql, int.class, userId);
+            newPropertyId = jdbcTemplate.queryForObject(sql2, int.class, manager_id, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
 
             return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
