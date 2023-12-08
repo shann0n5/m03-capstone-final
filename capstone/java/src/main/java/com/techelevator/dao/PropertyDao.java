@@ -27,7 +27,7 @@ public interface PropertyDao {
 //
 //    List<Property> getPropertiesByAvailability(boolean isAvailable);
 
-    Property createProperty(Property property, Principal principal);
+   // Property createProperty(Property property, Principal principal);
 
     Property updateProperty(Property property);
 

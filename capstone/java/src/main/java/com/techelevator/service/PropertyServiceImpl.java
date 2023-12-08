@@ -67,7 +67,7 @@ public class PropertyServiceImpl implements PropertyService{
          ;
         int userId = userDao.getUserByUsername(principal.getName()).getId();
         try {
-            newProperty = propertyDao.createProperty(propertyToCreate, principal);
+            newProperty = propertyDao.createProperty(propertyToCreate, userId);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
