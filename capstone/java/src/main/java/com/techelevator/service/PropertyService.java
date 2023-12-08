@@ -15,7 +15,7 @@ public interface PropertyService {
 
     Property createProperty(Principal principal, Property property);
 
-    Property updateProperty(Principal principal, int propertyId, Property updatedProperty);
+    Property updateProperty(Property updatedProperty, Principal principal, int propertyId);
 
     void deleteProperty(Principal principal, int propertyId);
 
