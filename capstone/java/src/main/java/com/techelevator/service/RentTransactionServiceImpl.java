@@ -100,7 +100,8 @@ public class RentTransactionServiceImpl implements RentTransactionService{
     public void deleteRentTransaction(Principal principal, int id) {
         try{
             int userId = userDao.getUserByUsername(principal.getName()).getId();
-            rentTransactionDao.deleteRentTransactionById(userId, id);
+            int tenantId = userDao.getTenantIdFromUserId(userId);
+            rentTransactionDao.deleteRentTransactionById(tenantId, id);
         }catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

@@ -113,12 +113,12 @@ public class PropertyController {
         try {
             Property updatedProperty = propertyService.updateProperty(propertyToUpdateTo, principal, id);
             if (updatedProperty == null) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredggg.");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
             } else {
                 return updatedProperty;
             }
         } catch (ServiceException e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredeee.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }
     }
 
@@ -134,7 +134,7 @@ public class PropertyController {
         try {
             propertyService.deleteProperty(principal, id);
         } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encounteredyyy.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
         }
     }
 

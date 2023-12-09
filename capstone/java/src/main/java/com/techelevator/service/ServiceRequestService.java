@@ -11,5 +11,5 @@ public interface ServiceRequestService {
     public ServiceRequest viewServiceRequestById(Principal principal, int serviceRequestId);
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest);
     public ServiceRequest updateServiceRequest(Principal principal, ServiceRequest serviceRequest);
-
+    void withdrawServiceRequest(int serviceRequestId, Principal principal);
 }

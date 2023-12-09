@@ -68,7 +68,8 @@ public class PropertyServiceImpl implements PropertyService{
 
         try {
             int userId = userDao.getUserByUsername(principal.getName()).getId();
-            newProperty = propertyDao.createProperty(propertyToCreate, userId);
+            int managerId = userDao.getManagerIdFromUserId(userId);
+            newProperty = propertyDao.createProperty(propertyToCreate, managerId);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
@@ -79,7 +80,8 @@ public class PropertyServiceImpl implements PropertyService{
     public Property updateProperty(@Valid Property propertyToUpdateTo, Principal principal, int propertyId) {
         try {
             int userId = userDao.getUserByUsername(principal.getName()).getId();
-            Property updatedProperty = propertyDao.updateProperty(propertyToUpdateTo, userId);
+            int managerId = userDao.getManagerIdFromUserId(userId);
+            Property updatedProperty = propertyDao.updateProperty(propertyToUpdateTo, managerId);
             return updatedProperty;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
@@ -90,7 +92,8 @@ public class PropertyServiceImpl implements PropertyService{
     public void deleteProperty(Principal principal, int propertyId){
         try {
             int userId = userDao.getUserByUsername(principal.getName()).getId();
-            propertyDao.deleteProperty(propertyId, userId);
+            int managerId = userDao.getManagerIdFromUserId(userId);
+            propertyDao.deleteProperty(propertyId, managerId);
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

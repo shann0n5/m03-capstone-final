@@ -18,7 +18,6 @@ public interface ServiceRequestDao {
 
     ServiceRequest updateServiceRequest(ServiceRequest serviceRequest);
 
-    int deleteServiceRequestById(int serviceRequestId);
-    int getManagerIdFromUserId(int userId);
-    int getTenantIdFromUserId(int userId);
+    int deleteServiceRequestById(int serviceRequestId, int userId);
+
 }
