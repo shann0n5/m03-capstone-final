@@ -91,6 +91,8 @@ public class ServiceRequestController {
             if(createdServiceRequest == null){
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
             } else {
+                //TODO send notification here/after creating a service request as a confirmation email to the user that
+                // it was created ADD other methods for logic to the notification service layer
                 return ResponseEntity.ok(createdServiceRequest);
             }
         }catch (ServiceException e) {
@@ -120,6 +122,7 @@ public class ServiceRequestController {
             if (updatedServiceRequest == null){
                 throw new ServiceException("No service request found with ID: " + id);
             } else {
+                // TODO SEND A NOTIFICATION OUT WHEN THE STATUS IS UPDATED TO STATUS COMPLETE
                 return updatedServiceRequest;
             }
         } catch (ServiceException e) {
