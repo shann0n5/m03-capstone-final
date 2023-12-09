@@ -104,7 +104,7 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //TODO: send notification here ??????
     @PutMapping("rent-transactions/update/{id}")
     public RentTransaction updateRentTransaction(@Valid Principal principal, @RequestBody RentTransaction rentTransaction,
                                                  @PathVariable("id") int rentTransactionId){

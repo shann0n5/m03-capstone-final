@@ -4,6 +4,7 @@ import com.techelevator.exception.ServiceException;
 import com.techelevator.model.Application;
 import com.techelevator.service.ApplicationService;
 import com.techelevator.service.ApplicationServiceImpl;
+import com.techelevator.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,9 +20,15 @@ import java.util.List;
 @CrossOrigin
 public class ApplicationController {
     private ApplicationService applicationService;
+    private NotificationService notificationService;
 
-    public ApplicationController(ApplicationService applicationService) {
+//    public ApplicationController(ApplicationService applicationService) {
+//        this.applicationService = applicationService;
+//    }
+
+    public ApplicationController(ApplicationService applicationService, NotificationService notificationService) {
         this.applicationService = applicationService;
+        this.notificationService = notificationService;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -87,6 +94,7 @@ public class ApplicationController {
             if(createdApplication == null){
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
+                notificationService.sendEmail();
                 return ResponseEntity.ok(createdApplication);
             }
         } catch (ServiceException e) {
@@ -103,7 +111,7 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')") //TODO: send notification here ??????
     @PutMapping("/applications/update/{id}")
     public Application updateApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
         application.setApplicationId(applicationId);
