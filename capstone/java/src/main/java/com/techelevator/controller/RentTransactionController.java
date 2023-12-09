@@ -5,10 +5,9 @@ import com.techelevator.model.Application;
 import com.techelevator.model.RentTransaction;
 import com.techelevator.service.RentTransactionService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -78,5 +77,33 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @PostMapping("/rent-transactions")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<RentTransaction> sendRentTransaction(@Valid Principal principal, @RequestBody RentTransaction
+                                                               newRentTransaction){
+        RentTransaction createdRentTransaction= null;
+        try{
+            createdRentTransaction = rentTransactionService.createRentTransaction(principal,newRentTransaction);
+            if(createdRentTransaction == null){
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return ResponseEntity.ok(createdRentTransaction);
+            }
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @DeleteMapping("/rent-transactions/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletedRentTransactions(@Valid Principal principal,@PathVariable("id") int rentTransactionId){
+        try{
+            rentTransactionService.deleteRentTransaction(principal,rentTransactionId);
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

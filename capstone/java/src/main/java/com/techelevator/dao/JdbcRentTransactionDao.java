@@ -169,12 +169,12 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     @Override
     public RentTransaction createRentTransaction(RentTransaction rentTransaction) {
         RentTransaction newRentTransaction = null;
-        String sql = "INSERT INTO rent_transactions (amount, due_date, past_due) " +
-                "VALUES (?, ?, ?) RETURNING transaction_id;";
+        String sql = "INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) " +
+                "VALUES (?, ?, ?, ?) RETURNING transaction_id;";
         try {
-            int newRentTransactionId = jdbcTemplate.queryForObject(sql, int.class, rentTransaction.getAmount(), rentTransaction.getDueDate(), rentTransaction.isPastDue());
+            int newRentTransactionId = jdbcTemplate.queryForObject(sql, int.class, rentTransaction.getTenantId(),
+                    rentTransaction.getAmount(), rentTransaction.getDueDate(), rentTransaction.isPastDue());
             newRentTransaction = getRentTransactionById(newRentTransactionId);
-
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -205,17 +205,28 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     }
 
     @Override
-    public int deleteRentTransactionById(int transactionId) {
+    public int deleteRentTransactionById(int userId,int transactionId) {
         int rowsAffected;
-        String sql = "DELETE FROM rent_transactions WHERE transaction_id = ?;";
+        String sql = "DELETE FROM rent_transactions rt WHERE rt.tenant_id = ? AND transaction_id = ?;";
         try {
-            rowsAffected = jdbcTemplate.update(sql, transactionId);
+            rowsAffected = jdbcTemplate.update(sql, getTenantIdFromUserId(userId), transactionId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
         return rowsAffected;
+    }
+
+    private int getTenantIdFromUserId(int userId){
+        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, int.class, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
     }
 
     private RentTransaction mapRowToTransfer(SqlRowSet results) {

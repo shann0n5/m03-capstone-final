@@ -12,4 +12,5 @@ public interface RentTransactionService {
     List<RentTransaction> viewRentTransactionsByPropertyId(Principal principal, int propertyId);
     RentTransaction viewRentTransactionById(Principal principal, int rentTransactionId);
     RentTransaction createRentTransaction(Principal principal, RentTransaction rentTransaction);
+    void deleteRentTransaction(Principal principal, int id);
 }
