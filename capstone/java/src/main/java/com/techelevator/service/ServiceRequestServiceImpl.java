@@ -10,6 +10,7 @@ import com.techelevator.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,37 +102,50 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
             serviceRequest.setTenantId(tenantId);   // automatically set the tenantId to the user's tenantId
             serviceRequest.setStatus(STATUS_OPEN);  // automatically set status to open
             return serviceRequestDao.createServiceRequest(serviceRequest);
-
-
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
 
     @Override
-    public ServiceRequest updateServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-        List<ServiceRequest> openServiceRequests = viewServiceRequestsByStatus(principal, "STATUS _OPEN");
+    public ServiceRequest updateServiceRequest(@Valid ServiceRequest serviceRequest, Principal principal) {
+        List<ServiceRequest> openOrInProgressServiceRequests = viewServiceRequestsByStatus(principal, STATUS_OPEN);
+        openOrInProgressServiceRequests.addAll(viewServiceRequestsByStatus(principal,STATUS_IN_PROGRESS));
         ServiceRequest updatedServiceRequest = null;
         try {
-            for (ServiceRequest request : openServiceRequests){
+            // serviceRequest what if they put in compelte instead of complete check that serviceRequest.getStatus equals/contains the status constants
+
+            int userId = userDao.getUserByUsername(principal.getName()).getId();
+            int managerId = userDao.getManagerIdFromUserId(userId);
+
+            for (ServiceRequest request : openOrInProgressServiceRequests){
                 if(request.getServiceRequestId() == serviceRequest.getServiceRequestId()){
-                    updatedServiceRequest = serviceRequestDao.updateServiceRequest(serviceRequest);
+                    serviceRequest.setTenantId(request.getTenantId());
+                    serviceRequest.setRequestDetails((request.getRequestDetails()));
+
+                    // check that the status they are updating to matches STATUS_IN_PROGRESS or STATUS_COMPLETE when ignoring case, then set the status to the constant
+                    if (serviceRequest.getStatus().toUpperCase().trim().contains(STATUS_IN_PROGRESS)) {
+                        serviceRequest.setStatus(STATUS_IN_PROGRESS);
+                        updatedServiceRequest = serviceRequestDao.updateServiceRequest(serviceRequest, managerId);
+                    } else if (serviceRequest.getStatus().toUpperCase().trim().contains(STATUS_COMPLETE)) {
+                        serviceRequest.setStatus(STATUS_COMPLETE);
+                        updatedServiceRequest = serviceRequestDao.updateServiceRequest(serviceRequest, managerId);
+                    }
                 }
             }
             return updatedServiceRequest;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
-
     }
+
     public void withdrawServiceRequest(int serviceRequestId, Principal principal) {
         try {
             int userId = userDao.getUserByUsername(principal.getName()).getId();
-            serviceRequestDao.deleteServiceRequestById(serviceRequestId, userId);
+            int tenantId = userDao.getTenantIdFromUserId(userId);
+            serviceRequestDao.deleteServiceRequestById(serviceRequestId, tenantId);
         }  catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
-
     }
-
 }

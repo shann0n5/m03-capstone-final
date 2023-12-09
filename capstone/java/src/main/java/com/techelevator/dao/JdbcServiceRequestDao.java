@@ -45,6 +45,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return serviceRequests;
     }
+
     @Override //TENANT accessing their own service requests
     public List<ServiceRequest> getServiceRequestsByTenantUsername(String username) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
@@ -67,15 +68,15 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    public ServiceRequest getManagerServiceRequestById(int serviceRequestId, int userId) {
+    public ServiceRequest getManagerServiceRequestById(int serviceRequestId, int managerId) {
         ServiceRequest serviceRequest = null;
-        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
-                "FROM service_requests " +
+        String sql = "SELECT sr.service_request_id, sr.tenant_id, sr.request_details, sr.status " +
+                "FROM service_requests sr " +
                 "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
                 "JOIN properties p ON tp.property_id = p.property_id " +
                 "WHERE service_request_id = ? AND manager_id = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId, managerId);
             if (results.next()) {
                 serviceRequest = mapRowToServiceRequest(results);
             }
@@ -86,14 +87,15 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return serviceRequest;
     }
+
     @Override
-    public ServiceRequest getTenantServiceRequestById(int serviceRequestId, int id) {
+    public ServiceRequest getTenantServiceRequestById(int serviceRequestId, int tenantId) {
         ServiceRequest serviceRequest = null;
         String sql = "SELECT service_request_id, tenant_id, request_details, status " +
                 "FROM service_requests " +
                 "WHERE service_request_id = ? AND tenant_id = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId, id);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId, tenantId);
             if (results.next()) {
                 serviceRequest = mapRowToServiceRequest(results);
             }
@@ -112,8 +114,8 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     @Override
     public List<ServiceRequest> getManagerServiceRequestsByStatus(String status, int id) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
-                "FROM service_requests " +
+        String sql = "SELECT sr.service_request_id, sr.tenant_id, sr.request_details, sr.status " +
+                "FROM service_requests sr " +
                 "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
                 "JOIN properties p ON tp.property_id = p.property_id " +
                 "WHERE status = ? AND manager_id = ?;";
@@ -129,6 +131,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return serviceRequests;
     }
+
     @Override
     public List<ServiceRequest> getTenantServiceRequestsByStatus(String status, int id) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
@@ -167,17 +170,17 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    public ServiceRequest updateServiceRequest(ServiceRequest serviceRequest) {
+    public ServiceRequest updateServiceRequest(ServiceRequest serviceRequest, int managerId) {
         ServiceRequest updatedServiceRequest = null;
         String sql = "UPDATE service_requests " +
                 "SET tenant_id = ?, request_details = ?, status = ? " +
                 "WHERE service_request_id = ?;";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getTenantId(), serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
+            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getTenantId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus(), serviceRequest.getServiceRequestId());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
-//                updatedServiceRequest = getServiceRequestById(serviceRequest.getServiceRequestId());
+                updatedServiceRequest = getManagerServiceRequestById(serviceRequest.getServiceRequestId(), managerId);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -188,11 +191,11 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    public int deleteServiceRequestById(int serviceRequestId, int userId) {
+    public int deleteServiceRequestById(int serviceRequestId, int tenantId) {
         int rowsAffected;
-        String sql = "DELETE FROM service_requests WHERE service_request_id = ?;";
+        String sql = "DELETE FROM service_requests WHERE service_request_id = ? AND tenant_id = ?;";
         try {
-            rowsAffected = jdbcTemplate.update(sql, serviceRequestId);
+            rowsAffected = jdbcTemplate.update(sql, serviceRequestId, tenantId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -200,34 +203,6 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return rowsAffected;
     }
-
-//    @Override
-//    public int getManagerIdFromUserId(int userId) {
-//        String sql = "SELECT manager_id " +
-//                "FROM manager_profiles " +
-//                "WHERE user_id = ?;";
-//        try {
-//            return jdbcTemplate.queryForObject(sql, int.class, userId);
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new DaoException("Data integrity violation", e);
-//        }
-//
-//    }
-
-//    @Override
-//    public int getTenantIdFromUserId(int userId) {
-//        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
-//        try {
-//            return jdbcTemplate.queryForObject(sql, int.class, userId);
-//        } catch (CannotGetJdbcConnectionException e) {
-//            throw new DaoException("Unable to connect to server or database", e);
-//        } catch (DataIntegrityViolationException e) {
-//            throw new DaoException("Data integrity violation", e);
-//        }
-//
-//    }
 
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {
         ServiceRequest serviceRequest = new ServiceRequest();

@@ -20,15 +20,5 @@ public interface PropertyService {
     void deleteProperty(Principal principal, int propertyId);
 
 
-//    List<Property> viewPropertiesByNumberOfRooms(Principal principal, int numberOfRooms);
-//    List<Property> viewPropertiesByZipcode(Principal principal, String zip);
-//    List<Property> viewPropertiesByAvailability(Principal principal, boolean isAvailable);
-
-//    List<Property> searchPropertiesByZipcode (String zipcode);
-//    List<Property> searchPropertiesByStateAndCity (String state, String city);
-//    List<Property> searchPropertiesByNumberOfRooms (int numberOfRooms);
-//    List<Property> searchPropertiesByRent (BigDecimal rent);
-//    List<Property> searchPropertiesByAvailability (boolean isAvailable);
-
 
 }
