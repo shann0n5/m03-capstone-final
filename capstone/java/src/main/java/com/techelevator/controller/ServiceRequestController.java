@@ -28,25 +28,9 @@ public class ServiceRequestController {
      * @param principal
      * @return the service requests a user has made
      */
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping("/service-requests")
     public List<ServiceRequest> getAllMyServiceRequests(@Valid Principal principal){
-        try{
-            List<ServiceRequest> serviceRequests = serviceRequestService.viewAllServiceRequests(principal);
-            return serviceRequests;
-        } catch (ServiceException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
-        }
-    }
-
-    /**
-     *
-     * @param principal
-     * @return service requests for properties managed by user
-     */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/service-requests/managing")
-    public List<ServiceRequest> getAllServiceRequests(@Valid Principal principal){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewAllServiceRequests(principal);
             return serviceRequests;
@@ -61,8 +45,6 @@ public class ServiceRequestController {
      * @param serviceRequestId
      * @return a service request by service request id
      */
-
-    //works
     @GetMapping("/service-requests/{id}")
     public ServiceRequest getServiceRequestById(@Valid Principal principal, @PathVariable("id") int serviceRequestId){
         try{
@@ -82,9 +64,6 @@ public class ServiceRequestController {
      * @param status
      * @return service requests by status
      */
-
-//TODO double check this after getting put to work
-    //works for users
     @GetMapping("/service-requests/status/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, @PathVariable String status){
         try{
@@ -119,7 +98,6 @@ public class ServiceRequestController {
         }
     }
 
-
     /**
      * manager can update a service request
      *
@@ -132,20 +110,26 @@ public class ServiceRequestController {
     //THIS ONE SAYS server error encountered
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/service-requests/{id}") //Status: In Progress
-    public void approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest, @PathVariable int id){
+    public ServiceRequest updateServiceRequestStatus(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest, @PathVariable int id){
+        if (id <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Client side error - make sure your request is properly defined.");
+        }
+        serviceRequest.setServiceRequestId(id);
         try {
-            ServiceRequest updateServiceRequest = serviceRequestService.updateServiceRequest(principal, serviceRequest);
-            if (updateServiceRequest == null){
+            ServiceRequest updatedServiceRequest = serviceRequestService.updateServiceRequest(serviceRequest, principal);
+            if (updatedServiceRequest == null){
                 throw new ServiceException("No service request found with ID: " + id);
+            } else {
+                return updatedServiceRequest;
             }
-
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/service-request/{id}")
+    @DeleteMapping("/service-requests/{id}")
     public  void deleteServiceRequest(@PathVariable int id, Principal principal) {
        try {
            serviceRequestService.withdrawServiceRequest(id, principal);
