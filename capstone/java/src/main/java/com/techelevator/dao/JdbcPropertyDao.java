@@ -101,12 +101,12 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property createProperty(Property property, int userId) {
+    public Property createProperty(Property property, int managerId) {
         int newPropertyId;
         String sql = "INSERT INTO properties (manager_id, address, number_of_rooms, rent, is_available) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING property_id;";
         try {
-            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, getManagerIdFromUserId(userId), property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
+            newPropertyId = jdbcTemplate.queryForObject(sql, int.class, managerId, property.getAddress(), property.getNumberOfRooms(), property.getRent(), property.isAvailable());
 
             return getPropertyById(newPropertyId);
         } catch (CannotGetJdbcConnectionException e) {
@@ -117,12 +117,12 @@ public class JdbcPropertyDao implements PropertyDao {
     }
 
     @Override
-    public Property updateProperty(Property property, int userId) {
+    public Property updateProperty(Property property, int managerId) {
         Property updatedProperty = new Property();
         String sql = "UPDATE properties SET manager_id = ?, address = ?, number_of_rooms = ?, rent = ?, is_available = ? " +
                 "WHERE property_id = ?;";
         try {
-            int numberOfRows = jdbcTemplate.update(sql, getManagerIdFromUserId(userId), property.getAddress(),
+            int numberOfRows = jdbcTemplate.update(sql, managerId, property.getAddress(),
                     property.getNumberOfRooms(), property.getRent(), property.isAvailable(), property.getPropertyId());
             if (numberOfRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
@@ -139,14 +139,11 @@ public class JdbcPropertyDao implements PropertyDao {
 
 
     @Override
-    public int deleteProperty(int propertyId, int userId) {
+    public int deleteProperty(int propertyId, int managerId) {
         int rowsAffected;
-
         String sql = "DELETE FROM properties WHERE property_id = ? AND manager_id = ?;";
-
         try {
-
-            rowsAffected = jdbcTemplate.update(sql, propertyId, getManagerIdFromUserId(userId));
+            rowsAffected = jdbcTemplate.update(sql, propertyId, managerId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -155,20 +152,9 @@ public class JdbcPropertyDao implements PropertyDao {
         return rowsAffected;
     }
 
+
     private Property mapRowToProperty(SqlRowSet results) {
         return new Property(results.getInt("property_id"), results.getInt("manager_id"), results.getString("address"), results.getInt("number_of_rooms"), results.getBigDecimal("rent"), results.getBoolean("is_available"));
     }
-    public int getManagerIdFromUserId(int userId) {
-        String sql = "SELECT manager_id " +
-                "FROM manager_profiles " +
-                "WHERE user_id = ?;";
-        try {
-            return jdbcTemplate.queryForObject(sql, int.class, userId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
 
-    }
 }

@@ -132,16 +132,25 @@ public class ServiceRequestController {
     //THIS ONE SAYS server error encountered
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/service-requests/{id}") //Status: In Progress
-    public ServiceRequest approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest, @PathVariable int id){
+    public void approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest, @PathVariable int id){
         try {
             ServiceRequest updateServiceRequest = serviceRequestService.updateServiceRequest(principal, serviceRequest);
             if (updateServiceRequest == null){
                 throw new ServiceException("No service request found with ID: " + id);
             }
-            return updateServiceRequest;
+
         } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/service-request/{id}")
+    public  void deleteServiceRequest(@PathVariable int id, Principal principal) {
+       try {
+           serviceRequestService.withdrawServiceRequest(id, principal);
+       } catch (ServiceException e) {
+           throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
+       }
+    }
 }

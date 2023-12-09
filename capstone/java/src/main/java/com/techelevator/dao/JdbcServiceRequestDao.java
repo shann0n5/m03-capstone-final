@@ -188,7 +188,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    public int deleteServiceRequestById(int serviceRequestId) {
+    public int deleteServiceRequestById(int serviceRequestId, int userId) {
         int rowsAffected;
         String sql = "DELETE FROM service_requests WHERE service_request_id = ?;";
         try {
@@ -201,33 +201,33 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         return rowsAffected;
     }
 
-    @Override
-    public int getManagerIdFromUserId(int userId) {
-        String sql = "SELECT manager_id " +
-                "FROM manager_profiles " +
-                "WHERE user_id = ?;";
-        try {
-            return jdbcTemplate.queryForObject(sql, int.class, userId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
+//    @Override
+//    public int getManagerIdFromUserId(int userId) {
+//        String sql = "SELECT manager_id " +
+//                "FROM manager_profiles " +
+//                "WHERE user_id = ?;";
+//        try {
+//            return jdbcTemplate.queryForObject(sql, int.class, userId);
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DaoException("Data integrity violation", e);
+//        }
+//
+//    }
 
-    }
-
-    @Override
-    public int getTenantIdFromUserId(int userId) {
-        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
-        try {
-            return jdbcTemplate.queryForObject(sql, int.class, userId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-
-    }
+//    @Override
+//    public int getTenantIdFromUserId(int userId) {
+//        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
+//        try {
+//            return jdbcTemplate.queryForObject(sql, int.class, userId);
+//        } catch (CannotGetJdbcConnectionException e) {
+//            throw new DaoException("Unable to connect to server or database", e);
+//        } catch (DataIntegrityViolationException e) {
+//            throw new DaoException("Data integrity violation", e);
+//        }
+//
+//    }
 
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {
         ServiceRequest serviceRequest = new ServiceRequest();

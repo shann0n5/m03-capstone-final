@@ -19,5 +19,5 @@ public interface RentTransactionDao {
 
     RentTransaction updateRentTransaction(RentTransaction rentTransaction);
 
-    int deleteRentTransactionById(int userId,int rentTransaction);
+    int deleteRentTransactionById(int tenantId, int rentTransaction);
 }

@@ -205,28 +205,17 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     }
 
     @Override
-    public int deleteRentTransactionById(int userId,int transactionId) {
+    public int deleteRentTransactionById(int tenantId, int transactionId) {
         int rowsAffected;
         String sql = "DELETE FROM rent_transactions rt WHERE rt.tenant_id = ? AND transaction_id = ?;";
         try {
-            rowsAffected = jdbcTemplate.update(sql, getTenantIdFromUserId(userId), transactionId);
+            rowsAffected = jdbcTemplate.update(sql, tenantId, transactionId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
         return rowsAffected;
-    }
-
-    private int getTenantIdFromUserId(int userId){
-        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, int.class, userId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
     }
 
     private RentTransaction mapRowToTransfer(SqlRowSet results) {

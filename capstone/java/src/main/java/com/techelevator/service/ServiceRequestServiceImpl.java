@@ -55,10 +55,10 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
         List<ServiceRequest> serviceRequests = new ArrayList<>();
         try {
             if (loggedInUser.getAuthorities().contains(managerRole)) {
-                int managerId = serviceRequestDao.getManagerIdFromUserId(loggedInUser.getId());
+                int managerId = userDao.getManagerIdFromUserId(loggedInUser.getId());
                  serviceRequests = serviceRequestDao.getManagerServiceRequestsByStatus(status, managerId);
             } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
-                int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+                int tenantId = userDao.getTenantIdFromUserId(loggedInUser.getId());
                 serviceRequests = serviceRequestDao.getTenantServiceRequestsByStatus(status, tenantId);
             }
             return serviceRequests;
@@ -80,10 +80,10 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
             }
             else {
                 if(loggedInUser.getAuthorities().contains(managerRole)){
-                    int managerId = serviceRequestDao.getManagerIdFromUserId(loggedInUser.getId());
+                    int managerId = userDao.getManagerIdFromUserId(loggedInUser.getId());
                     serviceRequest = serviceRequestDao.getManagerServiceRequestById(serviceRequestId, managerId);
                 } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
-                    int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+                    int tenantId = userDao.getTenantIdFromUserId(loggedInUser.getId());
                     serviceRequest = serviceRequestDao.getTenantServiceRequestById(serviceRequestId, tenantId);
                 }
                 return serviceRequest;
@@ -97,7 +97,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest) {
         User loggedInUser = userDao.getUserByUsername(principal.getName());
         try{
-            int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+            int tenantId = userDao.getTenantIdFromUserId(loggedInUser.getId());
             serviceRequest.setTenantId(tenantId);   // automatically set the tenantId to the user's tenantId
             serviceRequest.setStatus(STATUS_OPEN);  // automatically set status to open
             return serviceRequestDao.createServiceRequest(serviceRequest);
@@ -120,6 +120,15 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
             }
             return updatedServiceRequest;
         } catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+
+    }
+    public void withdrawServiceRequest(int serviceRequestId, Principal principal) {
+        try {
+            int userId = userDao.getUserByUsername(principal.getName()).getId();
+            serviceRequestDao.deleteServiceRequestById(serviceRequestId, userId);
+        }  catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
 
