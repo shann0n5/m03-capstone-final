@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import MangementServcies from '../services/MangementServcies';
+import MangementServcies from '../services/ManagementServices';
 export default {
 prop: {
   property: {

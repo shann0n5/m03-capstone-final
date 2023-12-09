@@ -1,26 +1,47 @@
 import axios from "axios";
 
 export default{
+    getMyApplications(){
+        return axios.get(`/applications`);
+    },
+    getApplicationById(applicationId){
+        return axios.get(`/applications/${applicationId}`);
+    },
+    addApplication(application){
+        return axios.post(`/applications`, application);
+    },
+    deleteApplication(applicationId){
+        return axios.delete(`/applications/${applicationId}`);
+    },
+
     
-    addServiceRequest() {
-        return axios.post('/service-request')
+    getMyRentTransactions(){
+        return axios.get(`/rent-transactions`);
     },
-    getServiceRequests() {
-        return axios.get('/service-requests');
+    getMyRentTransactionById(rentTransactionId){
+        return axios.get(`/rent-transactions/${rentTransactionId}`);
     },
-    getServiceRequestByTenantId(id){
-        return axios.get('/service-request/tenants/${id}');
+    addRentTransactions(rentTransaction){
+        return axios.post(`/rent-transactions`, rentTransaction);
     },
-    getServiceRequestById(id) {
-        return axios.get(`/service-requests/${id}`);
+    deleteRentTransactions(rentTransactionId){
+        return axios.delete(`/rent-transactions/${rentTransactionId}`);
+    }, 
+
+    
+    getAllMyServiceRequests(){
+        return axios.get(`/service-requests`);
     },
-    getServiceRequestByStatus(serviceRequest) {
-        return axios.get(`/service-requests/${serviceRequest.status}`)
+    getServiceRequestById(serviceRequestId){
+        return axios.get(`/service-requests/${serviceRequestId}`);
     },
-    updateServiceRequestApproved(id) {
-        return axios.put(`/service-requests/approve/${id}`);
+    getServiceRequestsByStatus(status){
+        return axios.get(`/service-requests/status/${status}`);
     },
-    updateServiceRequestStatusRejected(id) {
-        return axios.put(`/service-requests/reject/${id}`)
+    addServiceRequest(serviceRequest){
+        return axios.post(`/service-requests`, serviceRequest);
+    },
+    deleteServiceRequest(serviceRequestId){
+        return axios.delete(`service-requests/${serviceRequestId}`);
     }
 }
