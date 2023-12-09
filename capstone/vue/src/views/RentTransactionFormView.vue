@@ -1,7 +1,7 @@
 <template>
   <header>Rent Payment</header>
   <div class="back-to-rent-transactions">
-    <router-link v-bind:to="{name:'requestTransaction'}">back</router-link>
+    <router-link v-bind:to="{name:'rentTransaction'}">Back to Rent Transactions</router-link>
     <p></p>
     <rent-transaction-form v-bind:rentTransaction="rentTransaction" />
   </div>

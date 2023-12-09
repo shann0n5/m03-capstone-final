@@ -52,58 +52,84 @@ export function createStore(currentToken, currentUser) {
       ],
       applications:[
         {
-        applicationId: 3001,
+        applicationId: 5001,
         userId: 1004,
-        propertyId: 2001,
+        propertyId: 4001,
         status: 'STATUS_PENDING',
         hasRoomates: false,
         roomateNames: null
       },
       {
-        applicationId: 3002,
+        applicationId: 5002,
         userId: 1004,
-        propertyId: 2001,
+        propertyId: 4001,
         status: 'STATUS_WITHDRAWN',
         hasRoomates: true,
         roomateNames: 'Luna Lovegood'}
     ],
     serviceRequests: [
       {
-        serviceRequestId: 4001,
+        serviceRequestId: 6001,
         requestDetails: 'Plumbing needed',
         status: 'STATUS_COMPLETE'  
       },
       {
-        serviceRequestId: 4002,
+        serviceRequestId: 6002,
         requestDetails: 'Exterminator needed',
         status: 'STATUS_IN_PROGRESS',  
       },
       {
-        serviceRequestId: 4003,
+        serviceRequestId: 6003,
         requestDetails: 'Stove burner needs fixing',
         status: 'STATUS_OPEN'  
       }
     ],
     rentTransactions: [
       {
-        transactionId: 5001,
+        transactionId: 7001,
         amount: 2500.00,
         dueDate: '2023-01-01',
         pastDue: false
       },
       {
-        transactionId: 5002,
+        transactionId: 7002,
         amount: 2500.00,
         dueDate: '2023-01-01',
         pastDue: false
       },
       {
-        transactionId: 5003,
+        transactionId: 7003,
         amount: 1500.00,
         dueDate: '2023-01-01',
         pastDue: true
       }
-    ]
+    ],
+      properties: [
+      {
+        propertyId: 4001,
+        managerId: 2001,
+        numberOfRooms: 3,
+        rent: 5000.00,
+        isAvailable: true,
+        isOwner: true
+      },
+      {
+        propertyId: 4002,
+        managerId: 2001,
+        numberOfRooms: 2,
+        rent: 3500.00,
+        isAvailable: false,
+        isOwner: true
+      },
+      {
+        propertyId: 4003,
+        managerId: 2002,
+        numberOfRooms: 1,
+        rent: 1500.00,
+        isAvailable: false,
+        isOwner: true
+      }
+      ]
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -121,6 +147,12 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
+      },
+      SET_AVAILABILITY_STATUS(state, payload) {
+        payload.property.isAvailable = payload.value;
+      },
+      SAVE_PROPERTY(state, property) {
+        state.properties.push(property);
       }
     },
   });

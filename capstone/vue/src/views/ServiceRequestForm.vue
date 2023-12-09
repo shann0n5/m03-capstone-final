@@ -1,7 +1,7 @@
 <template>
   <header>New Service Request</header>
   <div class="back-to-service-request">
-    <router-link v-bind:to="{name:'serviceRequest'}">back</router-link>
+    <router-link v-bind:to="{name:'serviceRequest'}">Back to Service Requests</router-link>
     <p></p>
     
   </div>
