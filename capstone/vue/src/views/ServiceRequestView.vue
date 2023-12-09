@@ -13,7 +13,6 @@
 
   <div class="action-boards">
     <div><service-request-section title="Open"  v-bind:serviceRequests="open"  /></div>
-    
     <service-request-section title="In Progress"  v-bind:serviceRequests="inProgress" />
     <service-request-section title="Complete" v-bind:serviceRequests="complete" />
   </div> 

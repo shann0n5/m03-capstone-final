@@ -23,12 +23,5 @@ computed: {
 </script>
 
 <style>
-.occupied-properties {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  background-color: #6f828e;
-  border-radius: 20px;
-  padding: 0 20px 20px 20px;
-}
+
 </style>

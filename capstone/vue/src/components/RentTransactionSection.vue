@@ -4,7 +4,7 @@
       <div class="rent-transactions">
           <div class="rent-transaction" v-for="rentTransaction in $store.state.rentTransactions" v-bind:key="rentTransaction.transactionId" v-on:click="viewRentTransactionDetails(rentTransaction)">
           <div class="header">
-            <h3>Rent Transaction Id: {{ rentTransaction.transactionId }}</h3> </div>
+            <h3>Rent Payment Id: {{ rentTransaction.transactionId }}</h3> </div>
          
          <div class="transaction-section-details">
          <div > Amount Due: {{ rentTransaction.amount }} </div>

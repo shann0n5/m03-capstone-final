@@ -13,9 +13,9 @@
 </div>
 
   <div class="action-boards">
-    <rent-transaction-section title="Upcoming" v-bind:rentTransactions="upcoming" />
-    <rent-transaction-section title="Past Due" v-bind:rentTransactions="pastDue" />
-    <rent-transaction-section title="Completed" v-bind:rentTransactions="completed" />
+    <rent-transaction-section title="Upcoming Payments" v-bind:rentTransactions="upcoming" />
+    <rent-transaction-section title="Past Due Payments" v-bind:rentTransactions="pastDue" />
+    <rent-transaction-section title="Completed Payments" v-bind:rentTransactions="complete" />
   </div> 
 </template>
 
