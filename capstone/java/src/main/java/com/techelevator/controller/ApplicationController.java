@@ -34,6 +34,17 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/applications/managing/{propertyId}")
+    public List<Application> getAllApplicationsByPropertyId(@Valid Principal principal, @PathVariable("propertyId")
+    int propertyId) {
+        try{
+            List<Application> applications = applicationService.viewApplicationsByPropertyId(principal, propertyId);
+            return applications;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/applications")
     public List<Application> getMyApplications(@Valid Principal principal) {
@@ -95,6 +106,7 @@ public class ApplicationController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/applications/update/{id}")
     public Application updateApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+        application.setApplicationId(applicationId);
         try{
             Application updatedApplication = applicationService.approveOrRejectApplication(principal, application);
             if(updatedApplication == null){
@@ -105,19 +117,5 @@ public class ApplicationController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }
-
-//    @PutMapping("/applications/reject/{id}")
-//    public Application rejectApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
-//        try{
-//            Application updatedApplication = applicationService.rejectApplication(principal, application);
-//            if(updatedApplication == null){
-//                throw new ServiceException("No Application found with ID: " + applicationId);
-//            }
-//            return updatedApplication;
-//        }catch (ServiceException e) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
-//        }
-//    }
-
 }
 

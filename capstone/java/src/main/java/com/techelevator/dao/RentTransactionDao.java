@@ -6,17 +6,18 @@ import java.util.List;
 
 public interface RentTransactionDao {
 
-    List<RentTransaction> getRentTransactions();
+    List<RentTransaction> getRentTransactionsByManagerUsername(String username);
+    List<RentTransaction> getRentTransactionsByTenantUsername(String username);
 
     RentTransaction getRentTransactionById(int transactionId);
 
-    List<RentTransaction> getRentTransactionsPastDue(boolean isPastDue);
-
-    List<RentTransaction> getRentTransactionsByProperty(int propertyId);
-
+    List<RentTransaction> getRentTransactionsPastDue(String username,boolean isPastDue);
+    List<RentTransaction> getRentTransactionsByPropertyId(String username,int propertyId);
+    RentTransaction getRentTransactionByIdManager(String username, int rentTransactionId);
+    RentTransaction getRentTransactionByIdTenant(String username, int rentTransactionId);
     RentTransaction createRentTransaction(RentTransaction rentTransaction);
 
     RentTransaction updateRentTransaction(RentTransaction rentTransaction);
 
-    int deleteRentTransactionById(int rentTransaction);
+    int deleteRentTransactionById(int userId,int rentTransaction);
 }

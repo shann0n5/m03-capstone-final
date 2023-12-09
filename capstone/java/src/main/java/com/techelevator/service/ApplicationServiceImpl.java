@@ -56,7 +56,6 @@ public class ApplicationServiceImpl implements ApplicationService{
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
-
     @Override
     public List<Application> viewApplicationsByPropertyId(Principal principal, int propertyId) {
         List<Application> applications = null;
@@ -120,7 +119,6 @@ public class ApplicationServiceImpl implements ApplicationService{
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
-
     @Override
     public void deleteApplication(Principal principal,int id) {
         try{
