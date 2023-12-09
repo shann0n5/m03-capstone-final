@@ -12,6 +12,10 @@
          <div>Payment Due Date: {{ rentTransaction.dueDate }}</div>
          
          <div>  {{ rentTransaction.pastDue }}</div>
+         <div class="add-new-rent-Transaction">
+    <router-link v-bind:to="{name:'createRentTransaction'}">Pay Rent</router-link>
+    
+  </div>
          </div>
         </div> 
         </div>

@@ -1,5 +1,6 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
+const NOTIFICATION_TIMEOUT = 6000;
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
@@ -153,7 +154,34 @@ export function createStore(currentToken, currentUser) {
       },
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);
-      }
+      },
+      SET_NOTIFICATION(state, notification) {
+        if (state.notification) {
+          this.commit('CLEAR_NOTIFICATION');
+        }
+
+        if (typeof notification === 'string') {
+          notification = {
+            message: notification,
+            type: 'error',
+            timeout: NOTIFICATION_TIMEOUT
+          }
+        } else {
+          notification.type = notification.type || 'error';
+          notification.timeout = notification.timeout || NOTIFICATION_TIMEOUT;
+        }
+        state.notification = notification;
+        notification.timer = window.setTimeout(() => {
+          this.commit('CLEAR_NOTIFICATION');
+        }, notification.timeout);
+      },
+
+      CLEAR_NOTIFICATION(state) {
+        if (state.notification && state.notification.timer) {
+          window.clearTimeout(state.notification.timer);
+        }
+        state.notification = null;
+    },
     },
   });
   return store;
