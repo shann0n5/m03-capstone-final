@@ -16,6 +16,11 @@ import java.util.List;
 
 @Service
 public class ServiceRequestServiceImpl implements ServiceRequestService{
+
+    private final String STATUS_COMPLETE = "STATUS_COMPLETE";
+    private final String STATUS_IN_PROGRESS = "STATUS_IN_PROGRESS";
+    private final String STATUS_OPEN = "STATUS_OPEN";
+
     private ServiceRequestDao serviceRequestDao;
     private UserDao userDao;
 
@@ -45,7 +50,8 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
     @Override
     public List<ServiceRequest> viewServiceRequestsByStatus(Principal principal, String status) {
         try {
-            List<ServiceRequest> serviceRequests = serviceRequestDao.getServiceRequestByStatus(status);
+            User user = userDao.getUserByUsername(principal.getName());
+            List<ServiceRequest> serviceRequests = serviceRequestDao.getServiceRequestByStatus(status, user.getId());
             return serviceRequests;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
@@ -80,9 +86,9 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public ServiceRequest updateServiceRequest(Principal principal, ServiceRequest serviceRequest) {
-        List<ServiceRequest> openServiceRequests = viewServiceRequestsByStatus(principal, "Open");
+        List<ServiceRequest> openServiceRequests = viewServiceRequestsByStatus(principal, "STATUS _OPEN");
         ServiceRequest updatedServiceRequest = null;
-        try{
+        try {
             for (ServiceRequest request : openServiceRequests){
                 if(request.getServiceRequestId() == serviceRequest.getServiceRequestId()){
                     updatedServiceRequest = serviceRequestDao.updateServiceRequest(serviceRequest);

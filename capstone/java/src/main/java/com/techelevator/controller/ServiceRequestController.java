@@ -61,6 +61,8 @@ public class ServiceRequestController {
      * @param serviceRequestId
      * @return a service request by service request id
      */
+
+    //works
     @GetMapping("/service-requests/{id}")
     public ServiceRequest getServiceRequestById(@Valid Principal principal, @PathVariable("id") int serviceRequestId){
         try{
@@ -80,8 +82,10 @@ public class ServiceRequestController {
      * @param status
      * @return service requests by status
      */
+    // says 200 ok but doesn't return a service request
+
     @GetMapping("/service-requests/status/{status}")
-    public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, String status){
+    public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, @PathVariable String status){
         try{
             List<ServiceRequest> serviceRequests = serviceRequestService.viewServiceRequestsByStatus(principal, status);
             return serviceRequests;
@@ -120,20 +124,21 @@ public class ServiceRequestController {
      *
      * @param principal
      * @param serviceRequest
-     * @param serviceRequestId
+     * @param id
      * @return the updated service request
      */
+
+    //THIS ONE SAYS server error encountered
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/service-requests/{id}") //Status: In Progress
-    public ServiceRequest approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest,
-                                                @PathVariable("id") int serviceRequestId){
-        try{
+    public ServiceRequest approveServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest serviceRequest, @PathVariable int id){
+        try {
             ServiceRequest updateServiceRequest = serviceRequestService.updateServiceRequest(principal, serviceRequest);
-            if(updateServiceRequest == null){
-                throw new ServiceException("No service request found with ID: " + serviceRequestId);
+            if (updateServiceRequest == null){
+                throw new ServiceException("No service request found with ID: " + id);
             }
             return updateServiceRequest;
-        }catch (ServiceException e) {
+        } catch (ServiceException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
         }
     }

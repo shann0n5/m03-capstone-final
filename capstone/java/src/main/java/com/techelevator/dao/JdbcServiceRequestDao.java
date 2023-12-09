@@ -68,7 +68,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     @Override
     public ServiceRequest getServiceRequestById(int serviceRequestId) {
         ServiceRequest serviceRequest = null;
-        String sql = "SELECT service_request_id, request_details, status " +
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
                 "FROM service_requests " +
                 "WHERE service_request_id = ?;";
         try {
@@ -90,11 +90,18 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     // users (tenants) will see their requests by status
     // admin will see all requests related to their properties
 
-    public List<ServiceRequest> getServiceRequestByStatus(String status) {
+    public List<ServiceRequest> getServiceRequestByStatus(String status, int userId) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        String sql = "SELECT service_request_id, request_details, status " +
-                "FROM service_requests " +
-                "WHERE status = ?;";
+        final String SQL_WHERE_MANAGER_ID =
+                "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
+                "JOIN properties p ON tp.property_id = p.property_id " +
+                "WHERE status = ? AND manager_id = ?;";
+        final String SQL_WHERE_TENANT_ID = "WHERE status = ? AND tenant_id = ?;";
+
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
+                "FROM service_requests ";
+
+        // if () sql+= SQL_WHERE_TENANT_ID
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, status);
             while (results.next()) {
@@ -109,15 +116,11 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
+//Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
     public ServiceRequest createServiceRequest(ServiceRequest serviceRequest) {
-//        String status = "";
-//        String open = "Open";
-//        String inProg = "In Prog";
-//        String complete = "Complete";
         ServiceRequest request = null;
-        String sql = "INSERT INTO service_requests (request_details, status) " +
-                "VALUES (?, ?) RETURNING service_request_id;";
+        String sql = "INSERT INTO service_requests (tenant_id, request_details, status) " +
+                "VALUES (?, ?, ?) RETURNING service_request_id;";
         try {
 //            if ((serviceRequest.getStatus().toLowerCase()).contains(open.toLowerCase())) {
 //                serviceRequest.setStatus(open);
@@ -143,10 +146,10 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     public ServiceRequest updateServiceRequest(ServiceRequest serviceRequest) {
         ServiceRequest updatedServiceRequest = null;
         String sql = "UPDATE service_requests " +
-                "SET request_details = ?, status = ? " +
+                "SET tenant_id = ?, request_details = ?, status = ? " +
                 "WHERE service_request_id = ?;";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
+            int rowsAffected = jdbcTemplate.update(sql, serviceRequest.getTenantId(), serviceRequest.getServiceRequestId(), serviceRequest.getRequestDetails(), serviceRequest.getStatus());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
@@ -172,6 +175,20 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
             throw new DaoException("Data integrity violation", e);
         }
         return rowsAffected;
+    }
+    //TODO MAKE THIS A METHOD IN USER DAO?? CAN CALL FROM ALL DAOS USING USERDAO
+    public int getIdFromUserId(int userId) {
+        String sql = "SELECT manager_id " +
+                "FROM manager_profiles " +
+                "WHERE user_id = ?;";
+        try {
+            return jdbcTemplate.queryForObject(sql, int.class, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
     }
 
     private ServiceRequest mapRowToServiceRequest(SqlRowSet results) {

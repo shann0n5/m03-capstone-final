@@ -10,7 +10,7 @@ public interface ServiceRequestDao {
     ServiceRequest getServiceRequestById(int serviceRequestId);
 
     //Status: Open, In Prog, Complete
-    List<ServiceRequest> getServiceRequestByStatus(String status);
+    List<ServiceRequest> getServiceRequestByStatus(String status, int userId);
 
     ServiceRequest createServiceRequest(ServiceRequest serviceRequest);
 
