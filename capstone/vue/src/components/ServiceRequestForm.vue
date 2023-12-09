@@ -28,7 +28,12 @@ export default {
             description: this.serviceRequest.description
         }
     };
-}
+},
+    methods: {
+        cancelForm() {
+      this.$router.push({ name: 'serviceRequest', params: { id: this.editServiceRequest.serviceRequestId } });
+    }
+    }
 }
 </script>
 

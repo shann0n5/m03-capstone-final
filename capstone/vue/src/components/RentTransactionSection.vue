@@ -2,17 +2,20 @@
     <div class="action-board">
       <h2>{{title}}</h2>
       <div class="rent-transactions">
-          <div class="rent-transaction" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.transactionId" v-on:click="viewRentTransactionDetails(rentTransaction)">
+          <div class="rent-transaction" v-for="rentTransaction in $store.state.rentTransactions" v-bind:key="rentTransaction.transactionId" v-on:click="viewRentTransactionDetails(rentTransaction)">
           <div class="header">
             <h3>Rent Transaction Id: {{ rentTransaction.transactionId }}</h3> </div>
-         </div> 
          
-         <!-- <div> Amount Due: {{ rentTransaction.amount }}</div>
+         <div class="transaction-section-details">
+         <div > Amount Due: {{ rentTransaction.amount }} </div>
          
          <div>Payment Due Date: {{ rentTransaction.dueDate }}</div>
          
-         <div>  {{ rentTransaction.pastDue }}</div> -->
+         <div>  {{ rentTransaction.pastDue }}</div>
+         </div>
+        </div> 
         </div>
+
     </div>
   </template>
   

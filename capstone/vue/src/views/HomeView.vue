@@ -6,6 +6,9 @@
 <div class="tenant-home-btn"> 
   <router-link v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link>
 </div>
+<div class="manager-home-btn"> 
+  <router-link v-bind:to="{name: 'propertyManagerMainPage'}">Property Manager Home</router-link>
+</div>
  
 </template>
 

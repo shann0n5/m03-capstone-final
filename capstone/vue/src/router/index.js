@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import PropertiesView from '../views/PropertiesView.vue';
+import AvailablePropertiesView from '../views/AvailablePropertiesView.vue'
 import ContactUsView from '../views/ContactUsView.vue';
 import QualificationsView from '../views/QualificationsView.vue'
 import AboutUsView from '../views/AboutUsView.vue';
@@ -15,7 +15,12 @@ import TenantMainPageView from '../views/TenantMainPageView.vue';
 import ServiceRequestView from '../views/ServiceRequestView.vue';
 import ServiceRequestFormView from '../views/ServiceRequestForm.vue'
 import RentTransactionsView from '../views/RentTransactionsView.vue';
-import RentTransactionFormView from '../views/RentTransactionFormView.vue'
+import RentTransactionFormView from '../views/RentTransactionFormView.vue';
+import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
+import NewPropertyFormView from '../views/NewPropertyFormView.vue';
+import PropertyDetailsView from '../views/PropertyDetailsView.vue';
+
+
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -58,9 +63,9 @@ const routes = [
     }
   },
   {
-    path: "/properties",
-    name: "properties",
-    component: PropertiesView,
+    path: "/available-properties",
+    name: "availableProperties",
+    component: AvailablePropertiesView,
     meta: {
       requiresAuth: false
     }
@@ -133,9 +138,31 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }
-
- 
+  },
+    {
+      path: "/property-manager-main-view",
+      name: "propertyManagerMainPage",
+      component: PropertyManagerMainView,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/properties/create",
+      name: "addProperty",
+      component: NewPropertyFormView,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/property-details/:propertyId",
+      name: "propertyDetails",
+      component: PropertyDetailsView,
+      meta: {
+        requiresAuth: false
+      }
+    }
 
 ];
 
