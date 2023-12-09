@@ -104,6 +104,21 @@ public class RentTransactionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("rent-transactions/update/{id}")
+    public RentTransaction updateRentTransaction(@Valid Principal principal, @RequestBody RentTransaction rentTransaction,
+                                                 @PathVariable("id") int rentTransactionId){
+        rentTransaction.setTransactionId(rentTransactionId);
+        try{
+            RentTransaction updatedRentTransaction = rentTransactionService.updateRentTransaction(principal,rentTransaction);
+            if(updatedRentTransaction == null){
+                throw new ServiceException("No Rent Transaction found with ID: " + rentTransactionId);
+            }
+            return updatedRentTransaction;
+        }catch (ServiceException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered");
+        }
+    }
 
 
 }

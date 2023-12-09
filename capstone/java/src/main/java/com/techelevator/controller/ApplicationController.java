@@ -106,6 +106,7 @@ public class ApplicationController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/applications/update/{id}")
     public Application updateApplication(@Valid Principal principal, @RequestBody Application application, @PathVariable("id") int applicationId){
+        application.setApplicationId(applicationId);
         try{
             Application updatedApplication = applicationService.approveOrRejectApplication(principal, application);
             if(updatedApplication == null){

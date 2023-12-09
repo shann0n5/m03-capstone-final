@@ -186,10 +186,10 @@ public class JdbcRentTransactionDao implements RentTransactionDao {
     @Override
     public RentTransaction updateRentTransaction(RentTransaction rentTransaction) {
         RentTransaction updatedRentTransaction = null;
-        String sql = "UPDATE rent_transactions SET amount = ?, due_date = ?, past_due = ? " +
+        String sql = "UPDATE rent_transactions SET tenant_id = ?, amount = ?, due_date = ?, past_due = ? " +
                 "WHERE transaction_id = ?;";
         try {
-            int numberOfRows = jdbcTemplate.update(sql, rentTransaction.getAmount(),
+            int numberOfRows = jdbcTemplate.update(sql, rentTransaction.getTenantId(), rentTransaction.getAmount(),
                     rentTransaction.getDueDate(), rentTransaction.isPastDue(), rentTransaction.getTransactionId());
             if (numberOfRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");

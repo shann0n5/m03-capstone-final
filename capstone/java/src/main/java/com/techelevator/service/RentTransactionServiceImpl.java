@@ -105,4 +105,22 @@ public class RentTransactionServiceImpl implements RentTransactionService{
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }
     }
+
+    @Override
+    public RentTransaction updateRentTransaction(Principal principal, RentTransaction rentTransaction) {
+        List<RentTransaction> pastDueRent = viewRentTransactionsByPastDue(principal, true);
+        RentTransaction updatedRentTransaction = null;
+        try{
+            for(RentTransaction transaction : pastDueRent){
+                if(transaction.getTransactionId() == rentTransaction.getTransactionId()){
+                        transaction.setPastDue(false);
+                    updatedRentTransaction = rentTransactionDao.updateRentTransaction(transaction);
+                }
+            }
+            return updatedRentTransaction;
+        }catch (DaoException e) {
+            throw new ServiceException("An error has occurred: " + e.getMessage());
+        }
+
+    }
 }
