@@ -49,9 +49,18 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public List<ServiceRequest> viewServiceRequestsByStatus(Principal principal, String status) {
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority tenantRole = new Authority("ROLE_USER");
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
         try {
-            User user = userDao.getUserByUsername(principal.getName());
-            List<ServiceRequest> serviceRequests = serviceRequestDao.getServiceRequestByStatus(status, user.getId());
+            if (loggedInUser.getAuthorities().contains(managerRole)) {
+                int managerId = serviceRequestDao.getManagerIdFromUserId(loggedInUser.getId());
+                 serviceRequests = serviceRequestDao.getManagerServiceRequestsByStatus(status, managerId);
+            } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
+                int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+                serviceRequests = serviceRequestDao.getTenantServiceRequestsByStatus(status, tenantId);
+            }
             return serviceRequests;
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
@@ -60,13 +69,23 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public ServiceRequest viewServiceRequestById(Principal principal, int serviceRequestId) {
+
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
+        Authority managerRole = new Authority("ROLE_ADMIN");
+        Authority tenantRole = new Authority("ROLE_USER");
         ServiceRequest serviceRequest = null;
         try{
-            if(serviceRequestId <= 4000){
+            if(serviceRequestId <= 6000){
                 throw new DaoException("Cannot find a service request with id provided.");
             }
             else {
-                serviceRequest = serviceRequestDao.getServiceRequestById(serviceRequestId);
+                if(loggedInUser.getAuthorities().contains(managerRole)){
+                    int managerId = serviceRequestDao.getManagerIdFromUserId(loggedInUser.getId());
+                    serviceRequest = serviceRequestDao.getManagerServiceRequestById(serviceRequestId, managerId);
+                } else if (loggedInUser.getAuthorities().contains(tenantRole)) {
+                    int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+                    serviceRequest = serviceRequestDao.getTenantServiceRequestById(serviceRequestId, tenantId);
+                }
                 return serviceRequest;
             }
         }catch (DaoException e) {
@@ -76,9 +95,14 @@ public class ServiceRequestServiceImpl implements ServiceRequestService{
 
     @Override
     public ServiceRequest createServiceRequest(Principal principal, ServiceRequest serviceRequest) {
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
         try{
-            ServiceRequest newServiceRequest = serviceRequestDao.createServiceRequest(serviceRequest);
-            return newServiceRequest;
+            int tenantId = serviceRequestDao.getTenantIdFromUserId(loggedInUser.getId());
+            serviceRequest.setTenantId(tenantId);   // automatically set the tenantId to the user's tenantId
+            serviceRequest.setStatus(STATUS_OPEN);  // automatically set status to open
+            return serviceRequestDao.createServiceRequest(serviceRequest);
+
+
         } catch (DaoException e) {
             throw new ServiceException("An error has occurred: " + e.getMessage());
         }

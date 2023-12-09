@@ -82,8 +82,9 @@ public class ServiceRequestController {
      * @param status
      * @return service requests by status
      */
-    // says 200 ok but doesn't return a service request
 
+//TODO double check this after getting put to work
+    //works for users
     @GetMapping("/service-requests/status/{status}")
     public List<ServiceRequest> getServiceRequestsByStatus(@Valid Principal principal, @PathVariable String status){
         try{
@@ -104,12 +105,12 @@ public class ServiceRequestController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/service-requests")
     @ResponseStatus(HttpStatus.CREATED) //Status: Open
-    public ResponseEntity<ServiceRequest> addServiceRequest(@Valid Principal principal, @RequestBody ServiceRequest newServiceRequest){
+    public ResponseEntity<ServiceRequest> addServiceRequest(@Valid @RequestBody ServiceRequest newServiceRequest, Principal principal){
         ServiceRequest createdServiceRequest = null;
         try{
             createdServiceRequest = serviceRequestService.createServiceRequest(principal, newServiceRequest);
             if(createdServiceRequest == null){
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Server error encountered.");
             } else {
                 return ResponseEntity.ok(createdServiceRequest);
             }

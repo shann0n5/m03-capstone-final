@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Authority;
 import com.techelevator.model.ServiceRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -66,11 +67,13 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-    public ServiceRequest getServiceRequestById(int serviceRequestId) {
+    public ServiceRequest getManagerServiceRequestById(int serviceRequestId, int userId) {
         ServiceRequest serviceRequest = null;
         String sql = "SELECT service_request_id, tenant_id, request_details, status " +
                 "FROM service_requests " +
-                "WHERE service_request_id = ?;";
+                "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
+                "JOIN properties p ON tp.property_id = p.property_id " +
+                "WHERE service_request_id = ? AND manager_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId);
             if (results.next()) {
@@ -83,27 +86,58 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return serviceRequest;
     }
-
     @Override
+    public ServiceRequest getTenantServiceRequestById(int serviceRequestId, int id) {
+        ServiceRequest serviceRequest = null;
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
+                "FROM service_requests " +
+                "WHERE service_request_id = ? AND tenant_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, serviceRequestId, id);
+            if (results.next()) {
+                serviceRequest = mapRowToServiceRequest(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return serviceRequest;
+    }
+
     //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
 
     // users (tenants) will see their requests by status
     // admin will see all requests related to their properties
-
-    public List<ServiceRequest> getServiceRequestByStatus(String status, int userId) {
+    @Override
+    public List<ServiceRequest> getManagerServiceRequestsByStatus(String status, int id) {
         List<ServiceRequest> serviceRequests = new ArrayList<>();
-        final String SQL_WHERE_MANAGER_ID =
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
+                "FROM service_requests " +
                 "JOIN tenant_profiles tp ON sr.tenant_id = tp.tenant_id " +
                 "JOIN properties p ON tp.property_id = p.property_id " +
                 "WHERE status = ? AND manager_id = ?;";
-        final String SQL_WHERE_TENANT_ID = "WHERE status = ? AND tenant_id = ?;";
-
-        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
-                "FROM service_requests ";
-
-        // if () sql+= SQL_WHERE_TENANT_ID
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, status);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, status, id);
+            while (results.next()) {
+                serviceRequests.add(mapRowToServiceRequest(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return serviceRequests;
+    }
+    @Override
+    public List<ServiceRequest> getTenantServiceRequestsByStatus(String status, int id) {
+        List<ServiceRequest> serviceRequests = new ArrayList<>();
+        String sql = "SELECT service_request_id, tenant_id, request_details, status " +
+                "FROM service_requests " +
+                "WHERE status = ? AND tenant_id = ?;";
+        try {
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, status, id);
             while (results.next()) {
                 serviceRequests.add(mapRowToServiceRequest(results));
             }
@@ -116,30 +150,20 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
     }
 
     @Override
-//Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
+    //Status: STATUS_OPEN, STATUS_IN_PROGRESS, STATUS_COMPLETE
     public ServiceRequest createServiceRequest(ServiceRequest serviceRequest) {
         ServiceRequest request = null;
         String sql = "INSERT INTO service_requests (tenant_id, request_details, status) " +
                 "VALUES (?, ?, ?) RETURNING service_request_id;";
         try {
-//            if ((serviceRequest.getStatus().toLowerCase()).contains(open.toLowerCase())) {
-//                serviceRequest.setStatus(open);
-//            } else if ((serviceRequest.getStatus().toLowerCase()).contains(inProg.toLowerCase())) {
-//                serviceRequest.setStatus(inProg);
-//            } else if ((serviceRequest.getStatus().toLowerCase()).contains(complete.toLowerCase())) {
-//                serviceRequest.setStatus(complete);
-//            }
-//            status = jdbcTemplate.queryForObject(sql, String.class, serviceRequest.getServiceRequestId(),
-//                    serviceRequest.getRequestDetails(), serviceRequest.getStatus());
-            int requestId = jdbcTemplate.queryForObject(sql, int.class, serviceRequest.getRequestDetails(),
-                    serviceRequest.getStatus());
-            request = getServiceRequestById(requestId);
+            int requestId = jdbcTemplate.queryForObject(sql, int.class, serviceRequest.getTenantId() , serviceRequest.getRequestDetails(), serviceRequest.getStatus());
+            return getTenantServiceRequestById(requestId, serviceRequest.getTenantId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return request;
+
     }
 
     @Override
@@ -153,7 +177,7 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
-                updatedServiceRequest = getServiceRequestById(serviceRequest.getServiceRequestId());
+//                updatedServiceRequest = getServiceRequestById(serviceRequest.getServiceRequestId());
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -176,11 +200,25 @@ public class JdbcServiceRequestDao implements ServiceRequestDao {
         }
         return rowsAffected;
     }
-    //TODO MAKE THIS A METHOD IN USER DAO?? CAN CALL FROM ALL DAOS USING USERDAO
-    public int getIdFromUserId(int userId) {
+
+    @Override
+    public int getManagerIdFromUserId(int userId) {
         String sql = "SELECT manager_id " +
                 "FROM manager_profiles " +
                 "WHERE user_id = ?;";
+        try {
+            return jdbcTemplate.queryForObject(sql, int.class, userId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+    }
+
+    @Override
+    public int getTenantIdFromUserId(int userId) {
+        String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
         try {
             return jdbcTemplate.queryForObject(sql, int.class, userId);
         } catch (CannotGetJdbcConnectionException e) {

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 public class ServiceRequest {
     private int serviceRequestId;
-    @NotEmpty( message = "The field 'tenantId' is required.")
+    @NotNull( message = "The field 'tenantId' is required.")
     private int tenantId;
     @NotEmpty( message = "The field 'requestDetails' is required.")
     private String requestDetails;
