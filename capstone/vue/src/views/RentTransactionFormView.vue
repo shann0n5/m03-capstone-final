@@ -9,6 +9,7 @@
 
 <script>
 import RentTransactionForm from '../components/RentTransactionForm.vue';
+import TenantServices from '../services/TenantServices';
 export default {
 components: {
   RentTransactionForm},

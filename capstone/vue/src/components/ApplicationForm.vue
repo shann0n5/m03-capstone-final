@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import MangementServcies from '../services/ManagementServices';
+import ManagementServices from '../services/ManagementServices';
 export default {
     props: {
         application:{
