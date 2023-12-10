@@ -1,0 +1,22 @@
+import axios from "axios";
+
+export default{
+    getProperties(){
+        return axios.get(`/properties`);
+    },
+    getPropertyById(propertyId){
+        return axios.get(`properties/${propertyId}`);
+    },
+    getAllMyProperties(){
+        return axios.get(`properties/managing`);
+    },
+    addProperty(property) {
+        return axios.post('/properties', property);
+    },
+    updateProperty(property) {
+        return axios.put(`/properties/${property.id}`, property);
+    },
+    deleteProperty(propertyId) {
+        return axios.delete(`/properties/${propertyId}`);
+    }
+}
