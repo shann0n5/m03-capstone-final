@@ -124,4 +124,48 @@ body {
         text-align: center;
         padding-top: 20px;
     }
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  cursor: pointer;
+}
+
+.btn-submit {
+  color: rgba(255,255,255,0.7);
+  background-color: #0062cc;
+  border-color: #005cbf;
+  text-decoration: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  color: rgba(255,255,255,1.0);
+  border-color: #fff;
+}
+fieldset {
+  border: none;
+}
+
+.btn-cancel {
+  color: rgba(255,255,255,0.7);
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-cancel:hover {
+  color: rgba(255,255,255,1.0);
+  border-color: rgba(255,255,255,1.0);
+}
 </style>
