@@ -13,7 +13,7 @@ import AboutUsView from '../views/AboutUsView.vue';
 import ApplicationView from '../views/ApplicationView.vue';
 import TenantMainPageView from '../views/TenantMainPageView.vue';
 import ServiceRequestView from '../views/ServiceRequestView.vue';
-import ServiceRequestFormView from '../views/ServiceRequestForm.vue'
+import ServiceRequestFormView from '../views/AddServiceRequestView.vue'
 import RentTransactionsView from '../views/RentTransactionsView.vue';
 import RentTransactionFormView from '../views/RentTransactionFormView.vue';
 import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
@@ -132,7 +132,7 @@ const routes = [
     }
   },
   {
-    path: "/rent-transaction/:rentTransactionId/edit",
+    path: "/rent-transaction/create",
     name: "createRentTransaction",
     component: RentTransactionFormView,
     meta: {

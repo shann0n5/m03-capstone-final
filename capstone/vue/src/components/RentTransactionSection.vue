@@ -4,16 +4,16 @@
       <div class="rent-transactions" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.rentTransactionId">
          
           <div class="header">
-            <h3>Rent Payment Id: {{ rentTransaction.rentTransactionId }}</h3> </div>
+            <h3>Rent Payment Id: {{rentTransaction.rentTransactionId}}</h3> </div>
          
          <div class="transaction-section-details">
          <div > Amount Due: {{ rentTransaction.amount }} </div>
          
          <div>Payment Due Date: {{ rentTransaction.dueDate }}</div>
          
-         <div>  {{ rentTransaction.pastDue }}</div>
+         <div> Is this payment past due?  {{ rentTransaction.pastDue }}</div>
          <div class="add-new-rent-Transaction">
-    <router-link v-bind:to="{name:'createRentTransaction', params:{rentTransactionId: rentTransaction.rentTransactionId}}">Pay Rent</router-link>
+    <router-link v-bind:to="{name:'createRentTransaction'}">Pay Rent</router-link>
     
   </div>
          </div>
