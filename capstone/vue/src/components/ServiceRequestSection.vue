@@ -1,8 +1,10 @@
+<!-- similar to board section -->
 <template>
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
-        <div class="service-request" v-for="serviceRequest in $store.state.serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest) ">
+        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest) ">
+          <!-- $store.state.serviceRequests -->
           <div class="header">
             <h3>Service Request:{{ serviceRequest.serviceRequestId }}</h3>
           </div>
@@ -17,7 +19,7 @@
 
 <script>
 export default {
-props: ['title'],
+props: ['title', 'serviceRequests'],
 
 method: {
     viewServiceRequestDetails(serviceRequest) {

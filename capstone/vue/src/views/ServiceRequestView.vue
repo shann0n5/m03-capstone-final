@@ -1,38 +1,38 @@
+<!-- similar to BoardView -->
 <template>
-<div class="back-to-tenant-home">
-    <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
+    <div>
+      <div class="back-to-tenant-home">
+        <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
+      </div>
+      <div class="header">
+        <h1>Service Requests</h1>
+        <div class="add-new-service-request">
+        <router-link v-bind:to="{name:'addServiceRequest'}">Add New Request</router-link>
+      </div>
+    </div>
+    <div class="action-boards">
+        <service-request-section title="Open"  v-bind:serviceRequests="open"/>
+        <service-request-section title="In Progress"  v-bind:serviceRequests="inProgress"/>
+        <service-request-section title="Complete" v-bind:serviceRequests="complete"/>
+    </div>
   </div>
-  
-  
-  <div class="header">
-<h1>Service Requests</h1>
-<div class="add-new-service-request">
-    <router-link v-bind:to="{name:'addServiceRequest'}">Add New Request</router-link>
-  </div>
-</div>
-
-  <div class="action-boards">
-    <div><service-request-section title="Open"  v-bind:serviceRequests="open"  /></div>
-    <service-request-section title="In Progress"  v-bind:serviceRequests="inProgress" />
-    <service-request-section title="Complete" v-bind:serviceRequests="complete" />
-  </div> 
 </template>
 
 <script>
 import TenantServices from '../services/TenantServices'
 import ServiceRequestSection from '../components/ServiceRequestSection.vue'
+import serviceRequestService from '../services/ServiceRequestService';
 
 export default {
-components: {
-    
-ServiceRequestSection
-},
-data() {
-    return {
-        serviceBoard: { title: '', serviceRequests: []}
-    };
-    
-},
+  components: {
+    ServiceRequestSection
+  },
+  data() {
+      return {
+          serviceBoard: { title: '', serviceRequests: [] }
+      };
+      
+  },
   computed: {
     open() {
       return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_OPEN');
@@ -40,8 +40,50 @@ data() {
     inProgress() {
       return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_IN_PROGRESS');
     },
-    closed() {
+    complete() {
       return this.$store.state.serviceRequests.filter(serviceRequest => serviceRequest.status === 'STATUS_COMPLETE');
+    }
+  },
+  methods: {
+    deleteServiceRequest(){
+      if(confirm("Are you sure you want to delete this service transaction? This action cannot be undone.")){
+        serviceRequestService
+        .deleteServiceRequest(this.serviceBoard.id)
+        .then(response => {
+          if(response.status === 200){
+            this.$store.commit('SET_NOTIFICATION',
+            {
+              message: 'Service request has been deleted',
+              type: 'success'
+            });
+            this.$router.push({ name: 'serviceRequest'});
+          }
+        }).catch(error => {
+          if(error.response){
+            this.$store.commit('SET_NOTIFICATION',
+            "Error deleting service request. API Server could not be reached.");
+          }else {
+            this.$store.commit('SET_NOTIFICATION',
+            "Error deleting board. Request could not be executed.");
+          }
+        });
+      }
+    },
+    created(){
+      let serviceRequestId = parseInt(this.$route.params.serviceRequestId);
+      if(serviceRequestId != 0){
+        serviceRequestService
+          .getServiceRequestById(serviceRequestId)
+          .then(response => {
+            this.serviceRequest = response.data;
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 404){
+              this.$store.commit('SET_NOTIFICATION', `Error getting service request ${serviceRequestId}. This service request may have been deleted or you have entered an invalid service request ID.`);
+              this.$router.push({ name: 'serviceRequest' });
+            }
+          });
+      }
     }
   }
 }

@@ -1,17 +1,17 @@
+<!-- similar to CardForm -->
 <template>
-  <form v-onsubmit.prevent="submitForm" class="serviceRequestForm">
+  <form v-on:submit.prevent="submitForm" class="serviceRequestForm">
     <div class="info-field">
         <label for="title">Title:</label>
          <input id="title" type="text" class="form-control" v-model="editServiceRequest.title"/>
     </div>
     <div class="info-field">
-        <label for="requestDescription">Request Description:</label>  
-        <textarea id="requestDescription" class="form-control" v-model="editServiceRequest.description"></textarea>
+        <label for="requestDetails">Request Details:</label>  
+        <textarea id="requestDescription" class="form-control" v-model="editServiceRequest.details"></textarea>
     </div>
     <div class="serviceRequestButton">
-        <button class="btn-submit" type="submit">Add New Service Request</button>
-         <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
-
+        <button class="btn-submit" type="submit">Submit</button>
+        <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
     </div>
 
 
@@ -33,7 +33,8 @@ export default {
         editServiceRequest: {
             id: this.serviceRequest.id,
             title: this.serviceRequest.title,
-            description: this.serviceRequest.description
+            details: this.serviceRequest.details,
+            status: this.serviceRequest.status
         }
     };
 },
@@ -54,21 +55,51 @@ export default {
                                     type: 'success'
                                 }
                             );
-                            this.$router.push({ name: 'serviceRequest', params})
+                            this.$router.push({ name: 'serviceRequest' });
                         }
                     })
+                    .catch(error => {
+                        this.handleErrorResponse(error, 'adding');
+                    });
+            } else {
+                serviceRequestService
+                    .updateServiceRequest(this.editServiceRequest)
+                    .then(response => {
+                        if(response.status === 200){
+                            this.$store.commit(
+                                'SET_NOTIFICATION',
+                                    {
+                                        message: `Service request ${this.editServiceRequest.id} was updated.`,
+                                        type: 'success'
+                                    }
+                            );
+                            this.$router.push({ name: 'serviceRequest' });
+                        }
+                    })
+                    .catch(error => {
+                        this.handleErrorResponse(error, 'updating');
+                    });
             }
         },
         cancelForm(){
             this.$router.push({ name: 'serviceRequest', params: { id: this.editServiceRequest.serviceRequestId } });
+        },
+        handleErrorResponse(error, verb){
+            if(error.response){
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Response received was '" + error.response.statusText + "'.");
+            } else if(error.request){
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Server could not be reached.");
+            } else {
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Request could not be created.");
+            }
         },
         validateForm(){
             let msg = '';
             if(this.editServiceRequest.title.length === 0){
                 msg += 'The new service request must have a title.';
             }
-            if(this.editServiceRequest.description.length === 0){
-                msg += 'The new service request must have a description.';
+            if(this.editServiceRequest.details.length === 0){
+                msg += 'The new service request must have a details.';
             }
             if(msg.length > 0){
                 this.$store.commit('SET_NOTIFICATION', msg);
