@@ -18,14 +18,14 @@
 
 <script>
 import RentTransactionSection from '../components/RentTransactionSection.vue'
-import TenantServices from '../services/TenantServices';
+import RentTransactionService from '../services/RentTransactionService';
 export default {
   components: { 
     RentTransactionSection,
  },
  data() {
   return {
-    rentTransaction: {title: '', rentTransactions: []}
+    rentTransactionBoard: { title: '', rentTransactions: []}
   }
  },
  computed: {
@@ -35,9 +35,30 @@ export default {
     pastDuePayments() {
       return this.$store.state.rentTransactions.filter(rentTransaction => rentTransaction.pastDue === true);
     }
+  },
+  methods: {
+    created() {
+      let rentTransactionId = parseInt(this.$route.params.rentTransactionId)
+      if(rentTransactionId != 0) {
+      RentTransactionService.getRentTransactionById(rentTransactionId)
+      .then(response => {
+        this.rentTransaction = response.data;
+      })
+      .catch(error => {
+          if (error.response) {
+            this.$store.commit('SET_NOTIFICATION',
+              "Error getting rent transactions list. Response received was '" + error.response.statusText + "'.");
+          } else if (error.request) {
+            this.$store.commit('SET_NOTIFICATION', "Error getting rent transactions list. Server could not be reached.");
+          } else {
+            this.$store.commit('SET_NOTIFICATION', "Error getting rent transactions list. Request could not be created.");
+          }
+        });
+    }
+    }
   }
+  };
 
-}
 </script>
 
 <style>

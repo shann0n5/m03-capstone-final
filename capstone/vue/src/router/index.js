@@ -132,7 +132,7 @@ const routes = [
     }
   },
   {
-    path: "/rent-transaction/create",
+    path: "/rent-transaction/:rentTransactionId/edit",
     name: "createRentTransaction",
     component: RentTransactionFormView,
     meta: {

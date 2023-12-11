@@ -9,7 +9,8 @@
 
 <script>
 import RentTransactionForm from '../components/RentTransactionForm.vue';
-import TenantServices from '../services/TenantServices';
+import RentTransactionService from '../services/RentTransactionService';
+
 export default {
 components: {
   RentTransactionForm},
@@ -21,8 +22,17 @@ components: {
         dueDate: '',
         pastDue: false
       }
-    }
-  }
+    };
+  },
+  created() {
+    let rentTransactionId = parseInt(this.$route.params.rentTransactionId);
+      RentTransactionService
+      . addRentTransactions(rentTransactionId)
+      .then(response => {
+        this.rentTransaction = response.data;
+      })
+  
+}
 }
 </script>
 
