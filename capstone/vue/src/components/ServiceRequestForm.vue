@@ -28,7 +28,7 @@ export default {
             required: true
         }
     },
-    data() {
+    data() {    
     return {
         editServiceRequest: {
             id: this.serviceRequest.id,
@@ -37,16 +37,18 @@ export default {
             status: this.serviceRequest.status
         }
     };
-},
+    },
     methods: {
         submitForm(){
-            if(!this.validateForm()){
-                return;
-            }
+            // if(!this.validateForm()){
+            //     return;
+            // }
             if(this.editServiceRequest.id === 0){
+                
                 serviceRequestService
                     .addServiceRequest(this.serviceRequest)
                     .then(response => {
+                alert(this.serviceRequestId);
                         if(response.status === 201){
                             this.$store.commit(
                                 'SET_NOTIFICATION',
@@ -55,7 +57,7 @@ export default {
                                     type: 'success'
                                 }
                             );
-                            this.$router.push({ name: 'serviceRequest' });
+                            this.$router.push({ name: 'serviceRequests' });
                         }
                     })
                     .catch(error => {
@@ -73,7 +75,7 @@ export default {
                                         type: 'success'
                                     }
                             );
-                            this.$router.push({ name: 'serviceRequest' });
+                            this.$router.push({ name: 'serviceRequests' });
                         }
                     })
                     .catch(error => {
@@ -93,20 +95,20 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Request could not be created.");
             }
         },
-        validateForm(){
-            let msg = '';
-            if(this.editServiceRequest.title.length === 0){
-                msg += 'The new service request must have a title.';
-            }
-            if(this.editServiceRequest.details.length === 0){
-                msg += 'The new service request must have a details.';
-            }
-            if(msg.length > 0){
-                this.$store.commit('SET_NOTIFICATION', msg);
-                return false;
-            }
-            return true;
-        }
+        // validateForm(){
+        //     let msg = '';
+        //     if(this.editServiceRequest.title.length === 0){
+        //         msg += 'The new service request must have a title.';
+        //     }
+        //     if(this.editServiceRequest.details.length === 0){
+        //         msg += 'The new service request must have a details.';
+        //     }
+        //     if(msg.length > 0){
+        //         this.$store.commit('SET_NOTIFICATION', msg);
+        //         return false;
+        //     }
+        //     return true;
+        // }
     }
 }
 </script>
