@@ -69,21 +69,21 @@ export function createStore(currentToken, currentUser) {
         roomateNames: 'Luna Lovegood'}
     ],
     serviceRequests: [
-      {
-        serviceRequestId: 6001,
-        requestDetails: 'Plumbing needed',
-        status: 'STATUS_COMPLETE'  
-      },
-      {
-        serviceRequestId: 6002,
-        requestDetails: 'Exterminator needed',
-        status: 'STATUS_IN_PROGRESS',  
-      },
-      {
-        serviceRequestId: 6003,
-        requestDetails: 'Stove burner needs fixing',
-        status: 'STATUS_OPEN'  
-      }
+      // {
+      //   serviceRequestId: 6001,
+      //   requestDetails: 'Plumbing needed',
+      //   status: 'STATUS_COMPLETE'  
+      // },
+      // {
+      //   serviceRequestId: 6002,
+      //   requestDetails: 'Exterminator needed',
+      //   status: 'STATUS_IN_PROGRESS',  
+      // },
+      // {
+      //   serviceRequestId: 6003,
+      //   requestDetails: 'Stove burner needs fixing',
+      //   status: 'STATUS_OPEN'  
+      // }
     ],
     rentTransactions: [
       {
@@ -155,6 +155,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_AVAILABILITY_STATUS(state, payload) {
         payload.property.isAvailable = payload.value;
+      },
+      SET_SERVICE_REQUEST(state, serviceRequests){
+        state.serviceRequests = serviceRequests;
       },
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);

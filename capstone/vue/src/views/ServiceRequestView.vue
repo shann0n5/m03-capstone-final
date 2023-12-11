@@ -68,24 +68,23 @@ export default {
           }
         });
       }
-    },
-    created(){
-      let serviceRequestId = parseInt(this.$route.params.serviceRequestId);
-      if(serviceRequestId != 0){
+    }
+    
+  },
+  created(){
         serviceRequestService
-          .getServiceRequestById(serviceRequestId)
+          .getAllMyServiceRequests()
           .then(response => {
-            this.serviceRequest = response.data;
+            this.$store.commit('SET_SERVICE_REQUEST', response.data);
           })
           .catch(error => {
             if (error.response && error.response.status === 404){
-              this.$store.commit('SET_NOTIFICATION', `Error getting service request ${serviceRequestId}. This service request may have been deleted or you have entered an invalid service request ID.`);
+              this.$store.commit('SET_NOTIFICATION', `Error getting service request. This service request may have been deleted or you have entered an invalid service request ID.`);
               this.$router.push({ name: 'serviceRequest' });
             }
           });
-      }
+      
     }
-  }
 }
 </script>
 
