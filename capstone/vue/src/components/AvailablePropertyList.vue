@@ -11,14 +11,24 @@
 
 
 <script>
- import PropertyContainer from './PropertyContainer.vue';
+ import PropertyService from '../services/PropertyService';
+import PropertyContainer from './PropertyContainer.vue';
 
 export default {
-  
+  data() {
+    return {
+      properties: []
+    }
+  },
   components: { PropertyContainer },
   methods: {
     viewPropertyDetails(property) {
       this.$router.push({ name: 'propertyDetails', params: { propertyId: property.propertyId }});
+    },
+    getAvailableProperties() {
+      PropertyService.getAllMyProperties().then(response => {
+        this.properties = response.data;
+      });
     }
   },
   computed: {
@@ -27,7 +37,15 @@ export default {
             return property.isAvailable == true;
         });
     }
-}
+    // availableProperties() {
+    //     return this.properties.filter((property)=> {
+    //         return property.isAvailable == true;
+    //     });
+    // }
+},
+// created() {
+//   this.this.$store.state.properties;
+// }
 }
 </script>
 
