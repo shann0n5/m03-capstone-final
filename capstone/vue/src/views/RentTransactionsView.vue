@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import RentTransactionSection from '../components/RentTransactionSection.vue'
 import RentTransactionService from '../services/RentTransactionService';
 export default {
@@ -36,13 +37,13 @@ export default {
       return this.$store.state.rentTransactions.filter(rentTransaction => rentTransaction.pastDue === true);
     }
   },
-  methods: {
-    created() {
-      let rentTransactionId = parseInt(this.$route.params.rentTransactionId)
-      if(rentTransactionId != 0) {
-      RentTransactionService.getRentTransactionById(rentTransactionId)
+ 
+  created() {
+      // let rentTransactionId = parseInt(this.$route.params.rentTransactionId)
+      // if(rentTransactionId != 0) {
+      RentTransactionService.getMyRentTransactions()
       .then(response => {
-        this.rentTransaction = response.data;
+        this.$store.commit('SET_RENT_TRANSACTION',response.data)
       })
       .catch(error => {
           if (error.response) {
@@ -55,8 +56,6 @@ export default {
           }
         });
     }
-    }
-  }
   };
 
 </script>

@@ -64,7 +64,7 @@ export default {
       }
     },
         cancelPayment() {
-      this.$route.push({ name: 'rentTransaction' });
+      this.$router.push({ name: 'rentTransaction', params: {rentTransactionId: this.editRentTransaction.rentTransactionId} });
     },
     handleErrorResponse(error, verb) {
       if (error.response) {
