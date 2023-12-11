@@ -1,21 +1,30 @@
 <template>
   <section>
-    <h2>Availability Properties </h2>
-    <div class="availability-properties">
-    <property-container v-bind:property="property"  v-for="property in availableProperties"  v-bind:key="property.propertyId"  v-bind:enable-add="false"/>
-
+    <h2>Available Properties </h2>
+    <div class="available-properties">
+    <property-container v-bind:property="property"  v-for="property in availableProperties"  v-bind:key="property.propertyId"   ></property-container>
+ <!--v-on:click="viewPropertyDetails(property)" v-bind:to="{ name: 'propertyDetails', params: {propertyId: property.propertyId}}"-->
   </div>
   </section>
 </template>
 
+
+
 <script>
-import PropertyContainer from './PropertyContainer.vue';
+ import PropertyContainer from './PropertyContainer.vue';
+
 export default {
+  
   components: { PropertyContainer },
-computed: {
+  methods: {
+    viewPropertyDetails(property) {
+      this.$router.push({ name: 'propertyDetails', params: { propertyId: property.propertyId }});
+    }
+  },
+  computed: {
     availableProperties() {
         return this.$store.state.properties.filter((property)=> {
-            return property.isAvailable === true;
+            return property.isAvailable == true;
         });
     }
 }

@@ -112,7 +112,6 @@ export function createStore(currentToken, currentUser) {
         numberOfRooms: 3,
         rent: 5000.00,
         isAvailable: true,
-        isOwner: true
       },
       {
         propertyId: 4002,
@@ -120,7 +119,6 @@ export function createStore(currentToken, currentUser) {
         numberOfRooms: 2,
         rent: 3500.00,
         isAvailable: false,
-        isOwner: true
       },
       {
         propertyId: 4003,
@@ -128,7 +126,13 @@ export function createStore(currentToken, currentUser) {
         numberOfRooms: 1,
         rent: 1500.00,
         isAvailable: false,
-        isOwner: true
+      },
+      {
+        propertyId: 4004,
+        managerId: 2001,
+        numberOfRooms: 3,
+        rent: 5000.00,
+        isAvailable: true,
       }
       ]
     },

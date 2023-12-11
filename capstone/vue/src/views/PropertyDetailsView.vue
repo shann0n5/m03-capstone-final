@@ -5,7 +5,7 @@
   <router-link v-bind:to="{name:'propertyManagerMainPage'}">Back to Property Manager Home</router-link>
  </div>
   <div class="property-details">
-<property-details  
+<property-detail  v-bind:property="property"
 
 />
   </div>
@@ -13,9 +13,28 @@
 </template>
 
 <script>
-import PropertyDetails from '../components/PropertyDetails.vue'
+import PropertyDetail from '../components/PropertyDetail.vue';
+import PropertyService from '../services/PropertyService';
+
 export default {
-components: {PropertyDetails}
+components: {PropertyDetail},
+data() {
+  return {
+    property: {
+      propertyId: '',
+      managerId: '',
+      address: '',
+      numberOfRooms: '',
+      rent: '',
+      isAvailable: ''
+    }
+  };
+},
+created() {
+    PropertyService.getPropertyById(this.$route.params.propertyId).then(response => {
+      this.property = response.data;
+    });
+  }
 }
 </script>
 

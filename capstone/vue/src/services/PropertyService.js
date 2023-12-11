@@ -5,10 +5,10 @@ export default{
         return axios.get(`/properties`);
     },
     getPropertyById(propertyId){
-        return axios.get(`properties/${propertyId}`);
+        return axios.get(`/properties/${propertyId}`);
     },
     getAllMyProperties(){
-        return axios.get(`properties/managing`);
+        return axios.get(`/properties/managing`);
     },
     addProperty(property) {
         return axios.post('/properties', property);
