@@ -5,7 +5,7 @@
 
         <div v-bind:key="rentTransaction.rentTransactionId">Paymemt Due: {{ this.rentTransaction.amount }}</div>
           <label for="rentPayment">Amount you would like to pay:  </label>  
-          <input type="number" id="rentPayment" name="rentPayment" v-model="editRentTransaction.amount">
+          <input type="number" id="rentPayment" name="rentPayment">
       </div>
       <div v-if="rentTransaction.pastDue">Is this payment past due? {{ editRentTransaction.pastDue}}</div>
       <div class="serviceRequestButton">
@@ -45,7 +45,7 @@ export default {
         return;
       }
       if(this.editRentTransaction.rentTransactionId === 0) {
-        RentTransactionService. addRentTransactions(this.editRentTransaction)
+        RentTransactionService.getRentTransactionById(this.rentTransactionId)
         .then(response => {
           if (response.status === 201) {
               this.$store.commit(
@@ -78,7 +78,7 @@ export default {
     },
     validateTransaction() {
       let msg = '';
-      if (this.editRentTransaction.amount.length > 0) {
+      if (this.editRentTransaction.amount.length === this.rentTransaction.amount ) {
         msg += 'Rent payment amount must be more than 0. ';
       }
       if (msg.length > 0) {

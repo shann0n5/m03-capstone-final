@@ -86,24 +86,24 @@ export function createStore(currentToken, currentUser) {
       // }
     ],
     rentTransactions: [
-      {
-        rentTransactionId: 7001,
-        amount: 2500.00,
-        dueDate: '2023-01-01',
-        pastDue: false
-      },
-      {
-        rentTransactionId: 7002,
-        amount: 2500.00,
-        dueDate: '2023-01-01',
-        pastDue: false
-      },
-      {
-        rentTransactionId: 7003,
-        amount: 1500.00,
-        dueDate: '2023-01-01',
-        pastDue: true
-      }
+      // {
+      //   rentTransactionId: 7001,
+      //   amount: 2500.00,
+      //   dueDate: '2023-01-01',
+      //   pastDue: false
+      // },
+      // {
+      //   rentTransactionId: 7002,
+      //   amount: 2500.00,
+      //   dueDate: '2023-01-01',
+      //   pastDue: false
+      // },
+      // {
+      //   rentTransactionId: 7003,
+      //   amount: 1500.00,
+      //   dueDate: '2023-01-01',
+      //   pastDue: true
+      // }
     ],
       properties: [
       {

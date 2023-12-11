@@ -27,7 +27,7 @@ components: {
   created() {
     let rentTransactionId = parseInt(this.$route.params.rentTransactionId);
       RentTransactionService
-      . addRentTransactions(rentTransactionId)
+      .getRentTransactionById(rentTransactionId)
       .then(response => {
         this.rentTransaction = response.data;
       })
