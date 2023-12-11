@@ -15,21 +15,29 @@
 import PropertyContainer from './PropertyContainer.vue';
 
 export default {
-  data() {
-    return {
-      properties: []
-    }
-  },
+  props: ['properties'],
+  // data() {
+  // return {
+  //   property: {
+  //     propertyId: '',
+  //     managerId: '',
+  //     address: '',
+  //     numberOfRooms: '',
+  //     rent: '',
+  //     isAvailable: ''
+  //   }
+  // };},
+
   components: { PropertyContainer },
   methods: {
     viewPropertyDetails(property) {
       this.$router.push({ name: 'propertyDetails', params: { propertyId: property.propertyId }});
     },
-    getAvailableProperties() {
-      PropertyService.getAllMyProperties().then(response => {
-        this.properties = response.data;
-      });
-    }
+    // getAvailableProperties() {
+    //   PropertyService.getAllMyProperties().then(response => {
+    //     this.properties = response.data;
+    //   });
+    // }
   },
   computed: {
     availableProperties() {
@@ -43,9 +51,27 @@ export default {
     //     });
     // }
 },
+//  created() {
+//   this.getAvailableProperties();
+// }
+
+// created() {
+//     PropertyService.getAllMyProperties().then(response => {
+//       this.$store.commit('SET_PROPERTIES', response.data);
+//       alert('Created executed')
+//     }).catch(error => {
+//       if (error.response && error.response.status === 404) {
+//         this.$store.commit('SET_NOTIFICATION', `Error getting properties.`);
+//       }
+//     });
+//   }
 // created() {
 //   this.this.$store.state.properties;
 // }
+
+// SET_PROPERTIES(state, properties) {
+//   state.properties = properties;
+// },
 }
 </script>
 
