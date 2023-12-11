@@ -1,10 +1,10 @@
 <template>
     <div class="action-board">
       <h2>{{title}}</h2>
-      <div class="rent-transactions">
-          <div class="rent-transaction" v-for="rentTransaction in $store.state.rentTransactions" v-bind:key="rentTransaction.transactionId" v-on:click="viewRentTransactionDetails(rentTransaction)">
+      <div class="rent-transactions" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.rentTransactionId">
+         
           <div class="header">
-            <h3>Rent Payment Id: {{ rentTransaction.transactionId }}</h3> </div>
+            <h3>Rent Payment Id: {{ rentTransaction.rentTransactionId }}</h3> </div>
          
          <div class="transaction-section-details">
          <div > Amount Due: {{ rentTransaction.amount }} </div>
@@ -13,11 +13,11 @@
          
          <div>  {{ rentTransaction.pastDue }}</div>
          <div class="add-new-rent-Transaction">
-    <router-link v-bind:to="{name:'createRentTransaction'}">Pay Rent</router-link>
+    <router-link v-bind:to="{name:'createRentTransaction', params:{rentTransactionId: rentTransaction.rentTransactionId}}">Pay Rent</router-link>
     
   </div>
          </div>
-        </div> 
+        
         </div>
 
     </div>
@@ -27,12 +27,7 @@
   export default {
   props: ['title', 'rentTransactions'],
   
-  method: {
-     
-      viewRentTransactionDetails(rentTransaction) {
-        this.$router.push({name: 'rentTransaction', params:{rentTransactionId: rentTransaction.transactionId}});
-      }
-  }
+
   }
 </script>
 <style>

@@ -87,19 +87,19 @@ export function createStore(currentToken, currentUser) {
     ],
     rentTransactions: [
       {
-        transactionId: 7001,
+        rentTransactionId: 7001,
         amount: 2500.00,
         dueDate: '2023-01-01',
         pastDue: false
       },
       {
-        transactionId: 7002,
+        rentTransactionId: 7002,
         amount: 2500.00,
         dueDate: '2023-01-01',
         pastDue: false
       },
       {
-        transactionId: 7003,
+        rentTransactionId: 7003,
         amount: 1500.00,
         dueDate: '2023-01-01',
         pastDue: true
