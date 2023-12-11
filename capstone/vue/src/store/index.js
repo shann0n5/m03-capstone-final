@@ -156,9 +156,16 @@ export function createStore(currentToken, currentUser) {
       SET_AVAILABILITY_STATUS(state, payload) {
         payload.property.isAvailable = payload.value;
       },
+      SET_PROPERTIES(state, properties) {
+        state.properties = properties;
+      },
       SET_SERVICE_REQUEST(state, serviceRequests){
         state.serviceRequests = serviceRequests;
       },
+      SET_RENT_TRANSACTION(state, rentTransactions) {
+        state.rentTransactions = rentTransactions;
+      },
+      
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);
       },
