@@ -15,8 +15,8 @@ public interface UserDao {
 
     User createUser(RegisterUserDto user);
 
-    //TODO get users by property id????? check if principal = admin then show users by property id
     int getManagerIdFromUserId(int userId);
+
     int getTenantIdFromUserId(int userId);
     // List<User> getUsersByProperty(int propertyId, Principal principal)
 }
