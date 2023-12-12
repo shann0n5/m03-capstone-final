@@ -1,11 +1,26 @@
 <template>
 
   <header>Welcome</header>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'addProperty' }">Add New Property</router-link>
   <available-property-list />
   <occupied-property-list />
-  
+
+
+
+  <!-- ,
+  {
+    path: '/search-properties',
+    name: 'propertySearch',
+    component: PropertySearchView,
+    meta: {
+      requiresAuth: false
+    }
+  }, 
+import PropertySearchView from '../views/PropertySearchView.vue';
+-->
 
 
 
@@ -64,11 +79,10 @@ export default{
 <style>
 .btn-submit {
   color: rgba(255, 255, 255, 0.87);
-  background-color: #57798d;
-  border-color: #57798d;
+  background-color: #43677c;
+  border-color: #43677c;
   text-decoration: none;
   padding: 6px 12px;
   cursor: pointer;
-  padding: 10px;
 }
 </style>
