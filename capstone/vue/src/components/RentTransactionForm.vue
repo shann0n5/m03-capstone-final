@@ -3,11 +3,11 @@
       <div class="form-section">
     
 
-        <div v-bind:key="rentTransaction.rentTransactionId">Paymemt Due: {{ this.rentTransaction.amount }}</div>
+        <div v-bind:key="rentTransaction.rentTransactionId">Paymemt Due: {{ rentTransaction.amount }}</div>
           <label for="rentPayment">Amount you would like to pay:  </label>  
-          <input type="number" id="rentPayment" name="rentPayment">
+          <input type="number" id="rentPayment" name="rentPayment" >
       </div>
-      <div v-if="rentTransaction.pastDue">Is this payment past due? {{ editRentTransaction.pastDue}}</div>
+      <div v-if="rentTransaction.pastDue">Is this payment past due? {{ rentTransaction.pastDue}}</div>
       <div class="serviceRequestButton">
       
           <button class="btn-submit" type="submit" >Complete Payment</button>&nbsp;|&nbsp;
@@ -23,20 +23,12 @@
 import RentTransactionService from '../services/RentTransactionService'
 
 export default {
+  // Props are read-only, can use just this to call different values 
+  // since not editing any parameters in the pay rent form from tenant side..
     props: {
         rentTransaction: {
             type: Object,
             required: true
-        }
-    },
-    data() {
-        return {
-            editRentTransaction: {
-                rentTransactionId: this.rentTransaction.rentTransactionId,
-                amount: this.rentTransaction.amount,
-                dueDate: this.rentTransaction.dueDate,
-                pastDue: this.rentTransaction.pastDue
-            }
         }
     },
     methods: {
@@ -44,10 +36,10 @@ export default {
       if (!this.validateTransaction()) {
         return;
       }
-      if(this.editRentTransaction.rentTransactionId === 0) {
+      if(this.rentTransaction.rentTransactionId === 0) {
         RentTransactionService.getRentTransactionById(this.rentTransactionId)
         .then(response => {
-          if (response.status === 201) {
+          if (response.status === 200) {
               this.$store.commit(
                 'SET_NOTIFICATION',
                 {
@@ -55,7 +47,7 @@ export default {
                   type: 'success'
                 }
               );
-              this.$router.push({ name: 'rentTransaction', params: { rentTransactionId: this.editRentTransaction.rentTransactionId } });
+              this.$router.push({ name: 'rentTransaction'});
             }
         })
         .catch(error => {
@@ -64,7 +56,7 @@ export default {
       }
     },
         cancelPayment() {
-      this.$router.push({ name: 'rentTransaction', params: {rentTransactionId: this.editRentTransaction.rentTransactionId} });
+      this.$router.push({ name: 'rentTransaction'});
     },
     handleErrorResponse(error, verb) {
       if (error.response) {
@@ -78,9 +70,11 @@ export default {
     },
     validateTransaction() {
       let msg = '';
-      if (this.editRentTransaction.amount.length === this.rentTransaction.amount ) {
+      if(this.rentTransaction.amount === this.input)
+      if (this.rentTransaction.amount.length === 0) {
         msg += 'Rent payment amount must be more than 0. ';
       }
+
       if (msg.length > 0) {
         this.$store.commit('SET_NOTIFICATION', msg);
         return false;

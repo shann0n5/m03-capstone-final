@@ -143,8 +143,8 @@ const routes = [
     }
   },
   {
-    path: "/rent-transaction/create",
-    name: "createRentTransaction",
+    path: "/rent-transaction-form/:rentTransactionId",
+    name: "RentTransactionForm",
     component: RentTransactionFormView,
     meta: {
       requiresAuth: false
