@@ -1,9 +1,12 @@
 <template>
   <div class="serviceRequest">
     <h1>{{ serviceRequest.serviceRequestId }}</h1>
+    <h2>{{ serviceRequest.tenantId }}</h2>
     <p>{{ serviceRequest.requestDetails  }}</p>
-    <router-link v-bind:to="{ name: 'ServiceRequestView'}">Back to Service Requests</router-link>
-    <button class="btn btn-cancel" v-on:click="deleteServiceRequest">Delete Service Request</button>
+    <div>{{ serviceRequest.status }}</div>
+    
+    <router-link v-bind:to="{ name: 'serviceRequest'}">Back to Service Requests</router-link>
+    <button class="btn btn-delete" v-on:click="deleteServiceRequest">Delete Service Request</button>
   </div>
 </template>
 
@@ -37,7 +40,8 @@ export default {
             });
         }
         }
-    },
+    }
+    
 
 }
 </script>

@@ -2,8 +2,8 @@
     <div class="property-details-section">
       <div class="property-details"   >
     <!-- <property-container v-bind:property="property" v-for="property in this.$store.state.properties" v-bind:key="property.propertyId" v-for="property in $store.state.properties" v-bind:key="property.propertyId"/> -->
-        <header class="header">Property: {{ property.propertyId }} </header>
-              
+        <h1 class="header">Property: {{ property.propertyId }} </h1>
+        
         <h2> Property Manager Id: {{ property.managerId }}</h2>
           <div>Property Address: {{ property.address }}</div> 
           <div>Number of Rooms: {{ property.numberOfRooms }}</div>

@@ -3,16 +3,21 @@
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
-        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest)">
-          <!-- $store.state.serviceRequests -->
+        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails">
+          <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}}">
+          <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
           <div class="header">
-            <h3>Service Request:{{ serviceRequest.serviceRequestId }}</h3>
+            <h3>
+              <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
+              Service Request:{{ serviceRequest.serviceRequestId }}
+            </h3>
           </div>
+         
           <div>Details: {{ serviceRequest.requestDetails }}</div>
-          <!-- <p></p>
-          <div>{{ serviceRequest.status }}</div>
-          <p></p> -->
+        </router-link>
+
         </div>
+      
     </div>
   </div>
 </template>
@@ -22,8 +27,9 @@ export default {
 props: ['title', 'serviceRequests'],
 
 method: {
-    viewServiceRequestDetails(serviceRequest) {
-      this.$route.push({name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}});
+    viewServiceRequestDetails() {
+      alert('here');
+      // this.$router.push({name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}});
     }
 }
 }

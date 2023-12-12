@@ -13,6 +13,9 @@
         <button class="btn-submit" type="submit">Submit</button>
         <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
     </div>
+    <div>
+       Service Request info: {{ serviceRequest }}
+    </div>
 
 
   </form>
@@ -47,7 +50,7 @@ export default {
                 serviceRequestService
                     .addServiceRequest(this.editServiceRequest)
                     .then(response => {
-                        if(response.status === 201){
+                        if(response.status === 201 || response.status === 200){
                             this.$store.commit(
                                 'SET_NOTIFICATION',
                                 {
@@ -55,7 +58,7 @@ export default {
                                     type: 'success'
                                 }
                             );
-                            this.$router.push({ name: 'serviceRequests' });
+                            this.$router.push({ name: 'serviceRequest' });
                         }
                     })
                     .catch(error => {
@@ -82,7 +85,7 @@ export default {
             }
         },
         cancelForm(){
-            this.$router.push({ name: 'serviceRequest', params: { id: this.editServiceRequest.serviceRequestId } });
+            this.$router.push({ name: 'serviceRequest', params: { serviceRequestId: this.editServiceRequest.id } });
         },
         handleErrorResponse(error, verb){
             if(error.response){

@@ -2,7 +2,7 @@
 <template>
     <div>
       <div class="back-to-tenant-home">
-        <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
+        <router-link v-bind:to="{name:'tenantMainPage'}">Back to Home Page</router-link>
       </div>
       <div class="header">
         <h1>Service Requests</h1>
