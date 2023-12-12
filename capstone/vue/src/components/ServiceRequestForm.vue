@@ -7,7 +7,7 @@
     </div>
     <div class="info-field">
         <label for="requestDetails">Request Details:</label>  
-        <textarea id="requestDescription" class="form-control" v-model="editServiceRequest.details"></textarea>
+        <textarea id="requestDetails" class="form-control" v-model="editServiceRequest.requestDetails"></textarea>
     </div>
     <div class="serviceRequestButton">
         <button class="btn-submit" type="submit">Submit</button>
@@ -33,7 +33,7 @@ export default {
         editServiceRequest: {
             id: this.serviceRequest.id,
             title: this.serviceRequest.title,
-            details: this.serviceRequest.details,
+            requestDetails: this.serviceRequest.requestDetails,
             status: this.serviceRequest.status
         }
     };
@@ -44,11 +44,9 @@ export default {
             //     return;
             // }
             if(this.editServiceRequest.id === 0){
-                
                 serviceRequestService
-                    .addServiceRequest(this.serviceRequest)
+                    .addServiceRequest(this.editServiceRequest)
                     .then(response => {
-                alert(this.serviceRequestId);
                         if(response.status === 201){
                             this.$store.commit(
                                 'SET_NOTIFICATION',
