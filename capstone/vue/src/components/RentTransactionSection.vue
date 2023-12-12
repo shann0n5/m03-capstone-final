@@ -1,20 +1,19 @@
 <template>
     <div class="action-board">
       <h2>{{title}}</h2>
-      <div class="rent-transactions" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.rentTransactionId">
-         
+      <div class="rent-transactions">
+         <div class="rent-transaction" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.rentTransactionId">
          <div class="transaction-section-details">
-            <div>Rent Payment Id: {{rentTransaction.transactionId}}</div> 
+            <div class="info-field">Rent Payment Id: {{rentTransaction.transactionId}}</div> 
         
-         <div > Amount Due: {{ rentTransaction.amount }} </div>
+         <div class="info-field"> Amount Due: {{ rentTransaction.amount }} </div>
          
-         <div>Payment Due Date: {{ rentTransaction.dueDate }}</div>
+         <div class="info-field">Payment Due Date: {{ rentTransaction.dueDate }}</div>
          
-         <div> Is this payment past due?  {{ rentTransaction.pastDue }}</div>
-         <div class="add-new-rent-Transaction">
-    <router-link v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId} }">Pay Rent</router-link>
+         <div class="info-field"> Is this payment past due?  {{ rentTransaction.pastDue }}</div>
+        </div>
+    <button class="pay-btn"><router-link class="back-btn" v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId} }">Pay Rent</router-link> </button>
    
-  </div>
          </div>
         
         </div>
@@ -35,7 +34,19 @@
   border-radius: 10px;
   padding: 0 20px 20px 20px;
 }
+.action-board h2 {
+color: #2c363b
+}
 
+.info-field{
+  background: #fff;
+  border-radius: 0.10rem;
+  padding: 15px;
+  border: 10px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 .rent-transactions {
   background: #fff;
   border-radius: 0.25rem;
@@ -44,6 +55,21 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+}
+
+.rent-transaction {
+  border-style: ridge;
+  border-radius: 0.25rem;
+  padding: 10px;
+}
+.pay-btn{
+  color: rgba(25, 27, 29, 0.87);
+  background-color: #b7cddb;
+  border-color: #43677c;
+  text-decoration: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 0.20 rem;
 }
 
 .rent-transaction:last-child {
@@ -59,5 +85,6 @@
   display: flex;
   justify-content: space-between;
 }
+
 
 </style>
