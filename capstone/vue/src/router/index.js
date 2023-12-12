@@ -13,7 +13,8 @@ import AboutUsView from '../views/AboutUsView.vue';
 import ApplicationView from '../views/ApplicationView.vue';
 import TenantMainPageView from '../views/TenantMainPageView.vue';
 import ServiceRequestView from '../views/ServiceRequestView.vue';
-import ServiceRequestFormView from '../views/AddServiceRequestView.vue'
+import ServiceRequestFormView from '../views/AddServiceRequestView.vue';
+import ServiceRequestDetailView from '../views/ServiceRequestDetailView.vue';
 import RentTransactionsView from '../views/RentTransactionsView.vue';
 import RentTransactionFormView from '../views/RentTransactionFormView.vue';
 import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
@@ -112,8 +113,17 @@ const routes = [
     name: "serviceRequest",
     component: ServiceRequestView,
     meta:{
-      requiresAuth: false
+      requiresAuth: true
     }
+  },
+  {
+    path: "/service-request-details/:serviceRequestId",
+    name: "serviceRequestDetails",
+    component: ServiceRequestDetailView,
+    meta:{
+      requiresAuth: true
+    }
+
   },
   {
     path: "/rent-transaction-view",
@@ -128,7 +138,7 @@ const routes = [
     name:"addServiceRequest",
     component: ServiceRequestFormView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -162,8 +172,15 @@ const routes = [
       meta: {
         requiresAuth: false
       }
-    }
-
+    },
+    // {
+    //   path: '/search-properties',
+    //   name: 'propertySearch',
+    //   component: PropertySearchView,
+    //   meta: {
+    //     requiresAuth: false
+    //   }
+    // }
 ];
 
 // Create the router
