@@ -1,11 +1,13 @@
 <template>
   <div class="serviceRequest">
-    <h1>{{ serviceRequest.serviceRequestId }}</h1>
-    <h2>{{ serviceRequest.tenantId }}</h2>
-    <p>{{ serviceRequest.requestDetails  }}</p>
-    <div>{{ serviceRequest.status }}</div>
-    
     <router-link v-bind:to="{ name: 'serviceRequest'}">Back to Service Requests</router-link>
+    <div>
+        <h1>Service Request Details </h1>
+        <h2> Service Request ID: {{ serviceRequest.serviceRequestId }}</h2>
+        <h2> Tenant ID: {{ serviceRequest.tenantId }}</h2>
+        <div>{{ serviceRequest.status }}</div>
+        <p> Service Request Details: {{ serviceRequest.requestDetails  }}</p>
+    </div>
     <button class="btn btn-delete" v-on:click="deleteServiceRequest">Delete Service Request</button>
   </div>
 </template>
@@ -21,7 +23,7 @@ export default {
             serviceRequestService
             .deleteServiceRequest(this.serviceRequest.serviceRequestId)
             .then(response => {
-            if(response.status === 200){
+            if(response.status === 204){
                 this.$store.commit('SET_NOTIFICATION',
                 {
                 message: 'Service request has been deleted',

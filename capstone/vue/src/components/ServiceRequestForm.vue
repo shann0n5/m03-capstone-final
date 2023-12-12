@@ -13,11 +13,7 @@
         <button class="btn-submit" type="submit">Submit</button>
         <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
     </div>
-    <div>
-       Service Request info: {{ serviceRequest }}
-    </div>
-
-
+    
   </form>
 </template>
 
@@ -76,7 +72,7 @@ export default {
                                         type: 'success'
                                     }
                             );
-                            this.$router.push({ name: 'serviceRequests' });
+                            this.$router.push({ name: 'serviceRequest' });
                         }
                     })
                     .catch(error => {

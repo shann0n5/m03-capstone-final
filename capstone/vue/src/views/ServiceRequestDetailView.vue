@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <router-link v-bind:to="{ name: 'serviceRequestDetails', params:{ serviceRequestId: serviceRequest.serviceRequestId}}">Back to Service Requests</router-link> -->
     <service-request-detail v-bind:serviceRequest="serviceRequest"/>
   </div>
 </template>
@@ -16,10 +15,6 @@ export default {
   data(){
     return {
         serviceRequest: {
-            // serviceRequestId: this.serviceRequest.serviceRequestId,
-            // title: this.serviceRequest.title,
-            // requestDetails: this.serviceRequest.requestDetails,
-            // status: this.serviceRequest.status
         },
     }
   },
