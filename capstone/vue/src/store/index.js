@@ -106,41 +106,42 @@ export function createStore(currentToken, currentUser) {
       // }
     ],
       properties: [
-      {
-        propertyId: 4001,
-        managerId: 2001,
-        numberOfRooms: 3,
-        rent: 5000.00,
-        isAvailable: true,
-      },
-      {
-        propertyId: 4002,
-        managerId: 2001,
-        numberOfRooms: 2,
-        rent: 3500.00,
-        isAvailable: false,
-      },
-      {
-        propertyId: 4003,
-        managerId: 2002,
-        numberOfRooms: 1,
-        rent: 1500.00,
-        isAvailable: false,
-      },
-      {
-        propertyId: 4004,
-        managerId: 2001,
-        numberOfRooms: 4,
-        rent: 5000.00,
-        isAvailable: true,
-      },{
-        propertyId: 4005,
-        managerId: 2001,
-        numberOfRooms: 5,
-        rent: 7000.00,
-        isAvailable: true,
-      }
-      ]
+      // {
+      //   propertyId: 4001,
+      //   managerId: 2001,
+      //   numberOfRooms: 3,
+      //   rent: 5000.00,
+      //   isAvailable: true,
+      // },
+      // {
+      //   propertyId: 4002,
+      //   managerId: 2001,
+      //   numberOfRooms: 2,
+      //   rent: 3500.00,
+      //   isAvailable: false,
+      // },
+      // {
+      //   propertyId: 4003,
+      //   managerId: 2002,
+      //   numberOfRooms: 1,
+      //   rent: 1500.00,
+      //   isAvailable: false,
+      // },
+      // {
+      //   propertyId: 4004,
+      //   managerId: 2001,
+      //   numberOfRooms: 4,
+      //   rent: 5000.00,
+      //   isAvailable: true,
+      // },{
+      //   propertyId: 4005,
+      //   managerId: 2001,
+      //   numberOfRooms: 5,
+      //   rent: 7000.00,
+      //   isAvailable: true,
+      // }
+      ],
+      myProperties: []
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {

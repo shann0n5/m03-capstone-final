@@ -32,7 +32,7 @@ export default {
   computed: {
     availableProperties() {
         return this.$store.state.properties.filter((property)=> {
-            return property.isAvailable == true;
+            return property.available == true;
         });
     }
     // availableProperties() {
@@ -42,16 +42,16 @@ export default {
     // }
 },
 
-// created() {
-//     PropertyService.getAllMyProperties().then(response => {
-//       this.$store.commit('SET_PROPERTIES', response.data);
-//       alert('Created executed')
-//     }).catch(error => {
-//       if (error.response && error.response.status === 404) {
-//         this.$store.commit('SET_NOTIFICATION', `Error getting properties.`);
-//       }
-//     });
-//   }
+created() {
+    PropertyService.getAllMyProperties().then(response => {
+      this.$store.commit('SET_PROPERTIES', response.data);
+      // alert(response.data[0].propertyId);
+    }).catch(error => {
+      if (error.response && error.response.status === 404) {
+        this.$store.commit('SET_NOTIFICATION', `Error getting properties.`);
+      }
+    });
+  }
 // created() {
 //   this.this.$store.state.properties;
 // }

@@ -19,7 +19,7 @@
         </div>
        
         <div class="property-form-btn">
-            <button class="btn-submit" type="submit">Save New Property</button>
+            <button class="btn-submit" type="submit">Save Property</button>
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
         </div>
     </div>
@@ -46,8 +46,8 @@ data() {
     //   isAvailable: this.$store.state.properties.isAvailable
     // }
     editProperty: {
-      propertyId: this.property.propertyId,
-      managerId: this.property.managerId,
+      propertyId: this.$route.params.propertyId,
+      managerId: 0,
       address: this.property.address,
       numberOfRooms: this.property.numberOfRooms,
       rent: this.property.rent,
@@ -63,7 +63,7 @@ methods: {
     }
     if (this.editProperty.propertyId === 0) {
       PropertyService.addProperty(this.editProperty).then(response => {
-        if (response.status === 201) {
+        if (response.status === 201 || response.status === 200) {
               this.$store.commit(
                 'SET_NOTIFICATION',
                 {
@@ -84,6 +84,7 @@ methods: {
               type: 'success'
             }
           );
+          this.$router.push({ name: 'propertyManagerMainPage'});
         }
       }).catch(error => {
         this.handleErrorResponse(error, 'updating');
