@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link v-bind:to="{ name: 'ServiceRequestView'}">Back to Service Requests</router-link>
-    <service-request-detail/>
+    <service-request-detail v-bind:serviceRequest="serviceRequest"/>
   </div>
 </template>
 
