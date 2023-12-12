@@ -7,6 +7,7 @@
     <div class="occupied-properties-board" v-for="property in $store.state.properties" v-bind:key="property.propertyId" v-on:click="viewpropertytDetails(propertyId)">
     <h2>Occupied Properties</h2>
     
+    
   </div>
   </div>
 </template>

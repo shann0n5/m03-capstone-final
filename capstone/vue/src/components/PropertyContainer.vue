@@ -15,13 +15,17 @@
 <script>
 
 export default {
-  props: {
+  props: 
+  // ['title','properties']
+  // ['property']
+  {
     property: Object,
     enableAdd: {
         type: Boolean,
         default: false
     }
-},
+}
+,
 methods: {
     // openPropertyDetails() {
     //     this.$router.push({name: 'propertyDetails', params: {propertyId: this.$store.state.properties.propertyId}})
