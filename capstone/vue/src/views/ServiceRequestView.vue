@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import TenantServices from '../services/TenantServices'
 import ServiceRequestSection from '../components/ServiceRequestSection.vue'
 import serviceRequestService from '../services/ServiceRequestService';
 

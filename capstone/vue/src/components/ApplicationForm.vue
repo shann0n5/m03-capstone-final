@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import ManagementServices from '../services/ManagementServices';
+import applicationService from '../services/ApplicationService';
 export default {
     props: {
         application:{
@@ -48,9 +48,9 @@ export default {
         };
     },
     method: {
-        cancelForm() {
-      this.$router.push({ name: 'Home', params: { id: this.editApplication.id } });
-    }
+      cancelForm() {
+        this.$router.push({ name: 'home' });
+      }
     }
 }
 </script>
