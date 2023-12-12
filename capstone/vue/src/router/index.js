@@ -21,6 +21,7 @@ import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
 import NewPropertyFormView from '../views/NewPropertyFormView.vue';
 import PropertyDetailsView from '../views/PropertyDetailsView.vue';
 import PropertySearchView from '../views/PropertySearchView.vue';
+import EditPropertyFormView from '../views/EditPropertyFormView.vue';
 
 
 /**
@@ -181,7 +182,15 @@ const routes = [
       meta: {
         requiresAuth: false
       }
-    }
+    },
+    {
+      path: '/property-details/:propertyId/edit',
+      name: 'editProperty',
+      component: EditPropertyFormView,
+      meta: {
+        requiresAuth: true
+      }
+    }, 
 ];
 
 // Create the router

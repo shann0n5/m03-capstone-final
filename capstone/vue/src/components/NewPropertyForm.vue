@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="submitForm">
+  <form v-on:submit.prevent="submitForm" class="property-form">
     <div class="field">
         <!-- <div class="info-field">
           <label for="managerId">Manager Id: </label>
@@ -105,11 +105,14 @@ methods: {
   },
   validateForm() {
       let msg = '';
-      if (this.editCard.title.length === 0) {
-        msg += 'The new property must have a title. ';
+      if (this.editCard.address.length === 0) {
+        msg += 'The new property must have an address. ';
       }
-      if (this.editCard.status.length === 0) {
-        msg += 'The new property must have a status.';
+      if (this.editCard.numberOfRooms.length === 0) {
+        msg += 'The new property must have a number of rooms.';
+      }
+      if (this.editCard.rent.length === 0) {
+        msg += 'The new property must have a rent.';
       }
       if (msg.length > 0) {
         this.$store.commit('SET_NOTIFICATION', msg);
@@ -118,7 +121,7 @@ methods: {
       return true;
     },
 
-}
+},
 // , params: { id: this.editPropertyForm.propertyId } 
 }
 </script>

@@ -1,13 +1,15 @@
 <template>
- <header>Property:</header>
+ <header>Property Details</header>
  <div class="back-to-management-home">
   
-  <router-link v-bind:to="{name:'propertyManagerMainPage'}">Back to Property Manager Home</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{name:'propertyManagerMainPage'}">Back to Property Manager Home</router-link>
+  <!-- <router-link v-bind:to="{ name: 'EditPropertyForm', params: { propertyId: property.propertyId} }" class="btn btn-submit">Edit
+      Property</router-link> -->
+      
  </div>
   <div class="property-details">
-<property-detail  v-bind:property="property"
-
-/>
+<property-detail  v-bind:property="property"/>
+<router-link class="btn btn-submit" v-bind:to="{ name: 'editProperty' }">Edit Property</router-link>
   </div>
   
 </template>
@@ -15,6 +17,15 @@
 <script>
 import PropertyDetail from '../components/PropertyDetail.vue';
 import PropertyService from '../services/PropertyService';
+
+// {
+//       path: '/property-details/:propertyId/edit',
+//       name: 'editProperty',
+//       component: EditPropertyFormView,
+//       meta: {
+//         requiresAuth: true
+//       }
+//     }, 
 
 export default {
 components: {PropertyDetail},

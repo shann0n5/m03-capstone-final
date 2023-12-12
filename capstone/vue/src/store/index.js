@@ -130,8 +130,14 @@ export function createStore(currentToken, currentUser) {
       {
         propertyId: 4004,
         managerId: 2001,
-        numberOfRooms: 3,
+        numberOfRooms: 4,
         rent: 5000.00,
+        isAvailable: true,
+      },{
+        propertyId: 4005,
+        managerId: 2001,
+        numberOfRooms: 5,
+        rent: 7000.00,
         isAvailable: true,
       }
       ]
