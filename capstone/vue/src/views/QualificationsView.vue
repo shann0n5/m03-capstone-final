@@ -18,7 +18,6 @@
   
   <script>
   
-  import ManagementServices from '../services/ManagementServices';
   export default {
   
   }

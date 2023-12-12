@@ -7,49 +7,45 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || '',
       user: currentUser || {},
+      managerId: 0,
+      tenantId: 0,
       users: [
-        {
-          id: 1001,
-          userName: 'admin1',
-          role: 'ROLE_ADMIN',
-          activated: true
-        },
-        {
-          id: 1002,
-          userName: 'admin2',
-          role: 'ROLE_ADMIN',
-          activated: true
-        },
-        {
-          id: 1003,
-          userName: 'harry',
-          role: 'ROLE_USER',
-          activated: true
-        },
-        {
-          id: 1004,
-          userName: 'neville',
-          role: 'ROLE_USER',
-          activated: true
-        },
-        {
-          id: 1005,
-          userName: 'ron',
-          role: 'ROLE_USER',
-          activated: true
-        },
-        {
-          id: 1006,
-          userName: 'hermione',
-          role: 'ROLE_USER',
-          activated: true
-        },
-        {
-          id: 1007,
-          userName: 'ginny',
-          role: 'ROLE_USER',
-          activated: true
-        }
+        // {
+        //   id: 1001,
+        //   userName: 'admin1',
+        //   role: 'ROLE_ADMIN',
+        //   activated: true
+        // },
+        // {
+        //   id: 1002,
+        //   userName: 'admin2',
+        //   role: 'ROLE_ADMIN',
+        //   activated: true
+        // },
+        // {
+        //   id: 1003,
+        //   userName: 'harry',
+        //   role: 'ROLE_USER',
+        //   activated: true
+        // },
+        // {
+        //   id: 1004,
+        //   userName: 'neville',
+        //   role: 'ROLE_USER',
+        //   activated: true
+        // },
+        // {
+        //   id: 1005,
+        //   userName: 'ron',
+        //   role: 'ROLE_USER',
+        //   activated: true
+        // },
+        // {
+        //   id: 1006,
+        //   userName: 'hermione',
+        //   role: 'ROLE_USER',
+        //   activated: true
+        // },
       ],
       applications:[
         {
@@ -121,25 +117,12 @@ export function createStore(currentToken, currentUser) {
       //   isAvailable: false,
       // },
       // {
-      //   propertyId: 4003,
-      //   managerId: 2002,
-      //   numberOfRooms: 1,
-      //   rent: 1500.00,
-      //   isAvailable: false,
-      // },
-      // {
       //   propertyId: 4004,
       //   managerId: 2001,
       //   numberOfRooms: 4,
       //   rent: 5000.00,
       //   isAvailable: true,
-      // },{
-      //   propertyId: 4005,
-      //   managerId: 2001,
-      //   numberOfRooms: 5,
-      //   rent: 7000.00,
-      //   isAvailable: true,
-      // }
+      // },
       ],
       myProperties: []
     },
@@ -172,7 +155,12 @@ export function createStore(currentToken, currentUser) {
       SET_RENT_TRANSACTION(state, rentTransactions) {
         state.rentTransactions = rentTransactions;
       },
-      
+      SET_MANAGER_ID(state, managerId) {
+        state.managerId = managerId;
+      },
+      SET_TENANT_ID(state, tenantId) {
+        state.tenantId = tenantId;
+      },
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);
       },
@@ -180,7 +168,6 @@ export function createStore(currentToken, currentUser) {
         if (state.notification) {
           this.commit('CLEAR_NOTIFICATION');
         }
-
         if (typeof notification === 'string') {
           notification = {
             message: notification,
@@ -196,7 +183,6 @@ export function createStore(currentToken, currentUser) {
           this.commit('CLEAR_NOTIFICATION');
         }, notification.timeout);
       },
-
       CLEAR_NOTIFICATION(state) {
         if (state.notification && state.notification.timer) {
           window.clearTimeout(state.notification.timer);
