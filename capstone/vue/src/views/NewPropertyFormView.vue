@@ -1,4 +1,5 @@
 <template>
+    <router-link class="btn btn-submit" v-bind:to="{ name: 'propertyManagerMainPage' }">Property Manager Home</router-link>
  <header>Add New Property </header>
 <div class="property-form">
   <new-property-form v-bind:property="property"/>
