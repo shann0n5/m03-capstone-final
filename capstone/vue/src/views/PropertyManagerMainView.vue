@@ -2,7 +2,7 @@
 
   <header>Welcome</header>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">Search Properties</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'addProperty' }">Add New Property</router-link>
   <available-property-list />

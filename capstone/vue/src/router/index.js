@@ -20,6 +20,7 @@ import RentTransactionFormView from '../views/RentTransactionFormView.vue';
 import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
 import NewPropertyFormView from '../views/NewPropertyFormView.vue';
 import PropertyDetailsView from '../views/PropertyDetailsView.vue';
+import PropertySearchView from '../views/PropertySearchView.vue';
 
 
 /**
@@ -173,14 +174,14 @@ const routes = [
         requiresAuth: false
       }
     },
-    // {
-    //   path: '/search-properties',
-    //   name: 'propertySearch',
-    //   component: PropertySearchView,
-    //   meta: {
-    //     requiresAuth: false
-    //   }
-    // }
+    {
+      path: '/search-properties',
+      name: 'propertySearch',
+      component: PropertySearchView,
+      meta: {
+        requiresAuth: false
+      }
+    }
 ];
 
 // Create the router
