@@ -3,7 +3,7 @@
     <h1>{{ serviceRequest.serviceRequestId }}</h1>
     <p>{{ serviceRequest.requestDetails  }}</p>
     <router-link v-bind:to="{ name: 'ServiceRequestView'}">Back to Service Requests</router-link>
-    <button class="btn btn-cancel" v-on:click="deleteServiceRequest">Delete Service Request</button>
+    <button class="btn btn-delete" v-on:click="deleteServiceRequest">Delete Service Request</button>
   </div>
 </template>
 

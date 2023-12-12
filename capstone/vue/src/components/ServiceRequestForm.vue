@@ -82,7 +82,7 @@ export default {
             }
         },
         cancelForm(){
-            this.$router.push({ name: 'serviceRequest', params: { id: this.editServiceRequest.serviceRequestId } });
+            this.$router.push({ name: 'serviceRequest', params: { serviceRequestId: this.editServiceRequest.id } });
         },
         handleErrorResponse(error, verb){
             if(error.response){

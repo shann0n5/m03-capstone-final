@@ -5,9 +5,11 @@
     <div class="service-requests">
         <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.id" v-on:click="viewServiceRequestDetails(serviceRequest)">
           <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
-          <!-- $store.state.serviceRequests -->
           <div class="header">
-            <h3>Service Request:{{ serviceRequest.serviceRequestId }}</h3>
+            <h3>
+              <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
+              Service Request:{{ serviceRequest.serviceRequestId }}
+            </h3>
           </div>
           <div>Details: {{ serviceRequest.requestDetails }}</div>
           <!-- <p></p>
