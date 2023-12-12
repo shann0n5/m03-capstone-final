@@ -1,29 +1,33 @@
 <template>
- <header>New Property </header>
+ <header>Add New Property </header>
 <div class="property-form">
-  <new-property-form />
+  <new-property-form v-bind:property="property"/>
 </div>
 </template>
 
 <script>
-import NewPropertyForm from '../components/NewPropertyForm.vue'
+import NewPropertyForm from '../components/NewPropertyForm.vue';
+import PropertyService from '../services/PropertyService';
 
 export default {
   components: { NewPropertyForm},
   data() {
     return {
-      property:{
-        id: 0,
-        managerId: parseInt(this.$store.state.managerId),
+      property: {
+        propertyId: 0,
+        managerId: '',
         address: '',
-        numberOfRooms: 0,
-        rent: 0,
-        isAvailable: true
-
-
+        numberOfRooms: '',
+        rent: '',
+        isAvailable: ''
       }
     }
-  }
+  },
+  // created() {
+  //   PropertyService.addProperty(this.property).then(response => {
+  //     this.property = response.data;
+  //   });
+  // }
 
 }
 </script>

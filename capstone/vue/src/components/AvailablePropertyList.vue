@@ -2,8 +2,9 @@
   <section>
     <h2>Available Properties </h2>
     <div class="available-properties">
-    <property-container v-bind:property="property"  v-for="property in availableProperties"  v-bind:key="property.propertyId"   ></property-container>
- <!--v-on:click="viewPropertyDetails(property)" v-bind:to="{ name: 'propertyDetails', params: {propertyId: property.propertyId}}"-->
+     <property-container v-for="property in availableProperties" v-bind:key="property.propertyId" v-bind:property="property"       ></property-container> 
+   <!-- <router-link v-for="property in availableProperties" v-bind:key="property.propertyId" v-bind:to="{ name: 'propertyDetails', params: { propertyId: property.propertyId }}"  ></router-link>
+ v-on:click="viewPropertyDetails(property)" v-bind:to="{ name: 'propertyDetails', params: {propertyId: property.propertyId}}"-->
   </div>
   </section>
 </template>
@@ -15,18 +16,7 @@
 import PropertyContainer from './PropertyContainer.vue';
 
 export default {
-  props: ['properties'],
-  // data() {
-  // return {
-  //   property: {
-  //     propertyId: '',
-  //     managerId: '',
-  //     address: '',
-  //     numberOfRooms: '',
-  //     rent: '',
-  //     isAvailable: ''
-  //   }
-  // };},
+ 
 
   components: { PropertyContainer },
   methods: {
@@ -51,9 +41,6 @@ export default {
     //     });
     // }
 },
-//  created() {
-//   this.getAvailableProperties();
-// }
 
 // created() {
 //     PropertyService.getAllMyProperties().then(response => {
@@ -68,10 +55,6 @@ export default {
 // created() {
 //   this.this.$store.state.properties;
 // }
-
-// SET_PROPERTIES(state, properties) {
-//   state.properties = properties;
-// },
 }
 </script>
 

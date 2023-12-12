@@ -16,6 +16,7 @@
 
 export default {
   props: 
+  // ['title','properties']
   // ['property']
   {
     property: Object,
