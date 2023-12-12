@@ -17,7 +17,6 @@ components: {
   data() {
     return {
       rentTransaction: {
-        id: 0,
         amount: 0,
         dueDate: '',
         pastDue: false
@@ -26,13 +25,19 @@ components: {
   },
   created() {
     let rentTransactionId = parseInt(this.$route.params.rentTransactionId);
-      RentTransactionService
-      .getRentTransactionById(rentTransactionId)
+    if(rentTransactionId != 0) {
+      RentTransactionService.getRentTransactionById(rentTransactionId)
       .then(response => {
         this.rentTransaction = response.data;
-      })
-  
-}
+      }) 
+      .catch(error => {
+          if (error.response && error.response.status === 404) {
+            this.$store.commit('SET_NOTIFICATION', `Error getting card ${rentTransactionId}. This rent transaction may have been deleted or you have entered an invalid card ID.`);
+            this.$router.push({ name: 'rentTransaction' });
+          }
+        });
+    }
+    }
 }
 </script>
 

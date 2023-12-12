@@ -3,7 +3,7 @@
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
-        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest) ">
+        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails(serviceRequest)">
           <!-- $store.state.serviceRequests -->
           <div class="header">
             <h3>Service Request:{{ serviceRequest.serviceRequestId }}</h3>
@@ -23,8 +23,7 @@ props: ['title', 'serviceRequests'],
 
 method: {
     viewServiceRequestDetails(serviceRequest) {
-      
-      this.$route.push({name: 'serviceRequest', params:{serviceRequestId: serviceRequest.serviceRequestId}});
+      this.$route.push({name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}});
     }
 }
 }
