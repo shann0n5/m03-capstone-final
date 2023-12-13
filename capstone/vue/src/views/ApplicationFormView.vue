@@ -1,3 +1,4 @@
+<!-- ADD APPLICATION VIEW -->
 <template>
   <div class="application-header">
     <header>Real-TE Tenant Application</header>
@@ -15,13 +16,12 @@ export default {
     data() {
       return {
         application: {
-          id: 0,
-          applicationId: parseInt(this.$route.params.applicationId),
-          firstName: '',
-          lastName: '',
-          birthdate: '',
+          applicationId: 0,
+          propertyId: 0,
+          fullName: '',
           email: '',
-          address: '',
+          hasRoomates: false,
+          roomateNames: '',
           status: 'STATUS_PENDING'
         }
       }
