@@ -152,6 +152,9 @@ export function createStore(currentToken, currentUser) {
       SET_SERVICE_REQUEST(state, serviceRequests){
         state.serviceRequests = serviceRequests;
       },
+      SET_APPLICATION(state, applications){
+        state.applications = applications;
+      },
       SET_RENT_TRANSACTION(state, rentTransactions) {
         state.rentTransactions = rentTransactions;
       },
