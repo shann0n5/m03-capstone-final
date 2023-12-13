@@ -9,12 +9,12 @@
       <div class="info-field" v-if="rentTransaction.pastDue">Is this payment past due? {{ rentTransaction.pastDue}}</div>
       <div  class="serviceRequestButton">
       
-          <button v-bind:to="{name:'rentTransaction'}" class="btn-submit" type="submit" v-on:click="submitPayment">Complete Payment</button>&nbsp;&nbsp;
+          <button v-bind:to="{name:'rentTransaction'}" class="btn-submit" type="submit" v-on:click.prevent="submitPayment">Complete Payment</button>&nbsp;&nbsp;
            <button class="btn-cancel" type="button" v-on:click="cancelPayment">Cancel</button>
   
       </div>
   
-  
+  ''
     </form>
   </template>
 
@@ -28,34 +28,19 @@ export default {
         rentTransaction: {
             type: Object,
             required: true
+        },
+        enableAdd: {
+          type: Boolean,
+          default: false
         }
     },
     methods: {
       submitPayment() {
       if (this.validateTransaction()) {
           this.$router.push({ name: 'rentTransaction'});
-      }
-    
-      //   return alert('Thank you for your payment');
-      // if(this.rentTransaction.rentTransactionId === 0) {
-        // RentTransactionService.getRentTransactionById(this.transactionId)
-        // .then(response => {
-        //   if (response.status === 200) {
-        //       this.$store.commit(
-        //         'SET_NOTIFICATION',
-        //         {
-        //           message: 'Thank you for your payment!',
-        //           type: 'success'
-        //         }
-        //       );
-        //       this.$router.push({ name: 'rentTransaction'});
-        //     }
-        // })
-        // .catch(error => {
-        //     this.handleErrorResponse(error, 'updating');
-        //   });
-      // }
+      } 
     },
+        
         cancelPayment() {
       this.$router.push({ name: 'rentTransaction'});
     // },

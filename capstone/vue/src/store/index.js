@@ -153,6 +153,9 @@ export function createStore(currentToken, currentUser) {
       SET_PROPERTIES(state, properties) {
         state.properties = properties;
       },
+      SET_MY_PROPERTIES(state, myProperties) {
+        state.myProperties = myProperties;
+      },
       SET_SERVICE_REQUEST(state, serviceRequests){
         state.serviceRequests = serviceRequests;
       },
@@ -167,6 +170,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_TENANT_ID(state, tenantId) {
         state.tenantId = tenantId;
+      },
+      SET_IS_PAID(state, rentTransaction) {
+        rentTransaction.pastDue = ! rentTransaction.pastDue;
       },
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);
