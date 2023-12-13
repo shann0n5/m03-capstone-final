@@ -161,6 +161,9 @@ export function createStore(currentToken, currentUser) {
       SET_TENANT_ID(state, tenantId) {
         state.tenantId = tenantId;
       },
+      SET_IS_PAID(state, rentTransaction) {
+        rentTransaction.pastDue = ! rentTransaction.pastDue;
+      },
       SAVE_PROPERTY(state, property) {
         state.properties.push(property);
       },
