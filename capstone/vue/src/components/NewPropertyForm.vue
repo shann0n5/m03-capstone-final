@@ -15,7 +15,7 @@
           <input type="text" id="rent" name="rent" class="form-control" v-model="editProperty.rent">
         </div>
         <div class="info-field"> <label for="isAvailable">Is Available: </label>
-          <input type="checkbox" id="isAvailable" name="isAvailable" v-model="editProperty.isAvailable">
+          <input type="checkbox" id="isAvailable" name="isAvailable" v-model="editProperty.available">
         </div>
        
         <div class="property-form-btn">
@@ -37,22 +37,22 @@ props: {
 },
 data() {
   return {
-    // editProperty: {
-    //   propertyId: this.$store.state.properties.propertyId,
-    //   managerId: this.$store.state.properties.managerId,
-    //   address: this.$store.state.properties.address,
-    //   numberOfRooms: this.$store.state.properties.numberOfRooms,
-    //   rent: this.$store.state.properties.rent,
-    //   isAvailable: this.$store.state.properties.isAvailable
-    // }
     editProperty: {
-      propertyId: this.$route.params.propertyId,
-      managerId: 0,
+      propertyId: this.property.propertyId,
+      managerId: this.property.managerId,
       address: this.property.address,
       numberOfRooms: this.property.numberOfRooms,
       rent: this.property.rent,
-      isAvailable: this.property.isAvailable
+      available: this.property.available
     }
+    // editProperty: {
+    //   propertyId: 0,
+    //   managerId: 0,
+    //   address: '',
+    //   numberOfRooms:'',
+    //   rent: '',
+    //   available: ''
+    // }
 
   }
 },
@@ -70,6 +70,7 @@ methods: {
                   message: 'A new property was added.',
                   type: 'success'
                 }
+                
               );
               this.$router.push({ name: 'propertyManagerMainPage' });
             }
@@ -80,7 +81,7 @@ methods: {
       PropertyService.updateProperty(this.editProperty).then(response => {
         if (response.status === 200) {
           this.$store.commit('SET_NOTIFICATION', {
-              message: `Card ${this.editCard.propertyId} was updated.`,
+              message: `Property ${this.editCard.propertyId} was updated.`,
               type: 'success'
             }
           );
@@ -91,17 +92,28 @@ methods: {
       });
     }
   },
+  // clearForm() {
+  //   this.editProperty = {
+  //     propertyId: '',
+  //     managerId: '',
+  //     address: '',
+  //     numberOfRooms:'',
+  //     rent: '',
+  //     available: ''
+  //   }
+  // },
   cancelForm() {
+    // this.clearForm();
       this.$router.push({ name: 'propertyManagerMainPage' });
   },
   handleErrorResponse(error, verb) {
       if (error.response) {
         this.$store.commit('SET_NOTIFICATION',
-          "Error " + verb + " card. Response received was '" + error.response.statusText + "'.");
+          "Error " + verb + " property. Response received was '" + error.response.statusText + "'.");
       } else if (error.request) {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " card. Server could not be reached.");
+        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Server could not be reached.");
       } else {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " card. Request could not be created.");
+        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Request could not be created.");
       }
   },
   validateForm() {

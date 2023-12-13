@@ -10,38 +10,26 @@
 
 <script>
 import SearchRentalsForm from '../components/SearchRentalsForm.vue';
+import PropertyService from '../services/PropertyService';
+
 export default {
   components: { SearchRentalsForm },
   data() {
   return {
       properties : []
   }
-},
-methods: {
-  
-}
-  // created() {
-  //     PropertyService.getProperties().then(response => {
-  //         this.properties = response.data;
-  //     }).catch(error => {
-  //         if (error.response) {
-  //             if (error.response.status === 404) {
-  //                 this.$store.commit('SET_NOTIFICATION',
-  //                 "Error: property was not found.");
-  //                 this.$router.push({ name: 'HomeView' });
-  //             } else {
-  //                 this.$store.commit('SET_NOTIFICATION',
-  //                 "Error getting properties. Response received was '" + error.response.statusText + "'.");
-  //             }
-  //         } else if (error.request) {
-  //             this.$store.commit('SET_NOTIFICATION', "Error getting properties. Server could not be reached.");
-  //         } else {
-  //             this.$store.commit('SET_NOTIFICATION', "Error getting properties. Request could not be created.");
-  //         }
-  //     });
-     
-  // }
-
+  },
+  methods: {
+    getProperties() {
+              PropertyService.getProperties().then(response => {
+                  this.$store.state.commit('SET_PROPERTIES', response.data);
+                  this.properties = this.$store.state.properties;
+              })
+          },
+  },
+  created() {
+      this.getProperties(); 
+  }
 }
 </script>
 

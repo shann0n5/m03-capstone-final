@@ -20,31 +20,22 @@ export default {
 
   components: { PropertyContainer },
   methods: {
-    viewPropertyDetails(property) {
-      this.$router.push({ name: 'propertyDetails', params: { propertyId: property.propertyId }});
-    },
-    // getAvailableProperties() {
-    //   PropertyService.getAllMyProperties().then(response => {
-    //     this.properties = response.data;
-    //   });
-    // }
+    // viewPropertyDetails(property) {
+    //   this.$router.push({ name: 'propertyDetails', params: { propertyId: property.propertyId }});
+    // },
   },
   computed: {
     availableProperties() {
-        return this.$store.state.properties.filter((property)=> {
+        return this.$store.state.myProperties.filter((property)=> {
             return property.available == true;
         });
     }
-    // availableProperties() {
-    //     return this.properties.filter((property)=> {
-    //         return property.isAvailable == true;
-    //     });
-    // }
+
 },
 
 created() {
     PropertyService.getAllMyProperties().then(response => {
-      this.$store.commit('SET_PROPERTIES', response.data);
+      this.$store.commit('SET_MY_PROPERTIES', response.data);
       // alert(response.data[0].propertyId);
     }).catch(error => {
       if (error.response && error.response.status === 404) {
@@ -52,9 +43,6 @@ created() {
       }
     });
   }
-// created() {
-//   this.this.$store.state.properties;
-// }
 }
 </script>
 

@@ -9,7 +9,6 @@
 
 <script>
 import NewPropertyForm from '../components/NewPropertyForm.vue';
-import PropertyService from '../services/PropertyService';
 
 export default {
   components: { NewPropertyForm},
@@ -21,7 +20,7 @@ export default {
         address: '',
         numberOfRooms: '',
         rent: '',
-        isAvailable: ''
+        available: ''
       }
     }
   },
