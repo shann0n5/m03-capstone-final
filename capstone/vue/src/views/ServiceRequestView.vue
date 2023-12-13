@@ -28,7 +28,7 @@ export default {
   },
   data() {
       return {
-          serviceBoard: { title: '', serviceRequests: [] }
+          serviceRequestList: { title: '', serviceRequests: [] }
       };
       
   },
