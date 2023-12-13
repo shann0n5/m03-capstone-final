@@ -7,10 +7,19 @@
                 <h3>
                     Application: {{ application.applicationId }}
                 </h3>
+                <h4>
+                    PropertyId : {{ application.propertyId }}
+                </h4>
             </div>
-            <div>
-                Details: {{ application. }}
-            </div>
+            <!-- <p>
+                Full Name : {{ application.fullName }}
+            </p>
+            <p>
+                Email : {{ application.email }}
+            </p>
+            <p>
+                Roomates???
+            </p> -->
         </router-link>
     </div>
   </div>

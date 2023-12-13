@@ -10,11 +10,13 @@ import AvailablePropertiesView from '../views/AvailablePropertiesView.vue'
 import ContactUsView from '../views/ContactUsView.vue';
 import QualificationsView from '../views/QualificationsView.vue'
 import AboutUsView from '../views/AboutUsView.vue';
-import ApplicationView from '../views/ApplicationView.vue';
 import TenantMainPageView from '../views/TenantMainPageView.vue';
 import ServiceRequestView from '../views/ServiceRequestView.vue';
 import ServiceRequestFormView from '../views/AddServiceRequestView.vue';
 import ServiceRequestDetailView from '../views/ServiceRequestDetailView.vue';
+import ApplicationFormView from '../views/ApplicationFormView.vue';
+import ApplicationView from '../views/ApplicationView.vue';
+import ApplicationDetailsView from '../views/ApplicationDetailView.vue';
 import RentTransactionsView from '../views/RentTransactionsView.vue';
 import RentTransactionFormView from '../views/RentTransactionFormView.vue';
 import PropertyManagerMainView from '../views/PropertyManagerMainView.vue';
@@ -90,11 +92,6 @@ const routes = [
     }
   },
   {
-    path: "/application",
-    name: "application",
-    component: ApplicationView
-  },
-  {
     path: "/about-us",
     name: "aboutUs",
     component: AboutUsView,
@@ -125,7 +122,27 @@ const routes = [
     meta:{
       requiresAuth: true
     }
-
+  },
+  {
+    path: "/application/create",
+    name: "applicationForm",
+    component: ApplicationFormView
+  },
+  {
+    path: "/application-view",
+    name: "application",
+    component: ApplicationView,
+    meta:{
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/application-details/:applicationId",
+    name: "applicationDetails",
+    component: ApplicationDetailsView,
+    meta:{
+      requiresAuth: true
+    }
   },
   {
     path: "/rent-transaction-view",

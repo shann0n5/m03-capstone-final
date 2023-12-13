@@ -41,9 +41,9 @@ export default {
             editApplication: {
             id: this.application.id,
             fullName: this.application.fullName,
-            birthdate: this.application.birthdate,
+            // birthdate: this.application.birthdate,
             email: this.application.email,
-            address: this.application.address,
+            // address: this.application.address,
             status: this.application.status 
             }
         };
@@ -62,7 +62,7 @@ export default {
                     type: 'success'
                   }
                 );
-                //ROUTER PUSH TO APPLICATION PAGE
+                this.$router.push({ name: 'application' });
               }
             })
             .catch(error => {
@@ -72,7 +72,7 @@ export default {
 
       },
       cancelForm() {
-        this.$router.push({ name: 'home' });
+        this.$router.push({ name: 'application' });
       },
       handleErrorResponse(error, verb){
             if(error.response){

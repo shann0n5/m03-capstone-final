@@ -41,7 +41,8 @@ export default {
 
     },
     created(){
-        applicationService.getMyApplications()
+        applicationService
+        .getAllApplications()
         .then(response => {
             this.$store.commit('SET_APPLICATION', response.data);
         })
