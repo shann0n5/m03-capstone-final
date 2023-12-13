@@ -44,6 +44,7 @@ export default {
         applicationService
         .getAllApplications()
         .then(response => {
+            // alert(response.data);
             this.$store.commit('SET_APPLICATION', response.data);
         })
         .catch(error => {
@@ -51,7 +52,7 @@ export default {
                 this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
                 //ROUTER TO APPLICATIONS
             }
-        })
+        });
     }
 
 }
