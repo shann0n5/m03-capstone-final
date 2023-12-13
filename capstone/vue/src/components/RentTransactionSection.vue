@@ -9,10 +9,9 @@
          <div class="info-field"> Amount Due: {{ rentTransaction.amount }} </div>
          
          <div class="info-field">Payment Due Date: {{ rentTransaction.dueDate }}</div>
-         
-         <div class="info-field"> Is this payment past due?  {{ rentTransaction.pastDue }}</div>
+        
         </div>
-    <button class="pay-btn"><router-link class="back-btn" v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId} }">Pay Rent</router-link> </button>
+    <button class="pay-btn"><router-link class="back-btn" v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId, dueDate: rentTransaction.dueDate} }">Pay Rent</router-link> </button>
    
          </div>
         
@@ -25,7 +24,12 @@
   export default {
   props: ['title', 'rentTransactions'],
   
-
+methods: {
+  
+    // pastDuePaid(rentTransaction) {
+    //   this.$store.commit('SET_IS_PAID', rentTransaction)
+    // }
+}
   }
 </script>
 <style>
