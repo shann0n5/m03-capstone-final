@@ -30,6 +30,7 @@ export default{
     },
     
     deleteApplication(applicationId){
+        alert('delete was called');
         return axios.delete(`/applications/${applicationId}`);
     }
 }

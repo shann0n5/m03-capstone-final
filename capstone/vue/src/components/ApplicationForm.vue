@@ -6,24 +6,39 @@
             <input type="text" class="form-control" id="fullName" name="fullName" v-model="editApplication.fullName">
         </div>
         <div class="info-field">
+            <label for="propertyId">Property ID:</label>
+            <input type="number" class="form-control" id="propertyId" name="propertyId" v-model="editApplication.propertyId">
+        </div>
+        <!-- <div class="info-field">
             <label for="birthdate">BirthDate:</label>
             <input type="date" id="birthdate" class="form-control" name="birthdate" v-model="editApplication.birthdate">
-        </div>
+        </div> -->
         <div class="info-field">
             <label for="email">Email:</label>
             <input type="email" id="email" class="form-control" name="email" v-model="editApplication.email">
         </div>
-        <div class="info-field"> 
+        <!-- <div class="info-field"> 
             <label for="address">Address:</label>
             <input type="text" id="address" class="form-control" name="address" v-model="editApplication.address">
+        </div> -->
+        <div class="info-field">
+          <label for="hasRoomates">Roomates?</label>
+          <input type="checkbox" class="form-control" id="hasRoomates" v-model="editApplication.hasRoomates">
+        </div>
+        <div class="info-field">
+            <label for="roomateNames">Names of Roomates: </label>
+            <input type="text" class="form-control" id="roomateNames" name="roomateNames" v-model="editApplication.roomateNames">
         </div>
         <div class="applicationButton">
             <button class="btn-submit" type="submit">Submit</button>
-            <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
+            <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm">Cancel</button>
         </div>
     </div>
 
   </form>
+  <!-- <div>
+   Application: {{ editApplication }}
+  </div> -->
 </template>
 
 <script>
@@ -39,16 +54,19 @@ export default {
     data() {
         return {
             editApplication: {
-            id: this.application.id,
-            fullName: this.application.fullName,
-            // birthdate: this.application.birthdate,
-            email: this.application.email,
-            // address: this.application.address,
-            status: this.application.status 
+              id: this.application.applicationId,
+              propertyId: this.application.propertyId,
+              fullName: this.application.fullName,
+              // birthdate: this.application.birthdate,
+              email: this.application.email,
+              hasRoomates: this.application.hasRoomates,
+              roomateNames: this.application.roomateNames,
+              // address: this.application.address,
+              status: this.application.status 
             }
         };
     },
-    method: {
+    methods: {
       submitForm(){
         if(this.editApplication.id === 0){
           applicationService
@@ -62,7 +80,7 @@ export default {
                     type: 'success'
                   }
                 );
-                this.$router.push({ name: 'application' });
+                this.$router.push({ name: 'home' });
               }
             })
             .catch(error => {
@@ -72,7 +90,7 @@ export default {
 
       },
       cancelForm() {
-        this.$router.push({ name: 'application' });
+        this.$router.push({ name: 'home' });
       },
       handleErrorResponse(error, verb){
             if(error.response){

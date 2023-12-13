@@ -7,10 +7,10 @@
         <h1>Applications</h1>
         <!-- ROUTER LINK TO APPLICATION FORM -->
     </div>
-    <div>
-        <application-section title="Pending" v-bind:application="pending"/>
-        <application-section title="Approved" v-bind:application="approved"/>
-        <application-section title="Rejected" v-bind:application="rejected"/>
+    <div class="action-boards">
+        <application-section title="Pending" v-bind:applications="pending"/>
+        <application-section title="Approved" v-bind:applications="approved"/>
+        <application-section title="Rejected" v-bind:applications="rejected"/>
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
     },
     data(){
         return {
-            applicationBoard: { title: '', applications: [] }
+            applicationList: { title: '', applications: [] }
         };
     },
     computed: {
@@ -44,14 +44,16 @@ export default {
         applicationService
         .getAllApplications()
         .then(response => {
+            // alert(response.data);
             this.$store.commit('SET_APPLICATION', response.data);
+            // this.applications = this.$store.state.applications;
         })
         .catch(error => {
             if(error.response && error.response.status === 404){
                 this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
                 //ROUTER TO APPLICATIONS
             }
-        })
+        });
     }
 
 }

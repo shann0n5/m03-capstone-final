@@ -21,7 +21,7 @@ export default {
     },
     created(){
         applicationService
-        .getApplicationById(this.$forceUpdate.params.applicationId)
+        .getApplicationById(this.$route.params.applicationId)
         .then(response => {
             this.application = response.data;
         });

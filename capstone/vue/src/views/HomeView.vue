@@ -67,7 +67,7 @@ export default {
       this.showManagerPOV = false;
     }
     // alert(`Logging in ${this.$store.state.showManagerPOV}.`);
-    alert(this.showManagerPOV);
+    // alert(this.showManagerPOV);
   }
 
     
