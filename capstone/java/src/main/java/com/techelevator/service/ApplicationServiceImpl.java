@@ -91,7 +91,9 @@ public class ApplicationServiceImpl implements ApplicationService{
     @Override
     public Application createApplication(Principal principal, Application application) {
         Application newApplication;
+        User loggedInUser = userDao.getUserByUsername(principal.getName());
         try{
+            application.setUserId(loggedInUser.getId());
             newApplication = applicationDao.createApplication(application);;
             return newApplication;
         }catch (DaoException e) {

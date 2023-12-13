@@ -31,7 +31,8 @@ public class ApplicationController {
         this.notificationService = notificationService;
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @GetMapping("/applications/managing")
     public List<Application> getAllApplications(@Valid Principal principal) {
         try{
