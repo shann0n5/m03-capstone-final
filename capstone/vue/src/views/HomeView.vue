@@ -3,10 +3,14 @@
     <h1>Home</h1>
     <p>Welcome!</p>
   </div>
-<div class="tenant-home-btn"> 
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
+<div class="tenant-home-btn" v-show="showManagerPOV === true"> 
   <router-link v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link>
 </div>
-<div class="manager-home-btn"> 
+<div class="manager-home-btn" v-show="showManagerPOV === true"> 
   <router-link v-bind:to="{name: 'propertyManagerMainPage'}">Property Manager Home</router-link>
 </div>
  
@@ -16,6 +20,14 @@
 import UserService from '../services/UserService';
 
 export default {
+  data() {
+    return {
+      // showManagerPOV: false,
+      // SET_SHOW_MANAGER_POV(state, showManagerPOV) {
+      //   state.showManagerPOV = showManagerPOV;
+      // },
+    }
+  },
   created() {
     // let managerId = 0;
     // let tenantId = 0;
@@ -45,6 +57,14 @@ export default {
           "Error getting tenantId. Response received was '" + error.response.statusText + "'.");
       }
     });
+
+    if (this.$store.state.managerId != 0) {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    } else if (this.$store.state.tenantId != 0) {
+      this.$store.commit('SET_SHOW_MANAGER_POV', false);
+    }
+    // alert(this.$store.state.showManagerPOV)
+    
   }
 
     
