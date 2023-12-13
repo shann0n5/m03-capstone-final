@@ -9,6 +9,7 @@ export function createStore(currentToken, currentUser) {
       user: currentUser || {},
       managerId: 0,
       tenantId: 0,
+      showManagerPOV: false,
       users: [
         // {
         //   id: 1001,
@@ -142,6 +143,9 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
+      },
+      SET_SHOW_MANAGER_POV(state, showManagerPOV) {
+        state.showManagerPOV = showManagerPOV;
       },
       SET_AVAILABILITY_STATUS(state, payload) {
         payload.property.isAvailable = payload.value;
