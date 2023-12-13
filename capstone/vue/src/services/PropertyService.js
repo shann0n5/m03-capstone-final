@@ -14,7 +14,10 @@ export default{
         return axios.post('/properties', property);
     },
     updateProperty(property) {
-        return axios.put(`/properties/${property.id}`, property);
+        alert('property services');
+        alert(property.propertyId);
+        return axios.put(`/properties/${property.propertyId}`, property);
+        
     },
     deleteProperty(propertyId) {
         return axios.delete(`/properties/${propertyId}`);

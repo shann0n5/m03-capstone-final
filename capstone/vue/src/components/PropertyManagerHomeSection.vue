@@ -1,10 +1,10 @@
 <template>
-  <div class="management-action-boards">
+  <div class="properties-board">
     <div class="available-properties-board" v-for="property in $store.state.properties" v-bind:key="property.propertyId" v-on:click="viewpropertytDetails(propertyId)">
     <h2>Available Property</h2>
     
     </div>
-    <div class="occupied-properties-board" v-for="property in $store.state.properties" v-bind:key="property.propertyId" v-on:click="viewpropertytDetails(propertyId)">
+    <div class="properties-board" v-for="property in $store.state.properties" v-bind:key="property.propertyId" v-on:click="viewpropertytDetails(propertyId)">
     <h2>Occupied Properties</h2>
     
     
@@ -19,5 +19,9 @@ props: ['propertyId']
 </script>
 
 <style>
-
+.properties-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
 </style>

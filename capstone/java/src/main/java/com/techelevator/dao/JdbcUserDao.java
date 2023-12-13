@@ -104,7 +104,13 @@ public class JdbcUserDao implements UserDao {
     public int getTenantIdFromUserId(int userId) {
         String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
         try {
-            return jdbcTemplate.queryForObject(sql, int.class, userId);
+
+            int id = jdbcTemplate.queryForObject(sql, int.class, userId);
+            if (id > 0) {
+                return id;
+            } else {
+                return 0;
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

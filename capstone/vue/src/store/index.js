@@ -145,7 +145,9 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       },
       SET_SHOW_MANAGER_POV(state, showManagerPOV) {
+
         state.showManagerPOV = showManagerPOV;
+
       },
       SET_AVAILABILITY_STATUS(state, payload) {
         payload.property.isAvailable = payload.value;

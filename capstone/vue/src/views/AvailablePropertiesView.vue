@@ -10,7 +10,7 @@
 
 <script>
 import SearchRentalsForm from '../components/SearchRentalsForm.vue';
-import PropertyService from '../services/PropertyService';
+// import PropertyService from '../services/PropertyService';
 
 export default {
   components: { SearchRentalsForm },
@@ -19,17 +19,17 @@ export default {
       properties : []
   }
   },
-  methods: {
-    getProperties() {
-              PropertyService.getProperties().then(response => {
-                  this.$store.state.commit('SET_PROPERTIES', response.data);
-                  this.properties = this.$store.state.properties;
-              })
-          },
-  },
-  created() {
-      this.getProperties(); 
-  }
+  // methods: {
+  //   getProperties() {
+  //             PropertyService.getProperties().then(response => {
+  //                 this.$store.state.commit('SET_PROPERTIES', response.data);
+  //                 this.properties = this.$store.state.properties;
+  //             })
+  //         },
+  // },
+  // created() {
+  //     this.getProperties(); 
+  // }
 }
 </script>
 

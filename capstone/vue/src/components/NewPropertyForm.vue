@@ -22,6 +22,7 @@
             <button class="btn-submit" type="submit">Save Property</button>
             <button class="btn-cancel" type="button" v-on:click="cancelForm">Cancel</button>
         </div>
+        <div> {{ editProperty }}</div>
     </div>
 
   </form>
@@ -29,6 +30,7 @@
 
 <script>
 import PropertyService from '../services/PropertyService';
+import UserService from '../services/UserService';
 export default {
 props: {
   property: {
@@ -38,12 +40,12 @@ props: {
 data() {
   return {
     editProperty: {
-      propertyId: this.property.propertyId,
+      propertyId: this.$route.params.propertyId,
       managerId: this.property.managerId,
       address: this.property.address,
       numberOfRooms: this.property.numberOfRooms,
       rent: this.property.rent,
-      available: this.property.available
+      available: false
     }
     // editProperty: {
     //   propertyId: 0,
@@ -53,17 +55,48 @@ data() {
     //   rent: '',
     //   available: ''
     // }
-
   }
 },
 methods: {
+  getManagerId() {
+    alert('in the manager method');
+    UserService.getManagerIdFromUserId().then(response => {
+      this.$store.commit('SET_MANAGER_ID', response.data);
+      this.editProperty.managerId = this.$store.state.managerId;
+    
+    }).catch(error => {
+      if (error.response.status === 404) {
+        this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
+        this.$router.push({ name: 'HomeView' });
+      } else {
+        this.$store.commit('SET_NOTIFICATION',
+          "Error getting managerId. Response received was '" + error.response.statusText + "'.");
+      }
+    });
+   
+  }, 
+  getPropertyDetails() {
+    if (this.editProperty.propertyId > 0){
+    PropertyService.getPropertyById(this.editProperty.propertyId).then(response => {
+      this.editProperty = response.data;
+    }).catch(error => {
+      if (error.response.status === 404) {
+        this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
+        this.$router.push({ name: 'HomeView' });
+      } else {
+        this.$store.commit('SET_NOTIFICATION',
+          "Error getting managerId. Response received was '" + error.response.statusText + "'.");
+      }
+    });
+  }
+  },
   submitForm() {
-    if (!this.validateForm()) {
-      return;
-    }
-    if (this.editProperty.propertyId === 0) {
+ 
+    if (this.editProperty.propertyId == 0) {
+      alert('why???');
       PropertyService.addProperty(this.editProperty).then(response => {
         if (response.status === 201 || response.status === 200) {
+          alert(`Property is added to the database`);
               this.$store.commit(
                 'SET_NOTIFICATION',
                 {
@@ -78,10 +111,13 @@ methods: {
             this.handleErrorResponse(error, 'adding');
           });
     } else {
+      alert('calling update property');
       PropertyService.updateProperty(this.editProperty).then(response => {
+    
         if (response.status === 200) {
+          alert(`Property : ${this.$route.params.propertyId} is being updated to the database`);
           this.$store.commit('SET_NOTIFICATION', {
-              message: `Property ${this.editCard.propertyId} was updated.`,
+              message: `Property ${this.editProperty.propertyId} was updated.`,
               type: 'success'
             }
           );
@@ -91,6 +127,7 @@ methods: {
         this.handleErrorResponse(error, 'updating');
       });
     }
+   
   },
   // clearForm() {
   //   this.editProperty = {
@@ -135,6 +172,10 @@ methods: {
     },
 
 },
+created() {
+  this.getManagerId();
+  this.getPropertyDetails();
+}
 // , params: { id: this.editPropertyForm.propertyId } 
 }
 </script>

@@ -45,8 +45,10 @@ methods: {
     display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
-  background-color: #8c979d;
+  background-color: #a0bdcc;
   border-radius: 500px;
   padding: 0 20px 20px 20px;
+  margin-bottom: 20px;
+  width: 500px;
 }
 </style>

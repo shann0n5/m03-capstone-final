@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -19,6 +21,7 @@ public class Property {
     @NotNull( message = "The field 'rent' is required.")
     private BigDecimal rent;
 
+    @JsonProperty("available")
     @NotNull( message = "The field 'isAvailable' is required.")
     private boolean isAvailable;
 
