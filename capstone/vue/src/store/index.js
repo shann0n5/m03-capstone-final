@@ -49,21 +49,21 @@ export function createStore(currentToken, currentUser) {
         // },
       ],
       applications:[
-        {
-        applicationId: 5001,
-        userId: 1004,
-        propertyId: 4001,
-        status: 'STATUS_PENDING',
-        hasRoomates: false,
-        roomateNames: null
-      },
-      {
-        applicationId: 5002,
-        userId: 1004,
-        propertyId: 4001,
-        status: 'STATUS_WITHDRAWN',
-        hasRoomates: true,
-        roomateNames: 'Luna Lovegood'}
+      //   {
+      //   applicationId: 5001,
+      //   userId: 1004,
+      //   propertyId: 4001,
+      //   status: 'STATUS_PENDING',
+      //   hasRoomates: false,
+      //   roomateNames: null
+      // },
+      // {
+      //   applicationId: 5002,
+      //   userId: 1004,
+      //   propertyId: 4001,
+      //   status: 'STATUS_WITHDRAWN',
+      //   hasRoomates: true,
+      //   roomateNames: 'Luna Lovegood'}
     ],
     serviceRequests: [
       // {
