@@ -1,21 +1,18 @@
 <template>
-    <form class="rentTransactionForm">
+    <form class="rentTransactionForm" v-on:submit.prevent="submitPayment">
       <div class="form-section">
-        <div class="info-field" v-bind:key="rentTransaction.rentTransactionId">Paymemt Due: {{ rentTransaction.amount }}</div>
+        <div class="info-field">Paymemt Due: {{ rentTransaction.amount }}</div>
         <div class="info-field">
         <label for="rentPayment">Amount you would like to pay:  </label>  
-          <input type="number" name="paymentInput" ref="paymentInput"></div> 
-      </div>
-      <div class="info-field" v-if="rentTransaction.pastDue">Is this payment past due? {{ rentTransaction.pastDue}}</div>
-      <div  class="serviceRequestButton">
-      
-          <button v-bind:to="{name:'rentTransaction'}" class="btn-submit" type="submit" v-on:click.prevent="submitPayment">Complete Payment</button>&nbsp;&nbsp;
+          <input id="rentPayment" type="number" name="paymentInput" ref="paymentInput" v-model="editRentTransaction.amount"></div>
+        
+        <div class="action-btn">  
+          <button  class="btn-submit" type="submit">Complete Payment</button>&nbsp;&nbsp;
            <button class="btn-cancel" type="button" v-on:click="cancelPayment">Cancel</button>
-  
+  </div>
       </div>
-  
-  ''
     </form>
+    
   </template>
 
   <script>
@@ -34,12 +31,44 @@ export default {
           default: false
         }
     },
+    data() {
+      return {
+        editRentTransaction: {
+          rentTransactionId: this.rentTransaction.rentTransactionId,
+          amount: this.rentTransaction.amount,
+          dueDate: this.rentTransaction.dueDate,
+          pastDue: this.rentTransaction.pastDue
+        }
+      }
+    },
     methods: {
       submitPayment() {
-      if (this.validateTransaction()) {
-          this.$router.push({ name: 'rentTransaction'});
+      
+      if (!this.validateTransaction()) {
+          return;
       } 
-    },
+      // if(this.editRentTransaction.pastDue === true) {
+        RentTransactionService.updateRentTransaction(this.editRentTransaction)
+        .then(response => {
+          if(response.status === 200) {
+              this.$store.commit(
+                'SET_NOTIFICATION',
+                {
+                  message: `Payment for ${this.rentTransactionId} was successful.`,
+                  type: 'success'
+                }
+              );
+              alert('Thank you for your payment! ');
+              this.$router.push({ name: 'rentTransaction' });
+            } else {
+              alert('error')
+            }
+        })
+      },  
+    
+// pastDuePaid(rentTransaction) {
+//       this.$store.commit(SET_IS_PAID, this.rentTransaction)
+//     },
         
         cancelPayment() {
       this.$router.push({ name: 'rentTransaction'});
@@ -58,7 +87,6 @@ export default {
       
       if(this.rentTransaction.amount == this.$refs.paymentInput.value)
       {
-        alert('Thank you for your payment! ');
         return true;
       } else
         {
@@ -66,8 +94,10 @@ export default {
       return false
 
   }
+  
 }
 }
+
      </script>
 <style>
 .rentTransactionForm{

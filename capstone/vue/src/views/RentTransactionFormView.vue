@@ -17,8 +17,9 @@ components: {
   data() {
     return {
       rentTransaction: {
+        rentTransactionId: parseInt(this.$route.params.rentTransactionId),
         amount: 0,
-        dueDate: '',
+        dueDate: this.$route.params.dueDate,
         pastDue: false
       }
     };

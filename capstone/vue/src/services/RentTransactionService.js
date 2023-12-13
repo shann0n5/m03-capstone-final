@@ -22,7 +22,7 @@ export default{
     },
 
     updateRentTransaction(rentTransaction){
-        return axios.put(`/rent-transactions/update/${rentTransaction.id}`, rentTransaction);
+        return axios.put(`/rent-transactions/update/${rentTransaction.rentTransactionId}`, rentTransaction);
     },
 
     addRentTransactions(rentTransaction){

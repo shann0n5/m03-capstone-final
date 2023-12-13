@@ -161,7 +161,7 @@ const routes = [
     }
   },
   {
-    path: "/rent-transaction-form/:rentTransactionId",
+    path: "/rent-transaction-form/:rentTransactionId/:dueDate",
     name: "RentTransactionForm",
     component: RentTransactionFormView,
     meta: {
