@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div class="container">
       <table id="tblProperties">
           <thead>
@@ -20,22 +20,20 @@
                           <option value="viewAll">Search All Rentals</option>
                           <option value="isAvailable">Available</option>
                           <option value="occupied">Occupied</option>
-                          
                       </select>
                   </td>
                   <td><input type="number" id="propertyIdFilter" placeholder="ex: 4001"  v-model="filter.propertyId" v-on:change="filter.propertyId" ></td>
                   <td><input type="text" id="addressFilter" placeholder="ex: 328 N Rodeo Dr, Beverly Hills, CA 90210"  v-model="filter.address"></td>
-                  <!--<td><input type="text" id="cityFilter" placeholder="ex: Beverly Hills"  v-model="filter.city"></td>
-                  <td><input type="text" id="stateFilter" placeholder="ex: CA" v-model="filter.state"></td> 
+                  <td><input type="text" id="cityFilter" placeholder="ex: Beverly Hills"  v-model="filter.city"></td> 
+                  <!--<td><input type="text" id="stateFilter" placeholder="ex: CA" v-model="filter.state"></td> 
                   <td><input type="text" id="zipcodeFilter" placeholder="ex: 90210" v-model="filter.zipcode"></td>-->
-                   <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
+                    <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
                   
 
                     <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
 
                   <button class="btn btn-cancel" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
-
               <tr v-for="property in filterProperties" v-bind:key="property.propertyId" > 
                   <td>&nbsp;</td>
                   <td>{{ property.propertyId }}</td>
@@ -46,7 +44,7 @@
           </tbody>
       </table>
     </div>
-  </template>
+  </template> 
   
   <script>
   import PropertyService from '../services/PropertyService'
@@ -60,7 +58,6 @@
                   numberOfRooms: '',
                   rent: ''
               },
-              
           }
       },
       methods: {
@@ -131,4 +128,5 @@
   
   <style>
   
-  </style>
+  </style> 
+ 
