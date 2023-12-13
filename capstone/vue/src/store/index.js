@@ -153,6 +153,9 @@ export function createStore(currentToken, currentUser) {
       SET_PROPERTIES(state, properties) {
         state.properties = properties;
       },
+      SET_MY_PROPERTIES(state, myProperties) {
+        state.myProperties = myProperties;
+      },
       SET_SERVICE_REQUEST(state, serviceRequests){
         state.serviceRequests = serviceRequests;
       },
