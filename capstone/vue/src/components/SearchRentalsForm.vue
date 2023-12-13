@@ -3,7 +3,7 @@
       <table id="tblProperties">
           <thead>
               <tr>
-                <th>Availability</th>
+                  <th>Availability</th>
                   <th>Property ID</th>
                   <th>Address, City, State, or ZIP code</th>
                    <th>Number Of Rooms</th>
@@ -13,12 +13,14 @@
           </thead>
           <tbody>
               <tr>
+                 
                   <td>
                       <select id="availabilityFilter" v-model="filter.available">
                           <option disabled value="">-- Select --</option>
-                          <option value="viewAll">Search All of My Properties</option>
+                          <option value="viewAll">Search All Rentals</option>
                           <option value="isAvailable">Available</option>
-                          <option value="occupied">Occupied</option>   
+                          <option value="occupied">Occupied</option>
+                          
                       </select>
                   </td>
                   <td><input type="number" id="propertyIdFilter" placeholder="ex: 4001"  v-model="filter.propertyId" v-on:change="filter.propertyId" ></td>
@@ -28,25 +30,12 @@
                   <td><input type="text" id="zipcodeFilter" placeholder="ex: 90210" v-model="filter.zipcode"></td>-->
                    <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
                   
-                  <!--  -->
+
                     <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
-                      <!-- <td><select id="rentFilter" placeholder="ex:"  v-model="filter.rent">
-                          <option disabled value="">----</option>
-                          <option value="<1000">Below $1,000</option>
-                          <option value="<2000">$2,000 & under</option>
-                          <option value="<3000">$3,000 & under</option>
-                          <option value="<4000">$4,000 & under</option>
-                          <option value="<5000">$5,000 & under</option>
-                          <option value="<5000">$6,000 & under</option>
-                          <option value="<5000">$7,000 & under</option>
-                          <option value="<5000">$8,000 & under</option>
-                          <option value="<5000">$9,000 & under</option>
-                          <option value="<5000">$10,000 & under</option>
-                      </select> 
-                  </td>-->
+
                   <button class="btn btn-cancel" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
-              <!-- -->
+
               <tr v-for="property in filterProperties" v-bind:key="property.propertyId" > 
                   <td>&nbsp;</td>
                   <td>{{ property.propertyId }}</td>
@@ -75,10 +64,10 @@
           }
       },
       methods: {
-          getMyProperties() {
-              PropertyService.getAllMyProperties().then(response => {
-                  this.$store.state.commit('SET_MY_PROPERTIES', this.properties);
-                  this.properties = this.$store.state.myProperties;
+          getProperties() {
+              PropertyService.getProperties().then(response => {
+                  this.$store.state.commit('SET_PROPERTIES', this.properties);
+                  this.properties = this.$store.state.properties;
               })
           }, 
           clearFilter() {
@@ -93,7 +82,7 @@
       },
       computed: {
           filterProperties() {
-              let filteredProperties = this.$store.state.myProperties;
+              let filteredProperties = this.$store.state.properties;
               if (this.filter.available != '') {
                   // alert(this.filter.available)
                   if (this.filter.available == 'isAvailable') {
@@ -135,7 +124,7 @@
           
       },
       created() {
-          this.getMyProperties(); 
+          this.getProperties(); 
       }
   }
   </script>

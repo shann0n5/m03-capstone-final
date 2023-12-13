@@ -28,6 +28,7 @@
 
 <script>
 import applicationService from '../services/ApplicationService';
+
 export default {
     props: {
         application:{
@@ -40,17 +41,48 @@ export default {
             editApplication: {
             id: this.application.id,
             fullName: this.application.fullName,
-            birthdate: this.application.birthdate,
+            // birthdate: this.application.birthdate,
             email: this.application.email,
-            address: this.application.address,
+            // address: this.application.address,
             status: this.application.status 
             }
         };
     },
     method: {
+      submitForm(){
+        if(this.editApplication.id === 0){
+          applicationService
+            .addApplication(this.editApplication)
+            .then(response => {
+              if(response.status === 201 || response.status === 200){
+                this.$store.commit(
+                  'SET_NOTIFICATION',
+                  {
+                    message: 'A new application was submitted',
+                    type: 'success'
+                  }
+                );
+                this.$router.push({ name: 'application' });
+              }
+            })
+            .catch(error => {
+              this.handleErrorResponse(error, 'adding');
+            });
+        }
+
+      },
       cancelForm() {
-        this.$router.push({ name: 'home' });
-      }
+        this.$router.push({ name: 'application' });
+      },
+      handleErrorResponse(error, verb){
+            if(error.response){
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Response received was '" + error.response.statusText + "'.");
+            } else if(error.request){
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Server could not be reached.");
+            } else {
+                this.$store.commit('SET_NOTIFICATION', "Error " + verb + " service request. Request could not be created.");
+            }
+        }
     }
 }
 </script>

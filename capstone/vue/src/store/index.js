@@ -9,6 +9,7 @@ export function createStore(currentToken, currentUser) {
       user: currentUser || {},
       managerId: 0,
       tenantId: 0,
+      showManagerPOV: false,
       users: [
         // {
         //   id: 1001,
@@ -48,21 +49,21 @@ export function createStore(currentToken, currentUser) {
         // },
       ],
       applications:[
-        {
-        applicationId: 5001,
-        userId: 1004,
-        propertyId: 4001,
-        status: 'STATUS_PENDING',
-        hasRoomates: false,
-        roomateNames: null
-      },
-      {
-        applicationId: 5002,
-        userId: 1004,
-        propertyId: 4001,
-        status: 'STATUS_WITHDRAWN',
-        hasRoomates: true,
-        roomateNames: 'Luna Lovegood'}
+      //   {
+      //   applicationId: 5001,
+      //   userId: 1004,
+      //   propertyId: 4001,
+      //   status: 'STATUS_PENDING',
+      //   hasRoomates: false,
+      //   roomateNames: null
+      // },
+      // {
+      //   applicationId: 5002,
+      //   userId: 1004,
+      //   propertyId: 4001,
+      //   status: 'STATUS_WITHDRAWN',
+      //   hasRoomates: true,
+      //   roomateNames: 'Luna Lovegood'}
     ],
     serviceRequests: [
       // {
@@ -143,6 +144,9 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
+      SET_SHOW_MANAGER_POV(state, showManagerPOV) {
+        state.showManagerPOV = showManagerPOV;
+      },
       SET_AVAILABILITY_STATUS(state, payload) {
         payload.property.isAvailable = payload.value;
       },
@@ -151,6 +155,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_SERVICE_REQUEST(state, serviceRequests){
         state.serviceRequests = serviceRequests;
+      },
+      SET_APPLICATION(state, applications){
+        state.applications = applications;
       },
       SET_RENT_TRANSACTION(state, rentTransactions) {
         state.rentTransactions = rentTransactions;

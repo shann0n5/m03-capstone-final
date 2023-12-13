@@ -1,6 +1,7 @@
 <template>
-    <header>Search Properties</header>
-    <router-link class="btn btn-submit" v-bind:to="{ name: 'propertyManagerMainPage' }">Back</router-link>
+  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertyManagerMainPage' }">Back</router-link>
+  <header>Search Properties</header>
+    
   <div class="search-properties-form">
     <property-search-form v-bind:properties="properties"/>
     

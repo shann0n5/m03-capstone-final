@@ -3,7 +3,7 @@
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
-        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" v-on:click="viewServiceRequestDetails">
+        <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" >
           <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}}">
           <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
           <div class="header">
@@ -27,10 +27,7 @@ export default {
 props: ['title', 'serviceRequests'],
 
 method: {
-    viewServiceRequestDetails() {
-      alert('here');
-      // this.$router.push({name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}});
-    }
+  
 }
 }
 </script>
