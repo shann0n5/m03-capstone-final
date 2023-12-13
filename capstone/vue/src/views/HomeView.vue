@@ -12,7 +12,7 @@
   <router-link class="btn btn-submit" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
 </div>
 <div class="tenant-home-btn" > 
-  <router-link  v-show="!this.$store.state.showManagerPOV" class="btn btn-submit" v-bind:to="{name: 'tenantMainPage'}"  >Tenant Home</router-link>
+  <router-link  v-show="!this.$store.state.showManagerPOV" class="btn btn-submit" v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link>
   <router-link class="btn btn-submit" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'serviceRequest'}">Service Request</router-link>
   <router-link class="btn btn-submit" v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">View My Applications</router-link>
   <router-link class="btn btn-submit" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'rentTransaction'}">Rent Transactions</router-link>
