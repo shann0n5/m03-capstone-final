@@ -24,7 +24,6 @@
         </div>
         <div> {{ editProperty }}</div>
     </div>
-
   </form>
 </template>
 
@@ -59,11 +58,9 @@ data() {
 },
 methods: {
   getManagerId() {
-    alert('in the manager method');
     UserService.getManagerIdFromUserId().then(response => {
       this.$store.commit('SET_MANAGER_ID', response.data);
       this.editProperty.managerId = this.$store.state.managerId;
-    
     }).catch(error => {
       if (error.response.status === 404) {
         this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
@@ -91,9 +88,7 @@ methods: {
   }
   },
   submitForm() {
- 
     if (this.editProperty.propertyId == 0) {
-      alert('why???');
       PropertyService.addProperty(this.editProperty).then(response => {
         if (response.status === 201 || response.status === 200) {
           alert(`Property is added to the database`);
@@ -111,11 +106,9 @@ methods: {
             this.handleErrorResponse(error, 'adding');
           });
     } else {
-      alert('calling update property');
       PropertyService.updateProperty(this.editProperty).then(response => {
     
         if (response.status === 200) {
-          alert(`Property : ${this.$route.params.propertyId} is being updated to the database`);
           this.$store.commit('SET_NOTIFICATION', {
               message: `Property ${this.editProperty.propertyId} was updated.`,
               type: 'success'
@@ -129,16 +122,6 @@ methods: {
     }
    
   },
-  // clearForm() {
-  //   this.editProperty = {
-  //     propertyId: '',
-  //     managerId: '',
-  //     address: '',
-  //     numberOfRooms:'',
-  //     rent: '',
-  //     available: ''
-  //   }
-  // },
   cancelForm() {
     // this.clearForm();
       this.$router.push({ name: 'propertyManagerMainPage' });
