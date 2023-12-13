@@ -3,16 +3,19 @@
     <h1>Home</h1>
     <p>Welcome!</p>
   </div>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
-<div class="tenant-home-btn" v-show="showManagerPOV === true"> 
+<!--   <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
+  <router-link v-bind:to="{name: 'propertyManagerMainPage'}">Property Manager Home</router-link> -->
+<div class="manager-home-btn"> 
+  
+
+  <router-link class="btn btn-submit"  v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
+  <router-link class="btn btn-submit"  v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
+  <router-link class="btn btn-submit"  v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
+</div>
+<div class="tenant-home-btn"> 
   <router-link v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link>
 </div>
-<div class="manager-home-btn" v-show="showManagerPOV === true"> 
-  <router-link v-bind:to="{name: 'propertyManagerMainPage'}">Property Manager Home</router-link>
-</div>
+
  
 </template>
 
@@ -22,7 +25,7 @@ import UserService from '../services/UserService';
 export default {
   data() {
     return {
-      // showManagerPOV: false,
+      showManagerPOV: false,
       // SET_SHOW_MANAGER_POV(state, showManagerPOV) {
       //   state.showManagerPOV = showManagerPOV;
       // },
@@ -58,13 +61,13 @@ export default {
       }
     });
 
-    if (this.$store.state.managerId != 0) {
-      this.$store.commit('SET_SHOW_MANAGER_POV', true);
-    } else if (this.$store.state.tenantId != 0) {
-      this.$store.commit('SET_SHOW_MANAGER_POV', false);
+    if (this.$store.state.managerId > 0) {
+      this.showManagerPOV = true;
+    } else {
+      this.showManagerPOV = false;
     }
-    // alert(this.$store.state.showManagerPOV)
-    
+    // alert(`Logging in ${this.$store.state.showManagerPOV}.`);
+    alert(this.showManagerPOV);
   }
 
     
