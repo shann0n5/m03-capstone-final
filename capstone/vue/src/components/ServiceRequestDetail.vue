@@ -2,11 +2,21 @@
     <div class="serviceRequest">
       <router-link v-bind:to="{ name: 'serviceRequest'}">Back to Service Requests</router-link>
       <div>
-          <h1>Service Request Details </h1>
-          <h2> Service Request ID: {{ serviceRequest.serviceRequestId }}</h2>
-          <h2> Tenant ID: {{ serviceRequest.tenantId }}</h2>
-          <div>{{ serviceRequest.status }}</div>
-          <p> Service Request Details: {{ serviceRequest.requestDetails  }}</p>
+          <h2>Service Request Details </h2>
+          <div>
+          <h3> Service Request ID: {{ serviceRequest.serviceRequestId }}</h3>
+          </div>
+          <div>
+          <h4> Tenant ID: </h4>
+          {{ serviceRequest.tenantId }}
+          </div>
+          <div>
+            <h4>Status:</h4>
+            {{ serviceRequest.status }}
+          </div>
+          <div> <h4>Service Request Details:</h4> 
+            {{ serviceRequest.requestDetails  }}
+          </div>
       </div>
       <div>
         <select v-model="editServiceRequest.status" v-on:change="updateServiceRequest" v-show="this.$store.state.showManagerPOV">

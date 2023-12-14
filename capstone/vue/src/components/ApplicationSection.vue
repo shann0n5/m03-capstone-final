@@ -1,21 +1,22 @@
 <template>
   <div class="action-board">
     <h2>{{ title }}</h2>
-    <div class="application" v-for="application in applications" 
-    v-bind:key="application.applicationId">
-        
+    <div class="application" v-for="application in applications" v-bind:key="application.applicationId">
+      <div>
+          <router-link class="link" v-bind:to="{name: 'applicationDetails', params:{ applicationId: application.applicationId}}">
+            <h3>
+                Application ID: {{ application.applicationId }}
+            </h3>
             <div>
-                <router-link v-bind:to="{name: 'applicationDetails', params:{ applicationId: application.applicationId}}">
-                <h3>
-                    Application ID: {{ application.applicationId }}
-                </h3>
-                <h4>
-                    Property ID: {{ application.propertyId }}
-                </h4>
-                <div>{{ application.fullName }}</div>
-                </router-link>
+              <h4>Property ID: </h4>
+              {{ application.propertyId }}
             </div>
-        
+            <div>
+              <h5>Applicant Name: </h5>
+              {{ application.fullName }}
+            </div>
+        </router-link>
+      </div>  
     </div>
   </div>
 </template>
@@ -45,4 +46,5 @@ method: {
   margin-bottom: 10px;
   cursor: pointer;
 }
+
 </style>

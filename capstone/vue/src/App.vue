@@ -7,7 +7,6 @@
     <div id="capstone-app">
       <nav  class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-          <i class="bi bi-house"></i>
           
           <!-- <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
@@ -15,11 +14,11 @@
           <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp; -->
           <!-- <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link> -->
-          <a class="nav-link" href="/" target="_self">Home</a>
-          <a class="nav-link" href="/about-us" target="_self">About Us</a>
-          <a class="nav-link" href="/available-properties" target="_self">See Rentals</a>
-          <a class="nav-link" href="/qualifications" target="_self">Apply Here</a>
-          <a class="nav-link" href="/contact-us" target="_self">Contact Us</a>
+          <a class="bi bi-house" href="/" target="_self">Home</a>
+          <a class="bi bi-info-circle" href="/about-us" target="_self">About Us</a>
+          <a class="bi bi-search" href="/available-properties" target="_self">See Rentals</a>
+          <a class="bi bi-clipboard-plus" href="/qualifications" target="_self">Apply Here</a>
+          <a class="bi bi-person-rolodex" href="/contact-us" target="_self">Contact Us</a>
           
           <a  class="nav-link" href="/logout" target="_self" v-if="this.$store.state.token != ''" >Logout</a>
         
@@ -38,6 +37,7 @@
 
 <style>
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css");
 .logo {
       border-radius: 50%;
       height: 10rem;
@@ -55,6 +55,9 @@ button{
 }
 .nav-link{
 justify-content: center;
+}
+.link{
+  text-decoration: none;
 }
 
 /* body {

@@ -177,7 +177,7 @@ const routes = [
       }
     },
     {
-      path: "/properties/create",
+      path: "/properties/:propertyId/create",
       name: "addProperty",
       component: NewPropertyFormView,
       meta: {

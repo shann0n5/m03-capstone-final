@@ -45,7 +45,9 @@ export default {
   methods: {
     getManagerId() {
       UserService.getManagerIdFromUserId().then(response => {
+        alert(`response data for get managerId method: ${response.data}`);
         this.$store.commit('SET_MANAGER_ID', response.data);
+        alert(`${this.$store.state.managerId} managerId`);
         this.editProperty.managerId = this.$store.state.managerId;
       }).catch(error => {
         if (error.response.status === 404) {
@@ -73,6 +75,7 @@ export default {
       }
     },
     submitForm() {
+      alert(`${this.editProperty.propertyId} = propertyId in the submit form should be 0`)
       if (this.editProperty.propertyId == 0) {
         PropertyService.addProperty(this.editProperty).then(response => {
           if (response.status === 201 || response.status === 200) {
@@ -138,6 +141,7 @@ export default {
   created() {
     this.getManagerId();
     this.getPropertyDetails();
+    alert(this.$route.params.propertyId);
   }
 }
 </script>
