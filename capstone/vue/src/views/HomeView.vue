@@ -30,7 +30,9 @@ import PropertyService from '../services/PropertyService';
 export default {
   created() {
     if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      alert(`before the mutation ${this.$store.state.showManagerPOV}`)
       this.$store.commit('SET_SHOW_MANAGER_POV', true);
+      alert(`AFTER the mutation ${this.$store.state.showManagerPOV}`)
     }
     PropertyService.getAllMyProperties().then(response => {
       this.$store.commit('SET_MY_PROPERTIES', response.data);
