@@ -1,4 +1,3 @@
-<!-- similar to BoardView -->
 <template>
     <div>
       <div class="back-to-tenant-home">
@@ -44,30 +43,19 @@ export default {
     }
   },
   methods: {
-    // deleteServiceRequest(){
-    //   if(confirm("Are you sure you want to delete this service transaction? This action cannot be undone.")){
-    //     serviceRequestService
-    //     .deleteServiceRequest(this.serviceBoard.id)
-    //     .then(response => {
-    //       if(response.status === 200){
-    //         this.$store.commit('SET_NOTIFICATION',
-    //         {
-    //           message: 'Service request has been deleted',
-    //           type: 'success'
-    //         });
-    //         this.$router.push({ name: 'serviceRequest'});
-    //       }
-    //     }).catch(error => {
-    //       if(error.response){
-    //         this.$store.commit('SET_NOTIFICATION',
-    //         "Error deleting service request. API Server could not be reached.");
-    //       }else {
-    //         this.$store.commit('SET_NOTIFICATION',
-    //         "Error deleting board. Request could not be executed.");
-    //       }
-    //     });
-    //   }
-    // }
+    refresh(){
+      serviceRequestService
+          .getAllMyServiceRequests()
+          .then(response => {
+            this.$store.commit('SET_SERVICE_REQUEST', response.data);
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 404){
+              this.$store.commit('SET_NOTIFICATION', `Error getting service request. This service request may have been deleted or you have entered an invalid service request ID.`);
+              this.$router.push({ name: 'serviceRequest' });
+            }
+          });
+    }
     
   },
   created(){

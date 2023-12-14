@@ -14,7 +14,7 @@ export default{
     },
 
     updateServiceRequest(serviceRequest){
-        return axios.put(`/service-requests/${serviceRequest.id}`, serviceRequest);
+        return axios.put(`/service-requests/${serviceRequest.serviceRequestId}`, serviceRequest);
     },
 
     addServiceRequest(serviceRequest){

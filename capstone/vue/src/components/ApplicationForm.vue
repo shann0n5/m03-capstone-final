@@ -9,18 +9,10 @@
             <label for="propertyId">Property ID:</label>
             <input type="number" class="form-control" id="propertyId" name="propertyId" v-model="editApplication.propertyId">
         </div>
-        <!-- <div class="info-field">
-            <label for="birthdate">BirthDate:</label>
-            <input type="date" id="birthdate" class="form-control" name="birthdate" v-model="editApplication.birthdate">
-        </div> -->
         <div class="info-field">
             <label for="email">Email:</label>
             <input type="email" id="email" class="form-control" name="email" v-model="editApplication.email">
         </div>
-        <!-- <div class="info-field"> 
-            <label for="address">Address:</label>
-            <input type="text" id="address" class="form-control" name="address" v-model="editApplication.address">
-        </div> -->
         <div class="info-field">
           <label for="hasRoomates">Roomates?</label>
           <input type="checkbox" class="form-control" id="hasRoomates" v-model="editApplication.hasRoomates">
@@ -36,9 +28,6 @@
     </div>
 
   </form>
-  <!-- <div>
-   Application: {{ editApplication }}
-  </div> -->
 </template>
 
 <script>
@@ -57,11 +46,9 @@ export default {
               id: this.application.applicationId,
               propertyId: this.application.propertyId,
               fullName: this.application.fullName,
-              // birthdate: this.application.birthdate,
               email: this.application.email,
               hasRoomates: this.application.hasRoomates,
               roomateNames: this.application.roomateNames,
-              // address: this.application.address,
               status: this.application.status 
             }
         };

@@ -12,18 +12,9 @@
                 <h4>
                     Property ID: {{ application.propertyId }}
                 </h4>
-                <div>{{ application }}</div>
+                <div>{{ application.fullName }}</div>
                 </router-link>
             </div>
-            <!-- <p>
-                Full Name : {{ application.fullName }}
-            </p>
-            <p>
-                Email : {{ application.email }}
-            </p>
-            <p>
-                Roomates???
-            </p> -->
         
     </div>
   </div>

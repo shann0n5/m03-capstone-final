@@ -22,7 +22,7 @@ export default{
     },
     
     updateApplications(application){
-        return axios.put(`/applications/update/${application.id}`, application);
+        return axios.put(`/applications/update/${application.applicationId}`, application);
     },
     
     addApplication(application){
@@ -30,7 +30,6 @@ export default{
     },
     
     deleteApplication(applicationId){
-        alert('delete was called');
         return axios.delete(`/applications/${applicationId}`);
     }
 }

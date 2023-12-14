@@ -41,6 +41,7 @@ export default {
 
     },
     created(){
+        if(this.$store.state.user.authorities[0].name === 'ROLE_ADMIN'){
         applicationService
         .getAllApplications()
         .then(response => {
@@ -54,6 +55,22 @@ export default {
                 //ROUTER TO APPLICATIONS
             }
         });
+        } else if (this.$store.state.user.authorities[0].name === 'ROLE_USER'){
+        applicationService
+        .getMyApplications()
+        .then(response => {
+            // alert(response.data);
+            this.$store.commit('SET_APPLICATION', response.data);
+            // this.applications = this.$store.state.applications;
+        })
+        .catch(error => {
+            if(error.response && error.response.status === 404){
+                this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
+                //ROUTER TO APPLICATIONS
+            }
+        });
+        }
+        
     }
 
 }

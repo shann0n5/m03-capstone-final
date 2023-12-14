@@ -1,23 +1,19 @@
-<!-- similar to board section -->
 <template>
   <div class="action-board">
     <h2>{{title}}</h2>
     <div class="service-requests">
         <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" >
           <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}}">
-          <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
           <div class="header">
             <h3>
-              <!-- <router-link v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.id}}">Service Details</router-link> -->
               Service Request:{{ serviceRequest.serviceRequestId }}
             </h3>
           </div>
-         
-          <div>Details: {{ serviceRequest.requestDetails }}</div>
+          <div>
+            Details: {{ serviceRequest.requestDetails }}
+          </div>
         </router-link>
-
         </div>
-      
     </div>
   </div>
 </template>
