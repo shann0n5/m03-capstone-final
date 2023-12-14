@@ -7,7 +7,6 @@
         <h3>Application ID: {{ application.applicationId }}</h3>
         </div>
         <h4>Property ID : {{ application.propertyId }}</h4>
-        
         <div>
             <h5>Status : </h5>
             {{ application.status }}
