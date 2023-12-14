@@ -7,16 +7,20 @@
     <!-- <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">View Applications for My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
-    <a class="nav-link" href="/property-manager-main-view" target="_self">My Properties </a>
-    <a class="nav-link" href="/application-view" target="_self">View Applications for My Properties</a>
-    <a class="nav-link" href="/" target="_self">Home</a>
+    <a class="nav-link" href="/property-manager-main-view" target="_self" v-show="this.$store.state.showManagerPOV">My Properties </a>
+    <a class="nav-link" href="/application-view" target="_self"  v-show="this.$store.state.showManagerPOV">View Applications for My Properties</a>
+    <a class="nav-link" href="/service-request-view" target="_self" >See Service Requests</a>
     
   </div>
   <div class="tenant-home-btn" > 
     <!-- <router-link  v-show="!this.$store.state.showManagerPOV" class="btn btn-submit" v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link> -->
-    <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'serviceRequest'}">My Service Requests</router-link>
+    <!-- <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'serviceRequest'}">My Service Requests</router-link>
     <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">My Applications</router-link>
-    <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'rentTransaction'}"> My Rent Transactions</router-link>
+    <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'rentTransaction'}"> My Rent Transactions</router-link> -->
+
+    <a class="nav-link"   href="/service-request-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Service Requests</a>
+    <a class="nav-link"   href="/application-view" target="_self" v-show="!this.$store.state.showManagerPOV" >My Applications</a>
+    <a class="nav-link"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Rent Transactions</a>
   </div>
 </template>
 
