@@ -10,7 +10,6 @@ export default {
     this.$store.commit('SET_MANAGER_ID', 0);
     this.$store.commit('SET_TENANT_ID', 0);
     this.$store.commit('SET_SHOW_MANAGER_POV', false);
-    alert(this.$store.state.showManagerPOV);
   }
 }
 </script>

@@ -26,11 +26,10 @@ export default {
         default: false
     }
   },
-  methods: {
-      // addToOccupiedList(property) {
-      //     let addedProperty = Object.assign({isAvailable: false }, property);
-      //     this.$store.commit('SAVE_PROPERTY', addedProperty)
-      // }
+  created(){
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    }
   }
 }
 </script>

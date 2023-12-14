@@ -14,8 +14,6 @@ export default{
         return axios.post('/properties', property);
     },
     updateProperty(property) {
-        alert('property services');
-        alert(property.propertyId);
         return axios.put(`/properties/${property.propertyId}`, property); 
     },
     deleteProperty(propertyId) {
