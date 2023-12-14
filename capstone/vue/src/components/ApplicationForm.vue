@@ -3,17 +3,17 @@
     <div class="field">
         <div class="info-field">
             <label for="fullName">Full Name:</label>
-            <input type="text" class="form-control" id="fullName" name="fullName" v-model="editApplication.fullName">
+            <input type="text" class="form-control" id="fullName" name="fullName" v-model="editApplication.fullName" placeholder="Ex: Harry Potter">
         </div>
         <div class="info-field">
             <label for="propertyId">Property ID:</label>
-            <input type="number" class="form-control" id="propertyId" name="propertyId" v-model="editApplication.propertyId">
+            <input type="number" class="form-control" id="propertyId" name="propertyId" v-model="editApplication.propertyId" placeholder="Ex: 4001">
         </div>
         <div class="info-field">
             <label for="email">Email:</label>
-            <input type="email" id="email" class="form-control" name="email" v-model="editApplication.email">
+            <input type="email" id="email" class="form-control" name="email" v-model="editApplication.email" placeholder="name@email.com">
         </div>
-        <div  class="form-check form-switch">
+        <div class="form-check form-switch">
           <label for="hasRoomates">Roomates?</label>
           <input type="checkbox" class="form-check-input" id="hasRoomates" v-model="editApplication.hasRoomates">
         </div>

@@ -2,23 +2,21 @@
   <form v-on:submit.prevent="submitForm" class="property-form">
     <div class="field">
         <div class="info-field"><label for="address">Address: </label>
-          <input type="text" id="address" name="address" class="form-control" v-model="editProperty.address">
+          <input type="text" id="address" name="address" class="form-control" v-model="editProperty.address" placeholder="Ex: 123 Tech Elevator St. Philadelphia, NY 90210">
         </div>
         <div class="info-field"><label for="numberOfRooms">Number of Rooms: </label>
-          <input type="text" id="numberOfRooms" name="numberOfRooms" class="form-control" v-model="editProperty.numberOfRooms">
+          <input type="text" id="numberOfRooms" name="numberOfRooms" class="form-control" v-model="editProperty.numberOfRooms" placeholder="Ex: 2">
         </div>
         <div class="info-field"><label for="rent">Rent: </label>
-          <input type="text" id="rent" name="rent" class="form-control" v-model="editProperty.rent">
+          <input type="text" id="rent" name="rent" class="form-control" v-model="editProperty.rent" placeholder="Ex: 2700.00">
         </div>
-        <div class="info-field"> <label for="isAvailable">Is Available: </label>
-          <input type="checkbox" id="isAvailable" name="isAvailable" v-model="editProperty.available">
+        <div class="form-check form-switch"> <label for="isAvailable">Is Available: </label>
+          <input type="checkbox" class="form-check-input" id="isAvailable" name="isAvailable" v-model="editProperty.available">
         </div>
-       
         <div class="property-form-btn">
             <button class="btn btn-outline-primary" type="submit">Save Property</button>
             <button class="btn btn-outline-secondary" type="button" v-on:click="cancelForm">Cancel</button>
         </div>
-        <div> {{ editProperty }}</div>
     </div>
   </form>
 </template>
