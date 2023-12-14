@@ -41,6 +41,10 @@ main{
   align-content: center;
 }
 
+button{
+  margin: 10px;
+}
+
 /* body {
         margin: 0;
     }
