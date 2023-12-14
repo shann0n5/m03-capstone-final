@@ -29,12 +29,12 @@
         </div>
     </div>
     <div>
-    <select v-model="editApplication.status" v-on:change="updateApplications" v-show="this.$store.state.showManagerPOV">
+    <select v-model="editApplication.status" v-on:change="updateApplications" v-show="!this.$store.state.showManagerPOV">
         <option value="approved">Approved</option>
         <option value="rejected">Rejected</option>
     </select>
     </div>
-    <button class="btn btn-outline-danger" v-on:click="deleteApplication" v-show="!this.$store.state.showManagerPOV">Withdraw Application</button>
+    <button class="btn btn-outline-danger" v-on:click="deleteApplication" v-show="this.$store.state.showManagerPOV">Withdraw Application</button>
   </div>
 </template>
 

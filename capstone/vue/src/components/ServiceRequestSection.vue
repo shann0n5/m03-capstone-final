@@ -6,7 +6,7 @@
           <router-link class="link" v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}}">
           <div class="header">
             <h3>
-              Service Request:{{ serviceRequest.serviceRequestId }}
+              Service Request ID :{{ serviceRequest.serviceRequestId }}
             </h3>
           </div>
           <div>
