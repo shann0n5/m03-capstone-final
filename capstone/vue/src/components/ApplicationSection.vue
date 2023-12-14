@@ -31,7 +31,8 @@ method: {
 }
 </script>
 
-<style>
+<style scoped>
+
 .action-board {
   background-color: #6f828e;
   border-radius: 10px;
@@ -48,6 +49,13 @@ method: {
 }
 .title{
   color: white;
+}
+h2{
+  display: flex;
+  justify-content: center;
+}
+h3, h4, h5{
+  color: slategray;
 }
 
 </style>

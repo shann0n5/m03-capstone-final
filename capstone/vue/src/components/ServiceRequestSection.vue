@@ -1,6 +1,6 @@
 <template>
   <div class="action-board">
-    <h2>{{title}}</h2>
+    <h2 class="title">{{title}}</h2>
     <div class="service-requests">
         <div class="service-request" v-for="serviceRequest in serviceRequests" v-bind:key="serviceRequest.serviceRequestId" >
           <router-link class="link" v-bind:to="{name: 'serviceRequestDetails', params:{serviceRequestId: serviceRequest.serviceRequestId}}">
@@ -29,7 +29,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h2{
+  display: flex;
+  justify-content: center;
+}
 .action-board {
   background-color: #6f828e;
   border-radius: 10px;
@@ -44,4 +48,11 @@ export default {
   margin-bottom: 10px;
   cursor: pointer;
 }
+.title{
+  color: white;
+}
+h3, h4{
+  color: slategray;
+}
+
 </style>

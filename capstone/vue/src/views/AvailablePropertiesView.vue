@@ -1,8 +1,8 @@
 <template>
   <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
-  <header>Search Rentals</header>
+  <h2>Search Rentals</h2>
   <div class="search-properties-form">
-    <search-rentals-form />
+    <search-rentals-form class="form"/>
   
 </div>
   
@@ -10,7 +10,6 @@
 
 <script>
 import SearchRentalsForm from '../components/SearchRentalsForm.vue';
-// import PropertyService from '../services/PropertyService';
 
 export default {
   components: { SearchRentalsForm },
@@ -19,20 +18,19 @@ export default {
       properties : []
   }
   },
-  // methods: {
-  //   getProperties() {
-  //             PropertyService.getProperties().then(response => {
-  //                 this.$store.state.commit('SET_PROPERTIES', response.data);
-  //                 this.properties = this.$store.state.properties;
-  //             })
-  //         },
-  // },
-  // created() {
-  //     this.getProperties(); 
-  // }
 }
 </script>
 
-<style>
+<style scoped>
+h2{
+  display: flex;
+ justify-content: center;
+ padding-bottom: 20px;
+}
+.form{
+  display: flex;
+  justify-content: center;
+}
+
 
 </style>
