@@ -1,13 +1,12 @@
 <template>
-
   <h2>My Properties</h2>
   <router-link class="btn btn-primary" v-bind:to="{ name: 'home' }">Back To Home</router-link>
   <router-link class="btn btn-primary" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
   <!-- <router-link class="btn btn-primary" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
   <!-- <router-link class="btn btn-primary" v-bind:to="{name: 'application'}">See Applications</router-link> -->
   <router-link class="btn btn-primary" v-bind:to="{ name: 'addProperty', params: {propertyId: 0 } }">Add New Property</router-link>
-  <available-property-list />
-  <occupied-property-list />
+  <available-property-list/>
+  <occupied-property-list/>
 
 </template>
 
@@ -21,7 +20,7 @@ export default{
 </script>
 
 <style>
-.btn-submit {
+/*.btn-submit {
   color: rgba(25, 27, 29, 0.87);
   background-color: #b7cddb;
   border-color: #43677c;
@@ -35,7 +34,7 @@ export default{
   border-color: #b65d65;
   padding: 6px 12px;
 }
-/* header, footer, nav, main, aside {
+ header, footer, nav, main, aside {
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         font-size: 24px;
         text-transform: uppercase;

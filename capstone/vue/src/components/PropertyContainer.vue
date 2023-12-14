@@ -1,9 +1,9 @@
 <template>
   <div class="property-container" >
    <h4 >
-      <router-link v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
-        <p>Property: {{ property.propertyId }}</p> 
-        <!-- {{ property.address }}  -->
+      <router-link class="link" v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
+        <p>#{{ property.propertyId }}:</p> 
+        {{ property.address }}  <!-- -->
       </router-link> 
     </h4> 
     <p></p>
@@ -35,16 +35,22 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
  .property-container{
   display: flex;
   /* flex-direction: column; */
   justify-content: space-evenly;
   flex-wrap: wrap;
-  background-color: #a0bdcc;
-  border-radius: 500px;
+  background-color: #daf0fd;
+  border-radius: 45px;
   padding: 0 20px 20px 20px;
   margin-bottom: 20px;
   width: 500px;
 } 
+.link {
+  text-decoration: none;
+  color: rgb(53, 72, 95);
+  
+}
+.link:hover {filter: brightness(2);}
 </style>
