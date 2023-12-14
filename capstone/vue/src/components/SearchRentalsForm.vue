@@ -23,10 +23,8 @@
                   </td>
                   <td><input type="number" id="propertyIdFilter" placeholder="ex: 4001"  v-model="filter.propertyId" v-on:change="filter.propertyId" ></td>
                   <td><input type="text" id="addressFilter" placeholder="ex: 328 N Rodeo Dr, Beverly Hills, CA 90210"  v-model="filter.address"></td>
-                    <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
-                  
-
-                    <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
+                  <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
+                  <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
 
                   <button class="btn btn-outline-secondary" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
