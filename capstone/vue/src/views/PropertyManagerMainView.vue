@@ -1,11 +1,11 @@
 <template>
 
-  <header>My Properties</header>
-   <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{name: 'application'}">See Applications</router-link>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'addProperty', params: {propertyId: 0 } }">Add New Property</router-link>
+  <h2>My Properties</h2>
+  <router-link class="btn btn-primary" v-bind:to="{ name: 'home' }">Back To Home</router-link>
+  <router-link class="btn btn-primary" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
+  <!-- <router-link class="btn btn-primary" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
+  <!-- <router-link class="btn btn-primary" v-bind:to="{name: 'application'}">See Applications</router-link> -->
+  <router-link class="btn btn-primary" v-bind:to="{ name: 'addProperty', params: {propertyId: 0 } }">Add New Property</router-link>
   <available-property-list />
   <occupied-property-list />
 
