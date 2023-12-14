@@ -3,12 +3,11 @@
       <table id="tblProperties">
           <thead>
               <tr>
-                   <th>Availability</th>
-                  <th>Property ID</th>
-                  <th>Address, City, State, or ZIP code</th>
-                   <th>Number Of Rooms</th>
-                  <th>Maximum Rent: $</th> 
-                  
+                <th>Availability</th>
+                <th>Property ID</th>
+                <th>Address, City, State, or ZIP code</th>
+                <th>Number Of Rooms</th>
+                <th>Maximum Rent: $</th>  
               </tr>
           </thead>
           <tbody>

@@ -13,7 +13,7 @@
             <option value="inProgress">In Progress</option>
             <option value="complete">Complete</option>
         </select>
-      <button class="btn btn-delete" v-on:click="deleteServiceRequest" v-show="!this.$store.state.showManagerPOV">Delete Service Request</button>
+      <button class="btn btn-outline-danger" v-on:click="deleteServiceRequest" v-show="!this.$store.state.showManagerPOV">Delete Service Request</button>
     </div>
     </div>
   </template>

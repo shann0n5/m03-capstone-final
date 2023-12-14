@@ -11,7 +11,11 @@
          <div class="info-field">Payment Due Date: {{ rentTransaction.dueDate }}</div>
         
         </div>
-    <button class="pay-btn"><router-link class="back-btn" v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId, dueDate: rentTransaction.dueDate} }">Pay Rent</router-link> </button>
+        <button class="btn btn-outline-secondary">
+          <router-link class="back-btn" v-bind:to="{name:'RentTransactionForm', params:{rentTransactionId: rentTransaction.transactionId, dueDate: rentTransaction.dueDate} }">
+          Pay Rent
+          </router-link> 
+        </button>
    
          </div>
         
