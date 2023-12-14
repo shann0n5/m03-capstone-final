@@ -101,6 +101,7 @@ public class JdbcUserDao implements UserDao {
             throw new DaoException("Data integrity violation", e);
         }
     }
+    @Override
     public int getTenantIdFromUserId(int userId) {
         String sql = "SELECT tenant_id FROM tenant_profiles WHERE user_id = ?;";
         try {

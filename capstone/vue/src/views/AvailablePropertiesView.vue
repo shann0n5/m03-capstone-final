@@ -2,7 +2,7 @@
   <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
   <header>Search Rentals</header>
   <div class="search-properties-form">
-    <search-rentals-form  v-bind:properties="properties"/>
+    <search-rentals-form />
   
 </div>
   

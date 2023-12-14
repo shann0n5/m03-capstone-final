@@ -1,10 +1,6 @@
 <template>
   <form v-on:submit.prevent="submitForm" class="property-form">
     <div class="field">
-        <!-- <div class="info-field">
-          <label for="managerId">Manager Id: </label>
-          <input type="text" id="managerId" name="managerId" v-model="editProperty.managerId">
-        </div> -->
         <div class="info-field"><label for="address">Address: </label>
           <input type="text" id="address" name="address" class="form-control" v-model="editProperty.address">
         </div>
@@ -24,7 +20,6 @@
         </div>
         <div> {{ editProperty }}</div>
     </div>
-
   </form>
 </template>
 
@@ -32,151 +27,120 @@
 import PropertyService from '../services/PropertyService';
 import UserService from '../services/UserService';
 export default {
-props: {
-  property: {
-    type: Object, required: true
-  }
-},
-data() {
-  return {
-    editProperty: {
-      propertyId: this.$route.params.propertyId,
-      managerId: this.property.managerId,
-      address: this.property.address,
-      numberOfRooms: this.property.numberOfRooms,
-      rent: this.property.rent,
-      available: false
+  props: {
+    property: {
+      type: Object, required: true
     }
-    // editProperty: {
-    //   propertyId: 0,
-    //   managerId: 0,
-    //   address: '',
-    //   numberOfRooms:'',
-    //   rent: '',
-    //   available: ''
-    // }
-  }
-},
-methods: {
-  getManagerId() {
-    alert('in the manager method');
-    UserService.getManagerIdFromUserId().then(response => {
-      this.$store.commit('SET_MANAGER_ID', response.data);
-      this.editProperty.managerId = this.$store.state.managerId;
-    
-    }).catch(error => {
-      if (error.response.status === 404) {
-        this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
-        this.$router.push({ name: 'HomeView' });
-      } else {
-        this.$store.commit('SET_NOTIFICATION',
-          "Error getting managerId. Response received was '" + error.response.statusText + "'.");
-      }
-    });
-   
-  }, 
-  getPropertyDetails() {
-    if (this.editProperty.propertyId > 0){
-    PropertyService.getPropertyById(this.editProperty.propertyId).then(response => {
-      this.editProperty = response.data;
-    }).catch(error => {
-      if (error.response.status === 404) {
-        this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
-        this.$router.push({ name: 'HomeView' });
-      } else {
-        this.$store.commit('SET_NOTIFICATION',
-          "Error getting managerId. Response received was '" + error.response.statusText + "'.");
-      }
-    });
-  }
   },
-  submitForm() {
- 
-    if (this.editProperty.propertyId == 0) {
-      alert('why???');
-      PropertyService.addProperty(this.editProperty).then(response => {
-        if (response.status === 201 || response.status === 200) {
-          alert(`Property is added to the database`);
-              this.$store.commit(
-                'SET_NOTIFICATION',
-                {
-                  message: 'A new property was added.',
-                  type: 'success'
-                }
-                
-              );
-              this.$router.push({ name: 'propertyManagerMainPage' });
-            }
+  data() {
+    return {
+      editProperty: {
+        propertyId: this.$route.params.propertyId,
+        managerId: this.property.managerId,
+        address: this.property.address,
+        numberOfRooms: this.property.numberOfRooms,
+        rent: this.property.rent,
+        available: false
+      }
+    }
+  },
+  methods: {
+    getManagerId() {
+      UserService.getManagerIdFromUserId().then(response => {
+        this.$store.commit('SET_MANAGER_ID', response.data);
+        this.editProperty.managerId = this.$store.state.managerId;
       }).catch(error => {
-            this.handleErrorResponse(error, 'adding');
-          });
-    } else {
-      alert('calling update property');
-      PropertyService.updateProperty(this.editProperty).then(response => {
-    
-        if (response.status === 200) {
-          alert(`Property : ${this.$route.params.propertyId} is being updated to the database`);
-          this.$store.commit('SET_NOTIFICATION', {
-              message: `Property ${this.editProperty.propertyId} was updated.`,
-              type: 'success'
-            }
-          );
-          this.$router.push({ name: 'propertyManagerMainPage'});
+        if (error.response.status === 404) {
+          this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
+          this.$router.push({ name: 'HomeView' });
+        } else {
+          this.$store.commit('SET_NOTIFICATION',
+            "Error getting managerId. Response received was '" + error.response.statusText + "'.");
         }
-      }).catch(error => {
-        this.handleErrorResponse(error, 'updating');
       });
-    }
-   
-  },
-  // clearForm() {
-  //   this.editProperty = {
-  //     propertyId: '',
-  //     managerId: '',
-  //     address: '',
-  //     numberOfRooms:'',
-  //     rent: '',
-  //     available: ''
-  //   }
-  // },
-  cancelForm() {
-    // this.clearForm();
-      this.$router.push({ name: 'propertyManagerMainPage' });
-  },
-  handleErrorResponse(error, verb) {
-      if (error.response) {
-        this.$store.commit('SET_NOTIFICATION',
-          "Error " + verb + " property. Response received was '" + error.response.statusText + "'.");
-      } else if (error.request) {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Server could not be reached.");
-      } else {
-        this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Request could not be created.");
+    }, 
+    getPropertyDetails() {
+      if (this.editProperty.propertyId > 0){
+        PropertyService.getPropertyById(this.editProperty.propertyId).then(response => {
+          this.editProperty = response.data;
+        }).catch(error => {
+          if (error.response.status === 404) {
+            this.$store.commit('SET_NOTIFICATION', `Error: managerId was not found.`)
+            this.$router.push({ name: 'HomeView' });
+          } else {
+            this.$store.commit('SET_NOTIFICATION',
+              "Error getting managerId. Response received was '" + error.response.statusText + "'.");
+          }
+        });
       }
-  },
-  validateForm() {
-      let msg = '';
-      if (this.editCard.address.length === 0) {
-        msg += 'The new property must have an address. ';
-      }
-      if (this.editCard.numberOfRooms.length === 0) {
-        msg += 'The new property must have a number of rooms.';
-      }
-      if (this.editCard.rent.length === 0) {
-        msg += 'The new property must have a rent.';
-      }
-      if (msg.length > 0) {
-        this.$store.commit('SET_NOTIFICATION', msg);
-        return false;
-      }
-      return true;
     },
-
-},
-created() {
-  this.getManagerId();
-  this.getPropertyDetails();
-}
-// , params: { id: this.editPropertyForm.propertyId } 
+    submitForm() {
+      if (this.editProperty.propertyId == 0) {
+        PropertyService.addProperty(this.editProperty).then(response => {
+          if (response.status === 201 || response.status === 200) {
+                this.$store.commit(
+                  'SET_NOTIFICATION',
+                  {
+                    message: 'A new property was added.',
+                    type: 'success'
+                  }
+                );
+                this.$router.push({ name: 'propertyManagerMainPage' });
+              }
+        }).catch(error => {
+              this.handleErrorResponse(error, 'adding');
+            });
+      } else {
+        PropertyService.updateProperty(this.editProperty).then(response => {
+      
+          if (response.status === 200) {
+            this.$store.commit('SET_NOTIFICATION', {
+                message: `Property ${this.editProperty.propertyId} was updated.`,
+                type: 'success'
+              }
+            );
+            this.$router.push({ name: 'propertyManagerMainPage'});
+          }
+        }).catch(error => {
+          this.handleErrorResponse(error, 'updating');
+        });
+      }
+    },
+    cancelForm() {
+        this.$router.push({ name: 'propertyManagerMainPage' });
+    },
+    handleErrorResponse(error, verb) {
+        if (error.response) {
+          this.$store.commit('SET_NOTIFICATION',
+            "Error " + verb + " property. Response received was '" + error.response.statusText + "'.");
+        } else if (error.request) {
+          this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Server could not be reached.");
+        } else {
+          this.$store.commit('SET_NOTIFICATION', "Error " + verb + " property. Request could not be created.");
+        }
+    },
+    validateForm() {
+        let msg = '';
+        if (this.editCard.address.length === 0) {
+          msg += 'The new property must have an address. ';
+        }
+        if (this.editCard.numberOfRooms.length === 0) {
+          msg += 'The new property must have a number of rooms.';
+        }
+        if (this.editCard.rent.length === 0) {
+          msg += 'The new property must have a rent.';
+        }
+        if (msg.length > 0) {
+          this.$store.commit('SET_NOTIFICATION', msg);
+          return false;
+        }
+        return true;
+      },
+  },
+  created() {
+    this.getManagerId();
+    this.getPropertyDetails();
+  }
 }
 </script>
 

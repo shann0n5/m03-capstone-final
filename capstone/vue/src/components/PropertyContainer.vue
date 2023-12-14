@@ -16,27 +16,19 @@
 
 export default {
   props: 
-  // ['title','properties']
-  // ['property']
   {
     property: Object,
     enableAdd: {
         type: Boolean,
         default: false
     }
-}
-,
-methods: {
-    // openPropertyDetails() {
-    //     this.$router.push({name: 'propertyDetails', params: {propertyId: this.$store.state.properties.propertyId}})
-    // v-on:click="openPropertyDetails()"
-    // },
-    addToOccupiedList(property) {
-        let addedProperty = Object.assign({isAvailable: false }, property);
-        this.$store.commit('SAVE_PROPERTY', addedProperty)
-    }
-}
-
+  },
+  methods: {
+      addToOccupiedList(property) {
+          let addedProperty = Object.assign({isAvailable: false }, property);
+          this.$store.commit('SAVE_PROPERTY', addedProperty)
+      }
+  }
 }
 </script>
 
