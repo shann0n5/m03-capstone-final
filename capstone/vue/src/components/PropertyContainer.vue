@@ -2,7 +2,8 @@
   <div class="property-container" >
    <h4 >
       <router-link v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
-        <p>Property: {{ property.propertyId }}</p> {{ property.address }} 
+        <p>Property: {{ property.propertyId }}</p> 
+        <!-- {{ property.address }}  -->
       </router-link> 
     </h4> 
     <p></p>
@@ -26,16 +27,16 @@ export default {
     }
   },
   methods: {
-      addToOccupiedList(property) {
-          let addedProperty = Object.assign({isAvailable: false }, property);
-          this.$store.commit('SAVE_PROPERTY', addedProperty)
-      }
+      // addToOccupiedList(property) {
+      //     let addedProperty = Object.assign({isAvailable: false }, property);
+      //     this.$store.commit('SAVE_PROPERTY', addedProperty)
+      // }
   }
 }
 </script>
 
 <style>
-.property-container{
+ .property-container{
   display: flex;
   /* flex-direction: column; */
   justify-content: space-evenly;
@@ -45,5 +46,5 @@ export default {
   padding: 0 20px 20px 20px;
   margin-bottom: 20px;
   width: 500px;
-}
+} 
 </style>
