@@ -10,15 +10,14 @@
         <div class="info-field"><label for="rent">Rent: </label>
           <input type="text" id="rent" name="rent" class="form-control" v-model="editProperty.rent">
         </div>
-        <div class="info-field"> <label for="isAvailable">Is Available: </label>
-          <input type="checkbox" id="isAvailable" name="isAvailable" v-model="editProperty.available">
+        <div class="form-check form-switch"> <label for="isAvailable">Is Available: </label>
+          <input type="checkbox" class="form-check-input" id="isAvailable" name="isAvailable" v-model="editProperty.available">
         </div>
        
         <div class="property-form-btn">
             <button class="btn btn-outline-primary" type="submit">Save Property</button>
             <button class="btn btn-outline-secondary" type="button" v-on:click="cancelForm">Cancel</button>
         </div>
-        <div> {{ editProperty }}</div>
     </div>
   </form>
 </template>
