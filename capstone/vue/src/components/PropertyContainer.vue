@@ -1,12 +1,14 @@
 <template>
   <div class="property-container" >
-   <h2 ><router-link v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
-        Property: {{ property.propertyId }}
-      </router-link> </h2> 
+   <h4 >
+      <router-link v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
+        <p>Property: {{ property.propertyId }}</p> {{ property.address }} 
+      </router-link> 
+    </h4> 
     <p></p>
     <div class="button-container" > 
        
-    <button v-if="! enableAdd" v-on:click.prevent="addToOccupiedList(property)">Add to Occupied Property List  </button>
+    <!-- <button v-if="! enableAdd" v-on:click.prevent="addToOccupiedList(property)">Add to Occupied Property List  </button> -->
     </div>
 
   </div>
@@ -34,7 +36,8 @@ export default {
 
 <style>
 .property-container{
-    display: flex;
+  display: flex;
+  /* flex-direction: column; */
   justify-content: space-evenly;
   flex-wrap: wrap;
   background-color: #a0bdcc;
