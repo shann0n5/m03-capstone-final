@@ -9,8 +9,8 @@
       </p>
      
      <div class="application-link-to-register">
-      <router-link v-bind:to="{name: 'register'}">Register to Apply</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{name: 'applicationForm'}">Rental Application</router-link>
+      <router-link class="btn btn-outline-secondary" v-bind:to="{name: 'register'}">Register to Apply</router-link>
+      <router-link class="btn btn-outline-secondary" v-bind:to="{name: 'applicationForm'}">Rental Application</router-link>
     </div>
 
 
@@ -23,6 +23,8 @@
   }
   </script>
   
-  <style>
-  
+  <style scoped>
+  .btn.btn-light{
+    margin-right: 10px;
+  }
   </style>

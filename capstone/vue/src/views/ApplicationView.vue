@@ -5,7 +5,7 @@
     </div>
     <div class="header">
         <h1>Applications</h1>
-        <!-- ROUTER LINK TO APPLICATION FORM -->
+        <router-link v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'applicationForm'}">Create A New Application</router-link>
     </div>
     <div class="action-boards">
         <application-section title="Pending" v-bind:applications="pending"/>
@@ -42,37 +42,34 @@ export default {
     },
     created(){
         if(this.$store.state.user.authorities[0].name === 'ROLE_ADMIN'){
-        applicationService
-        .getAllApplications()
-        .then(response => {
-            // alert(response.data);
-            this.$store.commit('SET_APPLICATION', response.data);
-            // this.applications = this.$store.state.applications;
-        })
-        .catch(error => {
-            if(error.response && error.response.status === 404){
-                this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
-                //ROUTER TO APPLICATIONS
-            }
-        });
+            applicationService
+            .getAllApplications()
+            .then(response => {
+                this.$store.commit('SET_APPLICATION', response.data);
+            })
+            .catch(error => {
+                if(error.response && error.response.status === 404){
+                    this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
+                    this.$router.push({ name: 'application' });
+                }
+            });
         } else if (this.$store.state.user.authorities[0].name === 'ROLE_USER'){
-        applicationService
-        .getMyApplications()
-        .then(response => {
-            // alert(response.data);
-            this.$store.commit('SET_APPLICATION', response.data);
-            // this.applications = this.$store.state.applications;
-        })
-        .catch(error => {
-            if(error.response && error.response.status === 404){
-                this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
-                //ROUTER TO APPLICATIONS
-            }
-        });
+            applicationService
+            .getMyApplications()
+            .then(response => {
+                this.$store.commit('SET_APPLICATION', response.data);
+            })
+            .catch(error => {
+                if(error.response && error.response.status === 404){
+                    this.$store.commit('SET_NOTIFICATION', `Error getting applications.`)
+                    this.$router.push({ name: 'application' });
+                }
+            });
         }
-        
+        if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+            this.$store.commit('SET_SHOW_MANAGER_POV', true);
+        }
     }
-
 }
 </script>
 

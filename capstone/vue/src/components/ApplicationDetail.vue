@@ -29,13 +29,13 @@
         </div>
     </div>
     <div>
-    <select v-model="editApplication.status" v-on:change="updateApplications" v-show="!this.$store.state.showManagerPOV">
-        <option value="approved">Approved</option>
-        <option value="rejected">Rejected</option>
-    </select>
+        <select v-model="editApplication.status" v-on:change="updateApplications" v-show="this.$store.state.showManagerPOV">
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+        </select>
+        </div>
+        <button class="btn btn-outline-danger" v-on:click="deleteApplication" v-show="!this.$store.state.showManagerPOV">Withdraw Application</button>
     </div>
-    <button class="btn btn-outline-danger" v-on:click="deleteApplication" v-show="this.$store.state.showManagerPOV">Withdraw Application</button>
-  </div>
 </template>
 
 <script>
@@ -127,6 +127,9 @@ export default {
 },
 created(){
     this.getApplicationById();
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    }
 }
 }
        

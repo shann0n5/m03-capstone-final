@@ -20,15 +20,17 @@ export default {
         });
     }
 },
-created() {
+  created() {
     PropertyService.getAllMyProperties().then(response => {
       this.$store.commit('SET_MY_PROPERTIES', response.data);
-      // alert(response.data[0].propertyId);
     }).catch(error => {
       if (error.response && error.response.status === 404) {
         this.$store.commit('SET_NOTIFICATION', `Error getting properties.`);
       }
     });
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    }
   }
 }
 </script>

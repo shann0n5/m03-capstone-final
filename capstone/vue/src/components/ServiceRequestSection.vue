@@ -20,11 +20,12 @@
 
 <script>
 export default {
-props: ['title', 'serviceRequests'],
-
-method: {
-  
-}
+  props: ['title', 'serviceRequests'],
+  created(){
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    }
+  }
 }
 </script>
 

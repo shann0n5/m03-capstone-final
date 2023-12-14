@@ -24,6 +24,9 @@ export default {
     .then(response => {
         this.serviceRequest = response.data;
     });
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
+    }
 
   }
 
