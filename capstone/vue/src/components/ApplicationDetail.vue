@@ -73,7 +73,6 @@ export default {
     }
     },
     getApplicationById(){
-        alert(this.$route.params.applicationId);
         applicationService.getApplicationById(this.$route.params.applicationId)
         .then(response => {
             this.editApplication = response.data;
@@ -89,14 +88,9 @@ export default {
         });
     },
     updateApplications(){
-        alert('update called');
         let status = this.editApplication.status;
-        alert(this.editApplication.applicationId);
-        alert(this.editApplication.status);
         if(status === 'approved'){
-            alert(status);
             this.editApplication.status = 'STATUS_APPROVED';
-            alert(this.editApplication.status);
         } else if(status === 'rejected'){
             this.editApplication.status = 'STATUS_REJECTED';
         }
