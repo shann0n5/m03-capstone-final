@@ -1,6 +1,6 @@
 <template>
   <div class="action-board">
-    <h2>{{ title }}</h2>
+    <h2 class="title">{{ title }}</h2>
     <div class="application" v-for="application in applications" v-bind:key="application.applicationId">
       <div>
           <router-link class="link" v-bind:to="{name: 'applicationDetails', params:{ applicationId: application.applicationId}}">
@@ -45,6 +45,9 @@ method: {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-bottom: 10px;
   cursor: pointer;
+}
+.title{
+  color: white;
 }
 
 </style>
