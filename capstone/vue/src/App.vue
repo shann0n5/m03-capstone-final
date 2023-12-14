@@ -1,35 +1,47 @@
 <template>
-  <header class="app-header">
-    <img class="logo" src="../src/assets/Screenshot 2023-12-03 143827 (1).png"> 
-     <h1>Real-TE Management</h1> 
-  </header>
-  <div id="capstone-app">
-    <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    
+  <div class="main-div">
+    <header class="app-header">
+      <img class="logo" src="../src/assets/Screenshot 2023-12-03 143827 (1).png"> 
+      <h1>Real-TE Management</h1> 
+    </header>
+    <div id="capstone-app">
+      <div id="nav">
+        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp;
+        <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
+      
+      </div>
+      <router-view />
     </div>
-    <router-view />
+    <footer>
+      copy right and credentials here
+    </footer>
   </div>
-  <footer>
-    copy right and credentials here
-  </footer>
 </template>
 
 
 <style>
+@import 'bootstrap/dist/css/bootstrap.min.css';
+.logo {
+      border-radius: 50%;
+      height: 10rem;
+      padding: 10px;
+    }
+    .main-div {
+      margin-left: 25px;
+      align-content: center;
+    }
 
-body {
+/* body {
         margin: 0;
     }
 
     /* Add CSS Grid here  background colors: Header - #f69a00;  Nav - #f2ead2;  
     main - #f9f5f0;  aside - #f2ead2;  footer - #331312;
-    font colors header, footer - #ffffff;  nav, main, aside - #74889a;*/
+    font colors header, footer - #ffffff;  nav, main, aside - #74889a;
 
     .container{
         display: grid;
@@ -47,7 +59,7 @@ body {
 
 
     }
-    /*handle responsive behavior */
+    
     @media (max-width: 768px) {
         .container{
             grid-template-areas: 
@@ -58,13 +70,13 @@ body {
                 "footer";
             grid-template-columns: 1fr;
             grid-template-rows:
-                auto /*Header */
-                75px /*Nav*/
-                1fr /* content */
-                75px /* Sidebar */
-                auto; /* Footer */
+                auto *//*Header 
+                75px *//*Nav
+                1fr *//* content */
+                /*75px  Sidebar 
+                auto; *//* Footer */
             
-        }
+        /* }
         header, footer, nav, main, aside {
             padding: 5px 0;
         }
@@ -167,5 +179,5 @@ fieldset {
 .btn-cancel:hover {
   color: rgba(255,255,255,1.0);
   border-color: rgba(255,255,255,1.0);
-}
+} */
 </style>

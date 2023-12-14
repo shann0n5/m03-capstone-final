@@ -3,18 +3,13 @@
 </template>
 
 <script>
-
 export default {
-  
   created() {
-    // alert(`Manager Id: ${this.$store.state.managerId}`);
-    // alert(`Tenant Id: ${this.$store.state.tenantId}`);
     this.$store.commit("LOGOUT");
     this.$router.push("/login");
     this.$store.commit('SET_MANAGER_ID', 0);
     this.$store.commit('SET_TENANT_ID', 0);
     this.$store.commit('SET_SHOW_MANAGER_POV', false);
-    alert(`Log out in ${this.$store.state.showManagerPOV}.`)
   }
 }
 </script>

@@ -13,7 +13,6 @@
           </thead>
           <tbody>
               <tr>
-                 
                   <td>
                       <select id="availabilityFilter" v-model="filter.available">
                           <option disabled value="">-- Select --</option>
@@ -24,7 +23,7 @@
                   </td>
                   <td><input type="number" id="propertyIdFilter" placeholder="ex: 4001"  v-model="filter.propertyId" v-on:change="filter.propertyId" ></td>
                   <td><input type="text" id="addressFilter" placeholder="ex: 328 N Rodeo Dr, Beverly Hills, CA 90210"  v-model="filter.address"></td>
-                 <!-- <td><input type="text" id="cityFilter" placeholder="ex: Beverly Hills"  v-model="filter.city"></td> 
+                  <!-- <td><input type="text" id="cityFilter" placeholder="ex: Beverly Hills"  v-model="filter.city"></td> 
                   <td><input type="text" id="stateFilter" placeholder="ex: CA" v-model="filter.state"></td> 
                   <td><input type="text" id="zipcodeFilter" placeholder="ex: 90210" v-model="filter.zipcode"></td>-->
                     <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
@@ -43,7 +42,9 @@
               </tr> 
           </tbody>
       </table>
+    
     </div>
+   
   </template> 
   
   <script>
@@ -64,8 +65,7 @@
     methods: {
       getProperties() {
           PropertyService.getProperties().then(response => {
-              this.$store.state.commit('SET_PROPERTIES', response.data);
-              this.properties = this.$store.state.properties;
+              this.$store.commit('SET_PROPERTIES', response.data);
           })
       }, 
         clearFilter() {
@@ -119,7 +119,6 @@
             }
             return filteredProperties;
         }
-        
     },
       created() {
           this.getProperties(); 
