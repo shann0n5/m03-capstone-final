@@ -18,6 +18,7 @@
             {{ serviceRequest.requestDetails  }}
           </div>
       </div>
+     <div> {{ `service request ${this.$store.state.showManagerPOV}` }}</div>
       <div>
         <select v-model="editServiceRequest.status" v-on:change="updateServiceRequest" v-show="this.$store.state.showManagerPOV">
             <option value="inProgress">In Progress</option>
@@ -84,7 +85,6 @@
         });
           },
           updateServiceRequest(){
-            alert('update called');
             let status = this.editServiceRequest.status;
             if(status === 'inProgress'){
                 this.editServiceRequest.status = 'STATUS_IN_PROGRESS';
@@ -126,7 +126,10 @@
 
     } ,
     created(){
-        this.getServiceRequestById();
+      this.getServiceRequestById();
+      if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+        this.$store.commit('SET_SHOW_MANAGER_POV', true);
+      }
     }
   
   }
