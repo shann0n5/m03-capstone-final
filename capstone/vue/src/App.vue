@@ -5,15 +5,24 @@
       <h1>Real-TE Management</h1> 
     </header>
     <div id="capstone-app">
-      <nav class="navbar" style="background-color: #e3f2fd;">
-        <div id="nav">
+      <nav  class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
           <i class="bi bi-house"></i>
-          <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+          
+          <!-- <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
-          <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp;
-          <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
+          <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp; -->
+          <!-- <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link> -->
+          <a class="nav-link" href="/" target="_self">Home</a>
+          <a class="nav-link" href="/about-us" target="_self">About Us</a>
+          <a class="nav-link" href="/available-properties" target="_self">See Rentals</a>
+          <a class="nav-link" href="/qualifications" target="_self">Apply Here</a>
+          <a class="nav-link" href="/contact-us" target="_self">Contact Us</a>
+          
+          <a  class="nav-link" href="/logout" target="_self" v-if="this.$store.state.token != ''" >Logout</a>
+        
         </div>
       </nav>
       
@@ -43,6 +52,9 @@ main{
 
 button{
   margin: 10px;
+}
+.nav-link{
+justify-content: center;
 }
 
 /* body {
