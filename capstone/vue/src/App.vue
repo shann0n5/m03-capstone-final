@@ -1,7 +1,7 @@
 <template>
   <main>
     <header class="app-header">
-      <img class="logo" src="../src/assets/stickHouseLogo&Name.png"/>
+      <img class="logo" src="../src/assets/stickHouseLogo&NameCropped.png">
       <!-- <h1>Real-TE Management</h1>  -->
     </header>
     <div id="capstone-app">
@@ -36,7 +36,6 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css");
 .logo {
-      display: flex;
       border-radius: 50%;
       max-width: 100%;
       height: auto;
