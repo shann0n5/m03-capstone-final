@@ -12,9 +12,9 @@ public class NotificationServiceImpl implements NotificationService{
     private final String SENDGRID_API_KEY = "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";
     public void sendEmail() {
     Email from = new Email("keena.carulla@lc.cuny.edu");
-    String subject = "You've received a New Application";
+    String subject = "Your application has been sent!";
     Email to = new Email("keenacarulla@gmail.com");
-    Content content = new Content("text/plain", "You have received a new application.");
+    Content content = new Content("text/plain", "Your application has been sent!");
     Mail mail = new Mail(from, subject, to, content);
 
     SendGrid sg = new SendGrid(SENDGRID_API_KEY);
