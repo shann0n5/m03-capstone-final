@@ -1,5 +1,6 @@
 <template>
-<router-link v-bind:to="{ name: 'serviceRequest'}">Back to Service Requests</router-link>
+<router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'serviceRequest'}">
+  <i class="bi bi-chevron-left"></i>Back to Service Requests</router-link>
 <div class="card">
 
   <h1>Service Request Details</h1>

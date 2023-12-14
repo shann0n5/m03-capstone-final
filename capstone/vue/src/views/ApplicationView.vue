@@ -1,11 +1,14 @@
 <template>
   <div>
     <div class="back-to-home">
-        <router-link v-bind:to="{name: 'home'}">Back to Home</router-link>
+        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{name: 'home'}">
+            <i class="bi bi-chevron-left"></i>Back to Home</router-link>
     </div>
     <div class="header">
         <h1>Applications</h1>
-        <router-link v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'applicationForm'}">Create A New Application</router-link>
+        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'applicationForm'}"> 
+            <i class="bi bi-plus-lg"></i>
+            Create A New Application</router-link>
     </div>
     <div class="action-boards">
         <application-section title="Pending" v-bind:applications="pending"/>

@@ -1,12 +1,15 @@
 <template>
     <div>
       <div class="back-to-tenant-home">
-        <router-link v-bind:to="{name:'home'}">Back to Home Page</router-link>
+        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{name:'home'}"> 
+          <i class="bi bi-chevron-left"></i>
+          Back to Home Page</router-link>
       </div>
       <div class="header">
         <h1>Service Requests</h1>
         <div class="add-new-service-request">
-        <router-link v-bind:to="{name:'addServiceRequest'}">Add New Request</router-link>
+        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{name:'addServiceRequest'}">
+          <i class="bi bi-plus-lg"></i>Add New Request</router-link>
       </div>
     </div>
     <div class="action-boards">
