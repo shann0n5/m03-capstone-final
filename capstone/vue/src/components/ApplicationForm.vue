@@ -22,8 +22,8 @@
             <input type="text" class="form-control" id="roomateNames" name="roomateNames" v-model="editApplication.roomateNames">
         </div>
         <div class="applicationButton">
-            <button class="btn-submit" type="submit">Submit</button>
-            <button class="btn-cancel" type="button" v-on:click.prevent="cancelForm">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-secondary" type="button" v-on:click.prevent="cancelForm">Cancel</button>
         </div>
     </div>
 

@@ -13,7 +13,6 @@
           </thead>
           <tbody>
               <tr>
-                  <!---->
                   <td>
                       <select id="availabilityFilter" v-model="filter.available">
                           <option disabled value="">-- Select --</option>
@@ -25,28 +24,12 @@
                   </td>
                   <td><input type="number" id="propertyIdFilter" placeholder="ex: 4001"  v-model="filter.propertyId" v-on:change="filter.propertyId" ></td>
                   <td><input type="text" id="addressFilter" placeholder="ex: 328 N Rodeo Dr, Beverly Hills, CA 90210"  v-model="filter.address"></td>
-                  <!--<td><input type="text" id="cityFilter" placeholder="ex: Beverly Hills"  v-model="filter.city"></td>
-                  <td><input type="text" id="stateFilter" placeholder="ex: CA" v-model="filter.state"></td> 
-                  <td><input type="text" id="zipcodeFilter" placeholder="ex: 90210" v-model="filter.zipcode"></td>-->
                    <td><input type="number" id="numOfRoomsFilter" placeholder="ex: 3" v-model="filter.numberOfRooms"></td> 
                    <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
-                   <td><!--
-                      <select id="rentFilter" placeholder="ex:"  v-model="filter.rent">
-                          <option disabled value="">----</option>
-                          <option value="<1000">Below $1,000</option>
-                          <option value="<2000">$2,000 & under</option>
-                          <option value="<3000">$3,000 & under</option>
-                          <option value="<4000">$4,000 & under</option>
-                          <option value="<5000">$5,000 & under</option>
-                          <option value="<5000">$6,000 & under</option>
-                          <option value="<5000">$7,000 & under</option>
-                          <option value="<5000">$8,000 & under</option>
-                          <option value="<5000">$9,000 & under</option>
-                          <option value="<5000">$10,000 & under</option>
-                      </select>-->
+                   <td>
                       </td>
                   <td>&nbsp;</td>
-                  <button class="btn btn-cancel" v-on:click="clearFilter" type="button">Clear</button>
+                  <button class="btn btn-secondary" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
                
               <tr v-for="property in filterProperties" v-bind:key="property.propertyId" > 
@@ -65,16 +48,12 @@
   <script>
  import PropertyService from '../services/PropertyService';
   export default {
-    //   props: ['properties'],
       data() {
           return {
               filter: {
                   available: '',
                   propertyId: '',
                   address: '',
-                  // city: '',
-                  // state: '',
-                  // zipcode: '',
                   numberOfRooms: '',
                   rent: ''
               },
@@ -93,44 +72,19 @@
                   available: '',
                   propertyId: '',
                   address: '',
-                  // city: '',
-                  // state: '',
-                  // zipcode: '',
                   numberOfRooms: '',
                   rent: ''
               }
           }
-      //     getProperties() {
-      //         PropertyService.getProperties().then(response => {
-      //         this.properties = response.data;
-      //         }).catch(error => {
-      //             if (error.response) {
-      //                 if (error.response.status === 404) {
-      //                     this.$store.commit('SET_NOTIFICATION',
-      //                     "Error: property was not found.");
-      //                     this.$router.push({ name: 'HomeView' });
-      //                 } else {
-      //                     this.$store.commit('SET_NOTIFICATION',
-      //                     "Error getting properties. Response received was '" + error.response.statusText + "'.");
-      //                 }
-      //             } else if (error.request) {
-      //                 this.$store.commit('SET_NOTIFICATION', "Error getting properties. Server could not be reached.");
-      //             } else {
-      //                 this.$store.commit('SET_NOTIFICATION', "Error getting properties. Request could not be created.");
-      //             }
-      //         });
-      // }
           
       },
       computed: {
           filterProperties() {
               let filteredProperties = this.$store.state.myProperties;
               if (this.filter.available != '') {
-                  // alert(this.filter.available)
                   if (this.filter.available == 'isAvailable') {
                       filteredProperties = filteredProperties.filter(property => {
                           return property.available == true;
-                          // return true;
                           
                       })
                   } else if (this.filter.available == 'occupied') {
@@ -140,7 +94,6 @@
                   }
               }
               if (this.filter.propertyId != '') {
-                  // alert(this.filter.propertyId)
                   filteredProperties = filteredProperties.filter(property => {
                        return property.propertyId == this.filter.propertyId; 
                       
@@ -161,45 +114,13 @@
                   filteredProperties = filteredProperties.filter(property => {
                      return property.rent < this.filter.rent;
                   });
-              }// if (this.filter.city != '') {
-              //     filteredProperties = filteredProperties.filter(property => {
-              //         property.address.toLowerCase().includes(this.filter.city.toLowerCase())
-              //     });
-              // }
-              // if (this.filter.state != '') {
-              //     filteredProperties = filteredProperties.filter(property => {
-              //         property.address.toLowerCase().includes(this.filter.state.toLowerCase())
-              //     });
-              // }
-              // if (this.filter.zipcode != '') {
-              //     filteredProperties = filteredProperties.filter(property => {
-              //         property.address.toLowerCase().includes(this.filter.zipcode.toLowerCase())
-              //     });
-              // }
+              }
               return filteredProperties;
           }
           
       },
       created() {
           this.getMyProperties();
-      // //     PropertyService.getProperties().then(response => {
-      // //         this.properties = response.data;
-      // //     }).catch(error => {
-      // //         if (error.response) {
-      // //             if (error.response.status === 404) {
-      // //                 this.$store.commit('SET_NOTIFICATION',
-      // //                 "Error: property was not found.");
-      // //                 this.$router.push({ name: 'HomeView' });
-      // //             } else {
-      // //                 this.$store.commit('SET_NOTIFICATION',
-      // //                 "Error getting properties. Response received was '" + error.response.statusText + "'.");
-      // //             }
-      // //         } else if (error.request) {
-      // //             this.$store.commit('SET_NOTIFICATION', "Error getting properties. Server could not be reached.");
-      // //         } else {
-      // //             this.$store.commit('SET_NOTIFICATION', "Error getting properties. Request could not be created.");
-      // //         }
-      // //     });
          
       }
   }
