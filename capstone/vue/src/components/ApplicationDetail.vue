@@ -2,22 +2,32 @@
   <div class="application">
     <router-link v-bind:to="{name: 'application'}">Back to Applications</router-link>
     <div>
-        <h1>Application Details</h1>
-        <h2>Application ID: {{ application.applicationId }}</h2>
-        <h3>PropertyId : {{ application.propertyId }}</h3>
-        <h4>Status : {{ application.status }}</h4>
-        <p>
-            Full Name : {{ application.fullName }}
-        </p>
-        <p>
-            Email : {{ application.email }}
-        </p>
-        <p>
-            Has Roommates? {{ editApplication.hasRoomates }}
-        </p>
-        <p>
-            Roommates Names: {{ editApplication.roomateNames }}
-        </p>
+        <h2>Application Details</h2>
+        <div>
+        <h3>Application ID: {{ application.applicationId }}</h3>
+        </div>
+        <h4>Property ID : {{ application.propertyId }}</h4>
+        
+        <div>
+            <h5>Status : </h5>
+            {{ application.status }}
+        </div>
+        <div>
+            <h5>Full Name :</h5>
+            {{ application.fullName }}
+        </div>
+        <div>
+            <h5>Email : </h5>
+            {{ application.email }}
+        </div>
+        <div>
+            <h5> Has Roommates? </h5>
+            {{ editApplication.hasRoomates }}
+        </div>
+        <div>
+            <h5> Roommates Names: </h5>
+            {{ editApplication.roomateNames }}
+        </div>
     </div>
     <div>
     <select v-model="editApplication.status" v-on:change="updateApplications" v-show="this.$store.state.showManagerPOV">
@@ -25,7 +35,7 @@
         <option value="rejected">Rejected</option>
     </select>
     </div>
-    <button class="btn btn-delete" v-on:click="deleteApplication" v-show="!this.$store.state.showManagerPOV">Withdraw Application</button>
+    <button class="btn btn-outline-danger" v-on:click="deleteApplication" v-show="!this.$store.state.showManagerPOV">Withdraw Application</button>
   </div>
 </template>
 
