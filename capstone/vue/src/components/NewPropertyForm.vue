@@ -15,8 +15,8 @@
         </div>
        
         <div class="property-form-btn">
-            <button class="btn btn-primary" type="submit">Save Property</button>
-            <button class="btn btn-secondary" type="button" v-on:click="cancelForm">Cancel</button>
+            <button class="btn btn-outline-primary" type="submit">Save Property</button>
+            <button class="btn btn-outline-secondary" type="button" v-on:click="cancelForm">Cancel</button>
         </div>
         <div> {{ editProperty }}</div>
     </div>

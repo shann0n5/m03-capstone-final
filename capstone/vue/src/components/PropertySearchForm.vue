@@ -29,7 +29,7 @@
                    <td>
                       </td>
                   <td>&nbsp;</td>
-                  <button class="btn btn-secondary" v-on:click="clearFilter" type="button">Clear</button>
+                  <button class="btn btn-outline-secondary" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
                
               <tr v-for="property in filterProperties" v-bind:key="property.propertyId" > 

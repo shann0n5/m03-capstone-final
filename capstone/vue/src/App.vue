@@ -1,25 +1,29 @@
 <template>
-  <div class="main-div">
+  <main>
     <header class="app-header">
       <img class="logo" src="../src/assets/Screenshot 2023-12-03 143827 (1).png"> 
       <h1>Real-TE Management</h1> 
     </header>
     <div id="capstone-app">
-      <div id="nav">
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp;
-        <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
+      <nav class="navbar" style="background-color: #e3f2fd;">
+        <div id="nav">
+          <i class="bi bi-house"></i>
+          <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+          <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
+          <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
+          <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
+          <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp;
+          <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link>
+        </div>
+      </nav>
       
-      </div>
       <router-view />
     </div>
+    </main>
     <footer>
       copy right and credentials here
     </footer>
-  </div>
+  
 </template>
 
 
@@ -30,10 +34,12 @@
       height: 10rem;
       padding: 10px;
     }
-    .main-div {
-      margin-left: 25px;
-      align-content: center;
-    }
+
+main{
+  height: 100vh;
+  margin: 25px;
+  align-content: center;
+}
 
 /* body {
         margin: 0;
