@@ -28,7 +28,7 @@
 
                     <td><input type="number" id="rent" placeholder="ex: 5000" v-model="filter.rent"></td> 
 
-                  <button class="btn btn-secondary" v-on:click="clearFilter" type="button">Clear</button>
+                  <button class="btn btn-outline-secondary" v-on:click="clearFilter" type="button">Clear</button>
               </tr>
               <tr v-for="property in filterProperties" v-bind:key="property.propertyId" > 
                   <td>&nbsp;</td>

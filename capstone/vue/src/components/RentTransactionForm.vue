@@ -7,8 +7,8 @@
           <input id="rentPayment" type="number" name="paymentInput" ref="paymentInput" v-model="editRentTransaction.amount"></div>
         
         <div class="action-btn">  
-          <button  class="btn-submit" type="submit">Complete Payment</button>&nbsp;&nbsp;
-           <button class="btn-cancel" type="button" v-on:click="cancelPayment">Cancel</button>
+          <button  class="btn btn-outline-primary" type="submit">Complete Payment</button>&nbsp;&nbsp;
+           <button class="btn btn-outline-secondary" type="button" v-on:click="cancelPayment">Cancel</button>
   </div>
       </div>
     </form>

@@ -13,17 +13,17 @@
             <label for="email">Email:</label>
             <input type="email" id="email" class="form-control" name="email" v-model="editApplication.email">
         </div>
-        <div class="info-field">
+        <div  class="form-check form-switch">
           <label for="hasRoomates">Roomates?</label>
-          <input type="checkbox" class="form-control" id="hasRoomates" v-model="editApplication.hasRoomates">
+          <input type="checkbox" class="form-check-input" id="hasRoomates" v-model="editApplication.hasRoomates">
         </div>
         <div class="info-field">
             <label for="roomateNames">Names of Roomates: </label>
             <input type="text" class="form-control" id="roomateNames" name="roomateNames" v-model="editApplication.roomateNames">
         </div>
         <div class="applicationButton">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button class="btn btn-secondary" type="button" v-on:click.prevent="cancelForm">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <button class="btn btn-outline-secondary" type="button" v-on:click.prevent="cancelForm">Cancel</button>
         </div>
     </div>
 
