@@ -10,8 +10,8 @@
 </div>
 
   <div class="action-boards">
-    <rent-transaction-section title="Payments" v-bind:rentTransactions="payments" />
-    <rent-transaction-section title="Past Due Payments" v-bind:rentTransactions="pastDuePayments" />
+    <rent-transaction-section title="Payments Completed" v-bind:rentTransactions="payments" />
+    <rent-transaction-section title="Payments Due" v-bind:rentTransactions="pastDuePayments" />
     
   </div> 
 </template>
