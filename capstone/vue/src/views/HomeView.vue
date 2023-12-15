@@ -3,7 +3,7 @@
     <h1 class="home-header">Home</h1>
     <p></p>
   </div>
-  <div class="manager-home-btn" > 
+  <div class="manager-home-btn d-grid gap-3 d-md-flex justify-content-md-center " > 
     <!-- <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">View Applications for My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
@@ -15,15 +15,15 @@
   </div>
 
 
-  <div class="tenant-home-btn" > 
+  <div class="tenant-home-btn d-grid gap-3 d-md-flex justify-content-md-center " > 
     <!-- <router-link  v-show="!this.$store.state.showManagerPOV" class="btn btn-submit" v-bind:to="{name: 'tenantMainPage'}">Tenant Home</router-link> -->
     <!-- <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'serviceRequest'}">My Service Requests</router-link>
     <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">My Applications</router-link>
     <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'rentTransaction'}"> My Rent Transactions</router-link> -->
 
-    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"   href="/service-request-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Service Requests</a>
-    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"  href="/application-view" target="_self" v-show="!this.$store.state.showManagerPOV" >My Applications</a>
-    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Rent Transactions</a>
+    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"   href="/service-request-view" target="_self" v-show="!this.$store.state.showManagerPOV"> My Service Requests</a>
+    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"  href="/application-view" target="_self" v-show="!this.$store.state.showManagerPOV" > My Applications</a>
+    <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV"> My Rent Transactions</a>
   </div>
 </template>
 
