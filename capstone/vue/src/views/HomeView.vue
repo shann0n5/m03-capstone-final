@@ -30,6 +30,29 @@
     <a class="btn btn-outline-secondary text-bg-light p-3 position-relative"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV">
       <i class="bi bi-currency-dollar"></i> My Rent Transactions</a>
   </div>
+
+
+  <div id="carouselExample" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../assets/Property Photos/pexels-max-rahubovskiy-7031408.jpg" class="d-block w-100" alt="pexels-max-rahubovskiy-7031408.jpg">Max Rahubovskiy
+    </div>
+    <div class="carousel-item">
+      <img src="../assets/Property Photos/pexels-max-rahubovskiy-7031608.jpg" class="d-block w-100" alt="pexels-max-rahubovskiy-7031608.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="../assets/Property Photos/pexels-myburgh-roux-3081701.jpg" class="d-block w-100" alt="pexels-myburgh-roux-3081701.jpg">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 </template>
 
 <script>
