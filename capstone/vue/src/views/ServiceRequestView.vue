@@ -8,7 +8,7 @@
       <div class="header">
         <h1>Service Requests</h1>
         <div class="add-new-service-request">
-        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{name:'addServiceRequest'}">
+        <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name:'addServiceRequest'}">
           <i class="bi bi-plus-lg"></i>Add New Request</router-link>
       </div>
     </div>
@@ -62,19 +62,21 @@ export default {
     
   },
   created(){
-        serviceRequestService
-          .getAllMyServiceRequests()
-          .then(response => {
-            this.$store.commit('SET_SERVICE_REQUEST', response.data);
-          })
-          .catch(error => {
-            if (error.response && error.response.status === 404){
-              this.$store.commit('SET_NOTIFICATION', `Error getting service request. This service request may have been deleted or you have entered an invalid service request ID.`);
-              this.$router.push({ name: 'serviceRequest' });
-            }
-          });
-      
+    serviceRequestService
+      .getAllMyServiceRequests()
+      .then(response => {
+        this.$store.commit('SET_SERVICE_REQUEST', response.data);
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 404){
+          this.$store.commit('SET_NOTIFICATION', `Error getting service request. This service request may have been deleted or you have entered an invalid service request ID.`);
+          this.$router.push({ name: 'serviceRequest' });
+        }
+      });
+    if (this.$store.state.user.authorities[0].name == 'ROLE_ADMIN') {
+      this.$store.commit('SET_SHOW_MANAGER_POV', true);
     }
+  }
 }
 </script>
 
