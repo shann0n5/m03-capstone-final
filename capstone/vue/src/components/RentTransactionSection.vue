@@ -1,6 +1,6 @@
 <template>
     <div class="action-board">
-      <h2>{{title}}</h2>
+      <h2 id="title">{{title}}</h2>
       <div class="rent-transactions">
          <div class="rent-transaction" v-for="rentTransaction in rentTransactions" v-bind:key="rentTransaction.rentTransactionId">
          <div class="transaction-section-details">
@@ -27,16 +27,11 @@
   <script>
   export default {
   props: ['title', 'rentTransactions'],
-  
-methods: {
-  
-    // pastDuePaid(rentTransaction) {
-    //   this.$store.commit('SET_IS_PAID', rentTransaction)
-    // }
-}
+
   }
 </script>
-<style>
+
+<style scoped>
 .action-board {
   background-color: #6f828e;
   border-radius: 10px;
@@ -94,5 +89,13 @@ color: #2c363b
   justify-content: space-between;
 }
 
+#title{
+  color: white;
+}
+
+h2{
+  display: flex;
+  justify-content: center;
+}
 
 </style>
