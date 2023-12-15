@@ -1,8 +1,9 @@
 <template>
   <section>
-    <h4>Occupied Properties</h4>
-    <div class="occupied-properties">
-    <property-container v-for="property in occupiedProperties" v-bind:property="property" v-bind:key="property.propertyId" v-bind:enable-add="true" />
+    
+    <div class="occupied-properties text-center"> 
+      <h4 class="">Occupied Properties</h4>
+      <property-container id="container" class="text-center " v-for="property in occupiedProperties" v-bind:property="property" v-bind:key="property.propertyId" v-bind:enable-add="true" />
     </div>
   </section>
 </template>
@@ -32,6 +33,12 @@ created() {
 }
 </script>
 
-<style>
+<style scoped>
 
+.action-boards{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr 100%);
+  justify-items: center;
+  gap: 20px;
+}
 </style>

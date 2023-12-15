@@ -1,8 +1,9 @@
 <template>
   <section>
-    <h4>Available Properties </h4>
-    <div class="available-properties">
-     <property-container v-for="property in availableProperties" v-bind:key="property.propertyId" v-bind:property="property"></property-container> 
+
+    <div class="available-properties ">
+      <h4 class="">Available Properties</h4>
+     <property-container class="text-center justify-content-center" v-for="property in availableProperties" v-bind:key="property.propertyId" v-bind:property="property"></property-container> 
   </div>
   </section>
 </template>
@@ -35,7 +36,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.action-boards{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: 20px;
+}
 
 </style>

@@ -1,5 +1,6 @@
 <template>
-  <router-link class="btn btn-submit" v-bind:to="{ name: 'home' }">Back To Home</router-link>
+  <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'home' }"> 
+    <i class="bi bi-chevron-left"></i> Back To Home</router-link>
   <h2>Search Rentals</h2>
   <div class="search-properties-form">
     <search-rentals-form class="form"/>

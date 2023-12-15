@@ -1,11 +1,11 @@
 <template>
   <div class="property-container" >
-   <h4 >
+    <h5>
       <router-link class="link" v-bind:to="{name: 'propertyDetails', params: { propertyId: property.propertyId }}" >
         <p>#{{ property.propertyId }}:</p> 
         {{ property.address }}  <!-- -->
       </router-link> 
-    </h4> 
+    </h5> 
     <p></p>
     <div class="button-container" > 
        
@@ -36,19 +36,20 @@ export default {
 
 <style scoped>
  .property-container{
-  display: flex;
+  display: grid;
   /* flex-direction: column; */
   justify-content: space-evenly;
   flex-wrap: wrap;
-  background-color: #daf0fd;
-  border-radius: 45px;
-  padding: 0 20px 20px 20px;
-  margin-bottom: 20px;
-  width: 500px;
+  background-color: #889eaa;
+  border-radius: 30px;
+  padding: 10 10px 10px 10px;
+  margin-bottom: 10px;
+  width: 600px;
 } 
+
 .link {
   text-decoration: none;
-  color: rgb(53, 72, 95);
+  color: rgb(246, 238, 238);
   
 }
 .link:hover {filter: brightness(2);}

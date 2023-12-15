@@ -1,7 +1,7 @@
 <!-- Reference:
   https://www.w3schools.com/howto/howto_css_team.asp -->
 <template>
-  <div class="about-section">
+  <div class="about-section ">
     <h1 style="text-align:center">About Us</h1>
     <p>Welcome to Real-TE Management, your dedicated ally in property excellence! Real-TE is more than just a management service; it's a partnership crafted to elevate your property experience, whether you're an owner or a tenant. Our journey began with a vision to redefine property standards, and today, we proudly stand as your reliable companion in the world of real estate.</p>
     <p>Why choose Real-TE? Imagine a seamless blend of professionalism and personalized care. For property owners, we understand that your property is not merely a structure; it's an investment in your future. Our seasoned team of experts is committed to nurturing your property's potential, ensuring it thrives under our dedicated care.
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="column">
+  <div class="column ">
     <div class="card">
       <img src="../assets/taneaHeadshot.jpg"  style="width:100%">
       <div class="container">
@@ -75,7 +75,7 @@ html {
 .column {
   float: left;
   width: 33.3%;
-  margin-bottom: 16px;
+  margin-bottom: 60px;
   padding: 0 8px;
 }
 

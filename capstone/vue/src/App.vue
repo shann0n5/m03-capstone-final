@@ -1,7 +1,7 @@
 <template>
   <main>
     <header class="app-header">
-      <img class="logo mt-5 p-5" src="../src/assets/stickHouseLogo&NameCropped.png">
+      <img class="logo mt-5 pt-5" src="../src/assets/stickHouseLogo&NameCropped.png">
       <!-- <h1>Real-TE Management</h1>  -->
     </header>
     <div id="capstone-app">

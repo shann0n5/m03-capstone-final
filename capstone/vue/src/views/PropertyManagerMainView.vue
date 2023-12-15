@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h2>My Properties</h2>
+    <h2 class="mb-5 text-center" >My Properties</h2>
     <div class="d-grid gap-3 d-md-flex justify-content-md-center ">
       <!--  d-flex justify-content-around -->
       <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'home' }" >
@@ -17,9 +17,16 @@
         ></i>
         Add Property
       </router-link>
+      
     </div>
-    <available-property-list/>
-    <occupied-property-list/>
+    
+    <div class="text-center action-boards">
+      
+      <available-property-list id="container" class="mt-4 text-center action-boards"/>
+      
+      <occupied-property-list id="container" class="mt-4 text-center action-boards"/>
+    </div>
+      
   </main>
   <!-- <router-link class="btn btn-primary" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
   <!-- <router-link class="btn btn-primary" v-bind:to="{name: 'application'}">See Applications</router-link> -->
@@ -35,7 +42,23 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
+/* #container {
+  display: flex;
+  justify-content: center;
+} */
+/* #container{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+} */
+.action-boards{
+  display: flex;
+  justify-content: space-evenly;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  gap: 20px;
+}
 /*.btn-submit {
   color: rgba(25, 27, 29, 0.87);
   background-color: #b7cddb;
