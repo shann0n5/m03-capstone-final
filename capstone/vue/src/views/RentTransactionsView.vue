@@ -1,6 +1,6 @@
 <template>
   <div class="back-to-tenant-home">
-    <router-link v-bind:to="{name:'tenantMainPage'}">Back to Tenant Home</router-link>
+    <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{name:'home'}"><i class="bi bi-chevron-left"></i>Back to Home Page</router-link>
   </div>
  
   
