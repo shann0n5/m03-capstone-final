@@ -1,13 +1,28 @@
 <template>
   <h2>My Properties</h2>
-  <router-link class="btn btn-primary" v-bind:to="{ name: 'home' }">Back To Home</router-link>
-  <router-link class="btn btn-primary" v-bind:to="{ name: 'propertySearch' }">Search Properties</router-link>
-  <!-- <router-link class="btn btn-primary" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
-  <!-- <router-link class="btn btn-primary" v-bind:to="{name: 'application'}">See Applications</router-link> -->
-  <router-link class="btn btn-primary" v-bind:to="{ name: 'addProperty', params: {propertyId: 0 } }">Add New Property</router-link>
+  <div class="d-grid gap-3 d-md-flex justify-content-md-center ">
+    <!--  d-flex justify-content-around -->
+    <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'home' }" >
+      <i class="bi bi-chevron-left"></i>
+      Back To Home
+    </router-link>
+    <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'propertySearch' }">
+      <i class="bi bi-search"></i> 
+      Search My Properties 
+    </router-link>
+    <router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'addProperty', params: {propertyId: 0 } }">
+      <i 
+      class="bi bi-plus-lg "
+      ></i>
+      Add Property
+    </router-link>
+</div>
   <available-property-list/>
   <occupied-property-list/>
 
+  <!-- <router-link class="btn btn-primary" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
+  <!-- <router-link class="btn btn-primary" v-bind:to="{name: 'application'}">See Applications</router-link> -->
+  
 </template>
 
 <script>

@@ -1,27 +1,45 @@
 <template>
   <main>
     <header class="app-header">
-      <img class="logo" src="../src/assets/stickHouseLogo&NameCropped.png">
+      <img class="logo text-center" src="../src/assets/stickHouseLogo&NameCropped.png">
       <!-- <h1>Real-TE Management</h1>  -->
     </header>
     <div id="capstone-app">
-      <nav  class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          
+      <nav  class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+        <div class="container-fluid d-flex justify-content-evenly">
+          <ul class="nav nav-underline text-bg-light p-3 grid gap-0 column-gap-3">
           <!-- <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'aboutUs'}">About Us</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'availableProperties'}">See Rentals</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'qualifications'}">Apply Here</router-link>&nbsp;|&nbsp;
           <router-link v-bind:to="{name: 'contactUs'}">Contact Us</router-link>&nbsp;|&nbsp; -->
           <!-- <router-link v-bind:to="{ name: 'logout' }" v-if="this.$store.state.token != ''">Logout</router-link> -->
-          <a class="bi bi-house" href="/" target="_self">Home</a>
-          <a class="bi bi-info-circle" href="/about-us" target="_self">About Us</a>
-          <a class="bi bi-search" href="/available-properties" target="_self">See Rentals</a>
-          <a class="bi bi-clipboard-plus" href="/qualifications" target="_self">Apply Here</a>
-          <a class="bi bi-person-rolodex" href="/contact-us" target="_self">Contact Us</a>
+          <li class="nav-item p-2 g-col-6">
+            <a class="bi bi-house p-2 g-col-6 link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/" target="_self"> Home</a>
+          </li>
+          <li class="nav-item p-2 g-col-6">
+            <a class="bi bi-info-circle p-2 g-col-6 link-dark  link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/about-us" target="_self"> About Us</a>
+          </li>
+          <li class="nav-item p-2 g-col-6">
+            <a class="bi bi-search p-2 g-col-6 link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/available-properties" target="_self"> Search Rentals</a>
+          </li>
+          <li class="nav-item p-2 g-col-6">
+            <a class="bi bi-clipboard-plus p-2 g-col-6 link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/qualifications" target="_self"> Apply Here</a>
+          </li>
+          <li class="nav-item p-2 g-col-6">
+            <a class="bi bi-person-rolodex p-2 g-col-6 link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/contact-us" target="_self"> Contact Us</a>
+          </li>
+          <li class="nav-item p-2 g-col-6">
+            <a  class="bi bi-box-arrow-right p-2 g-col-6 link-dark link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" 
+            href="/logout" target="_self" v-if="this.$store.state.token != ''" > Logout</a>
+          </li>
           
-          <a  class="nav-link" href="/logout" target="_self" v-if="this.$store.state.token != ''" >Logout</a>
-        
+        </ul>
         </div>
       </nav>
       
@@ -36,10 +54,15 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css");
 .logo {
-      border-radius: 50%;
+      /* border-radius: 50%;
       max-width: 100%;
-      height: auto;
-      padding-right: 10px;
+      height: 25vh;
+      
+      padding-right: 10px; */
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
     }
 
 main{

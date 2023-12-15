@@ -1,12 +1,19 @@
 <template>
- <header>Property Details</header>
+ <h1>Property Details</h1>
  <div class="back-to-management-home">
-  
-  <router-link class="btn btn-submit" v-bind:to="{name:'propertyManagerMainPage'}">Back to Property Manager Home</router-link>   
+  <nav  class="navbar navbar-expand-md bg-body-tertiary ">
+    <div class="container-fluid">
+      <a class="bi bi-chevron-left" href="/property-manager-main-view" target="_self">Back</a>
+    </div>
+  </nav>
+   <!--<router-link  v-bind:to="{name:'propertyManagerMainPage'}"> to Property Manager Home</router-link>  
+  class="btn btn-submit"  -->
  </div>
   <div class="property-details">
 <property-detail  v-bind:property="property"/>
-<router-link class="btn btn-submit" v-bind:to="{ name: 'editProperty' }">Edit Property</router-link>
+<router-link class="btn btn-submit" v-bind:to="{ name: 'editProperty' }">
+  <i class="bi bi-pen"></i>
+  Edit Property</router-link>
   </div>
   
 </template>
