@@ -3,7 +3,6 @@ BEGIN TRANSACTION;
 
 DROP TABLE IF EXISTS users, manager_profiles, tenant_profiles, properties, applications, service_requests, 
 rent_transactions;
---, DROP TABLE IF EXISTS property_addresses, user_profiles, user_properties, tenant_service_requests, tenant_rent_transactions
 DROP SEQUENCE IF EXISTS seq_user_id, seq_manager_id, seq_tenant_id, seq_property_id, seq_application_id, 
 seq_service_request_id, seq_transaction_id;--, seq_address_id;
 
@@ -123,81 +122,4 @@ CREATE TABLE rent_transactions (
 	CONSTRAINT FK_rent_transactions_tenant_profiles FOREIGN KEY (tenant_id) REFERENCES tenant_profiles (tenant_id)
 );
 
-
------------------------------------- old tables ---------------------------------------------------------
-
---CREATE TABLE properties (
---    property_id int NOT NULL DEFAULT nextval('seq_property_id'),
---	number_of_rooms int NOT NULL,
---	rent Decimal(10,2) NOT NULL,
---	is_available boolean NOT NULL,
---	is_owner boolean NOT NULL,
---	CONSTRAINT PK_properties PRIMARY KEY (property_id)
---);
---CREATE TABLE properties (
---    property_id int NOT NULL DEFAULT nextval('seq_property_id'),
---	address_id int NOT NULL,
---	number_of_rooms int NOT NULL,
---	rent Decimal(10,2) NOT NULL,
---	is_available boolean NOT NULL,
---	is_owner boolean NOT NULL,
---	CONSTRAINT PK_properties PRIMARY KEY (property_id),
---	CONSTRAINT FK_properties_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id)
---);
-
-
---CREATE TABLE property_addresses (
---	address_id int NOT NULL,
---	property_id int NOT NULL,
---	CONSTRAINT FK_property_addresses_addresses FOREIGN KEY (address_id) REFERENCES addresses (address_id),
---	CONSTRAINT FK_property_addresses_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
---);
-
---CREATE SEQUENCE seq_address_id
---	INCREMENT BY 1
---	START WITH 1
---	NO MAXVALUE;
---
---CREATE TABLE addresses (
---	address_id int NOT NULL DEFAULT nextval('seq_address_id'),
---	address varchar (50) NOT NULL,
---	address2 varchar (50),
---	city varchar (75) NOT NULL,
---	state varchar (50) NOT NULL,
---	zipcode varchar (15) NOT NULL,
---	CONSTRAINT PK_addresses PRIMARY KEY (address_id)
---);
-
--- CREATE TABLE user_profiles (
--- 	user_id int NOT NULL,
--- 	full_name varchar(100) NOT NULL,
--- 	suite_number varchar(10),
--- 	has_autopay boolean DEFAULT false,
--- 	CONSTRAINT PK_user_profiles PRIMARY KEY (user_id),
--- 	CONSTRAINT FK_user_profile_users FOREIGN KEY (user_id) REFERENCES users (user_id)
--- );
-
--- CREATE TABLE user_properties (
--- 	user_id int NOT NULL,
--- 	property_id int NOT NULL,
--- 	CONSTRAINT FK_user_properties_users FOREIGN KEY (user_id) REFERENCES users (user_id),
--- 	CONSTRAINT FK_user_properties_properties FOREIGN KEY (property_id) REFERENCES properties (property_id)
--- );
-
--- CREATE TABLE tenant_service_requests (
--- 	tenant_id int NOT NULL,
--- 	service_request_id int NOT NULL,
--- 	CONSTRAINT FK_tenant_services_requests_users FOREIGN KEY (tenant_id) REFERENCES users (user_id),
--- 	CONSTRAINT FK_tenant_services_requests_service_requests FOREIGN KEY (service_request_id) REFERENCES service_requests (service_request_id)
--- );
-
--- CREATE TABLE tenant_rent_transactions(
--- 	tenant_id int NOT NULL,
--- 	transaction_id int NOT NULL,
--- 	CONSTRAINT FK_tenant_rent_transactions_users FOREIGN KEY (tenant_id) REFERENCES users (user_id),
--- 	CONSTRAINT FK_tenant_rent_transactions_rent_transactions FOREIGN KEY (transaction_id) REFERENCES rent_transactions (transaction_id)
--- );
-----------------------------------------------------------------------------------------------------------
-
--- ROLLBACK;
 COMMIT TRANSACTION;

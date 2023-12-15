@@ -1,32 +1,20 @@
 <template>
-    <div class="serviceRequest">
-      <router-link v-bind:to="{ name: 'serviceRequest'}">Back to Service Requests</router-link>
-      <div>
-          <h2>Service Request Details </h2>
-          <div>
-          <h3> Service Request ID: {{ serviceRequest.serviceRequestId }}</h3>
-          </div>
-          <div>
-          <h4> Tenant ID: </h4>
-          {{ serviceRequest.tenantId }}
-          </div>
-          <div>
-            <h4>Status:</h4>
-            {{ serviceRequest.status }}
-          </div>
-          <div> <h4>Service Request Details:</h4> 
-            {{ serviceRequest.requestDetails  }}
-          </div>
-      </div>
-     <div> {{ `service request ${this.$store.state.showManagerPOV}` }}</div>
-      <div>
+<router-link class="btn btn-outline-secondary text-bg-light p-3 position-relative" v-bind:to="{ name: 'serviceRequest'}">
+  <i class="bi bi-chevron-left"></i>Back to Service Requests</router-link>
+<div class="card">
+
+  <h1>Service Request Details</h1>
+  <p class="info">Tenant ID:  {{ serviceRequest.serviceRequestId }} </p>
+  <p class="info">Status: {{ serviceRequest.status }}</p>
+  <p>Details: {{ serviceRequest.requestDetails  }}</p>
+  <p>
         <select v-model="editServiceRequest.status" v-on:change="updateServiceRequest" v-show="this.$store.state.showManagerPOV">
             <option value="inProgress">In Progress</option>
             <option value="complete">Complete</option>
         </select>
       <button class="btn btn-outline-danger" v-on:click="deleteServiceRequest" v-show="!this.$store.state.showManagerPOV">Delete Service Request</button>
-    </div>
-    </div>
+  </p>
+</div>                                              
   </template>
   
   <script>
@@ -135,6 +123,22 @@
   }
   </script>
   
-  <style>
-  
+  <style scoped>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  padding: 25px;
+}
+
+.info {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
   </style>

@@ -67,7 +67,6 @@ INSERT INTO service_requests (tenant_id, request_details, status) VALUES (3004, 
 INSERT INTO service_requests (tenant_id, request_details, status) VALUES (3005, 'Cracking in bathroom ceiling', 'STATUS_OPEN'); --6011
 INSERT INTO service_requests (tenant_id, request_details, status) VALUES (3006, 'Window in liivng room wont open', 'STATUS_IN_PROGRESS');--6012
 
-
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3001, 1500.00, '2023-01-01', false); --rentTransactionId 7001
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3002, 3500.00, '2023-01-01', false); --rentTransactionId 7002
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3003, 5000.00, '2023-12-01', true); --rentTransactionId 7003
@@ -80,61 +79,6 @@ INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (30
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3004, 3500.00, '2024-01-01', true); --7010
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3005, 2250.00, '2023-12-01', true); --7011
 INSERT INTO rent_transactions (tenant_id, amount, due_date, past_due) VALUES (3006, 2000.00, '2023-12-01', true); --7012
-
--------------------------------------------------------- old tables -------------------------------------------------------
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1004, 'Neville Longbottom', NULL, false); --applicant
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1005, 'Ron Weasley', '3R', false);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1006, 'Hermione Granger', NULL, true); --applicant
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1007, 'Ginny Weasley', NULL, false);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
--- INSERT INTO user_profiles(user_id, full_name, suite_number, has_autopay) VALUES (1003, 'Harry Potter','3R', true);
-
--- INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1003, 4001);
--- INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1005, 4002);
--- INSERT INTO tenant_service_requests (tenant_id, service_request_id) VALUES (1007, 4003); 
-
--- INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1003, 5001);
--- INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1005, 5002);
--- INSERT INTO tenant_rent_transactions (tenant_id, transaction_id) VALUES (1007, 5003);
-
---INSERT INTO properties(number_of_rooms, rent, is_available, is_owner) VALUES (3, 5000.00, true, true); --propertyId 2001
---INSERT INTO properties(number_of_rooms, rent, is_available, is_owner) VALUES (2, 3500.00, false, true); --propertyId 2002
---INSERT INTO properties(number_of_rooms, rent, is_available, is_owner) VALUES (1, 1500.00, false, true); --propertyId 2003
-
---INSERT INTO property_addresses (address_id, property_id) VALUES (1,2001);
---INSERT INTO property_addresses (address_id, property_id) VALUES (2,2002);
---INSERT INTO property_addresses (address_id, property_id) VALUES (3,2003);
-
---INSERT INTO properties(address_id, number_of_rooms, rent, is_available, is_owner) VALUES (1, 3, 5000.00, true, true); --propertyId 2001
---INSERT INTO properties(address_id, number_of_rooms, rent, is_available, is_owner) VALUES (2, 2, 3500.00, false, true); --propertyId 2002
---INSERT INTO properties(address_id, number_of_rooms, rent, is_available, is_owner) VALUES (3, 1, 1500.00, false, true); --propertyId 2003
-
---INSERT INTO addresses (address, address2, city, state, zipcode) VALUES ('123 Test St', '', 'New York', 'NY', '10024'); --addressId 1 ?
---INSERT INTO addresses (address, address2, city, state, zipcode) VALUES ('456 Testing Blvd', '', 'Long Beach', 'CA', '90210'); --addressId 2 ?
---INSERT INTO addresses (address, address2, city, state, zipcode) VALUES('789 Test Ave', '', 'Philadelphia', 'PA', '19093'); --addressId 3 ?
-
--- INSERT INTO user_properties(user_id, property_id) VALUES (1001, 2001); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1001, 2003); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1002, 2002); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1002, 2004); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1003, 2005); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1003, 2006); --owner
--- INSERT INTO user_properties(user_id, property_id) VALUES (1003, 2001); --tenant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1005, 2001); --tenant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1007, 2003); --tenant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1011, 2005); --tenant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1012, 2003); --tenant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1004, 2002); --applicant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1006, 2003); --applicant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1009, 2004); --applicant
--- INSERT INTO user_properties(user_id, property_id) VALUES (1010, 2006); --applicant
----------------------------------------------------------------------------------------------------------------------------
 
 COMMIT TRANSACTION;
 

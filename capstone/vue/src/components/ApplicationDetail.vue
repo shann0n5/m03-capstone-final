@@ -1,30 +1,31 @@
 <template>
-  <div class="application">
-    <router-link v-bind:to="{name: 'application'}">Back to Applications</router-link>
+<router-link v-bind:to="{name: 'application'}">Back to Applications</router-link>
+  <div class="card">
+    
     <div>
-        <h2>Application Details</h2>
+        <h1>Application Details</h1>
         <div>
-        <h3>Application ID: {{ application.applicationId }}</h3>
+        <h3 class="info">{{ application.applicationId }}</h3>
         </div>
-        <h4>Property ID : {{ application.propertyId }}</h4>
+        <h4 class="info">Property ID : {{ application.propertyId }}</h4>
         <div>
-            <h5>Status : </h5>
+            <h5 class="info">Status : </h5>
             {{ application.status }}
         </div>
         <div>
-            <h5>Full Name :</h5>
+            <h5 class="info">Full Name :</h5>
             {{ application.fullName }}
         </div>
         <div>
-            <h5>Email : </h5>
+            <h5 class="info">Email : </h5>
             {{ application.email }}
         </div>
         <div>
-            <h5> Has Roommates? </h5>
+            <h5 class="info"> Has Roommates? </h5>
             {{ editApplication.hasRoomates }}
         </div>
         <div>
-            <h5> Roommates Names: </h5>
+            <h5 class="info"> Roommates Names: </h5>
             {{ editApplication.roomateNames }}
         </div>
     </div>
@@ -134,3 +135,23 @@ created(){
 }
        
 </script>
+
+<style scoped>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  padding: 25px;
+}
+
+.info {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+</style>
