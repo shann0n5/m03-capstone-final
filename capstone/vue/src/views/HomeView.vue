@@ -7,11 +7,11 @@
     <!-- <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'propertyManagerMainPage' }">My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">View Applications for My Properties</router-link>
     <router-link class="btn btn-primary" v-show="this.$store.state.showManagerPOV" v-bind:to="{ name: 'serviceRequest' }">See Service Requests</router-link> -->
-    <a class="btn btn-outline-primary btn-lg " href="/property-manager-main-view" target="_self" v-show="this.$store.state.showManagerPOV">My Properties </a> &nbsp;&nbsp;
+    <a class="btn btn-outline-primary btn-lg" href="/property-manager-main-view" target="_self" v-show="this.$store.state.showManagerPOV">My Properties </a> &nbsp;&nbsp;
    
-    <a class=" btn btn-outline-primary  btn-lg " href="/application-view" target="_self"  v-show="this.$store.state.showManagerPOV">View Applications for My Properties</a> &nbsp;&nbsp;
+    <a class="btn btn-outline-primary btn-lg" href="/application-view" target="_self"  v-show="this.$store.state.showManagerPOV">View Applications for My Properties</a> &nbsp;&nbsp;
     
-    <a class="btn btn-outline-primary  btn-lg " href="/service-request-view" target="_self" v-show="this.$store.state.showManagerPOV" >See Service Requests</a>
+    <a class="btn btn-outline-primary btn-lg" href="/service-request-view" target="_self" v-show="this.$store.state.showManagerPOV" >See Service Requests</a>
   </div>
 
 
@@ -21,9 +21,9 @@
     <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{ name: 'application' }">My Applications</router-link>
     <router-link class="btn btn-primary" v-show="!this.$store.state.showManagerPOV" v-bind:to="{name: 'rentTransaction'}"> My Rent Transactions</router-link> -->
 
-    <a class="btn btn-outline-primary nav btn-lg flex-column"   href="/service-request-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Service Requests</a>
-    <a class="btn btn-outline-primary nav btn-lg flex-column"  href="/application-view" target="_self" v-show="!this.$store.state.showManagerPOV" >My Applications</a>
-    <a class="btn btn-outline-primary nav btn-lg flex-column"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Rent Transactions</a>
+    <a class="btn btn-outline-primary btn-lg"   href="/service-request-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Service Requests</a>&nbsp;&nbsp;
+    <a class="btn btn-outline-primary btn-lg"  href="/application-view" target="_self" v-show="!this.$store.state.showManagerPOV" >My Applications</a>&nbsp;&nbsp;
+    <a class="btn btn-outline-primary btn-lg"   href="/rent-transaction-view" target="_self" v-show="!this.$store.state.showManagerPOV">My Rent Transactions</a>
   </div>
 </template>
 
