@@ -1,11 +1,11 @@
 <template>
   <main>
     <header class="app-header">
-      <img class="logo text-center" src="../src/assets/stickHouseLogo&NameCropped.png">
+      <img class="logo mt-5 p-5" src="../src/assets/stickHouseLogo&NameCropped.png">
       <!-- <h1>Real-TE Management</h1>  -->
     </header>
     <div id="capstone-app">
-      <nav  class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
+      <nav  class="navbar navbar-expand-lg bg-body-tertiary fixed-top ">
         <div class="container-fluid d-flex justify-content-evenly">
           <ul class="nav nav-underline text-bg-light p-3 grid gap-0 column-gap-3">
           <!-- <router-link v-bind:to="{name: 'home' }">Home</router-link>&nbsp;|&nbsp;
